@@ -1,1 +1,156 @@
+<!doctype html>
+<html lang="el">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SINTELIA Pulse Professional v2.0</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
 
+<body>
+  <div id="app" class="app-shell">
+    <header class="topbar">
+      <div>
+        <div class="eyebrow">SINTELIA Pulse Professional v2.0</div>
+        <h1>OPS-Governed Market Signal Console</h1>
+        <p class="subtitle">OPS detects structure. Decision Engine decides HOLD / ARM / GO.</p>
+      </div>
+
+      <div class="status-stack">
+        <div id="connectionStatus" class="badge badge-neutral">OFFLINE</div>
+        <div id="versionBadge" class="badge badge-dark">v2.0</div>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="panel hero-panel">
+        <div class="asset-row">
+          <div>
+            <label for="assetSelect">Asset</label>
+            <select id="assetSelect"></select>
+          </div>
+
+          <div>
+            <label for="modeSelect">Mode</label>
+            <select id="modeSelect">
+              <option value="live" selected>Live</option>
+              <option value="paper">Paper</option>
+            </select>
+          </div>
+
+          <button id="startBtn">START</button>
+          <button id="stopBtn" class="secondary">STOP</button>
+        </div>
+
+        <div id="finalVerdictCard" class="verdict-card hold">
+          <div class="verdict-label">FINAL VERDICT</div>
+          <div id="finalVerdict" class="verdict-main">HOLD</div>
+          <div id="finalReason" class="verdict-reason">Waiting for valid market data.</div>
+        </div>
+
+        <div class="metric-grid">
+          <div class="metric">
+            <span>Price</span>
+            <strong id="priceValue">—</strong>
+          </div>
+          <div class="metric">
+            <span>Confidence</span>
+            <strong id="confidenceValue">—</strong>
+          </div>
+          <div class="metric">
+            <span>Historical Win Rate</span>
+            <strong id="winRateValue">—</strong>
+          </div>
+          <div class="metric">
+            <span>Historical Edge</span>
+            <strong id="edgeValue">—</strong>
+          </div>
+          <div class="metric">
+            <span>Risk</span>
+            <strong id="riskValue">—</strong>
+          </div>
+          <div class="metric">
+            <span>Decision Stability</span>
+            <strong id="stabilityValue">—</strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>OPS Detector</h2>
+        <p class="panel-note">Independent detector only. No trading rules inside OPS.</p>
+
+        <div class="metric-grid">
+          <div class="metric"><span>PCS_z</span><strong id="pcsValue">—</strong></div>
+          <div class="metric"><span>Π</span><strong id="piValue">—</strong></div>
+          <div class="metric"><span>SCG</span><strong id="scgValue">—</strong></div>
+          <div class="metric"><span>Rolling Persistence</span><strong id="rollingValue">—</strong></div>
+          <div class="metric"><span>Axiom A</span><strong id="axiomValue">—</strong></div>
+          <div class="metric"><span>OPS Status</span><strong id="opsStatusValue">—</strong></div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>WHY</h2>
+        <ul id="whyList" class="why-list">
+          <li>Waiting for diagnostics.</li>
+        </ul>
+      </section>
+
+      <section class="panel">
+        <h2>Memory / Outcome / Calibration</h2>
+
+        <div class="metric-grid">
+          <div class="metric"><span>Nearest Cases</span><strong id="nearestCasesValue">—</strong></div>
+          <div class="metric"><span>Memory Bias</span><strong id="memoryBiasValue">—</strong></div>
+          <div class="metric"><span>Outcome Status</span><strong id="outcomeStatusValue">—</strong></div>
+          <div class="metric"><span>Precision</span><strong id="precisionValue">—</strong></div>
+          <div class="metric"><span>Recall</span><strong id="recallValue">—</strong></div>
+          <div class="metric"><span>Drift</span><strong id="driftValue">—</strong></div>
+        </div>
+      </section>
+
+      <section class="panel wide">
+        <h2>Audit Log</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Asset</th>
+                <th>Price</th>
+                <th>OPS</th>
+                <th>Decision</th>
+                <th>Risk</th>
+                <th>Version</th>
+              </tr>
+            </thead>
+            <tbody id="auditTableBody">
+              <tr>
+                <td colspan="7">No audit entries yet.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="button-row">
+          <button id="exportAuditBtn" class="secondary">EXPORT AUDIT</button>
+          <button id="clearAuditBtn" class="danger">CLEAR LOCAL AUDIT</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="js/utils.js"></script>
+  <script src="js/dataEngine.js"></script>
+  <script src="js/opsEngine.js"></script>
+  <script src="js/memoryEngine.js"></script>
+  <script src="js/outcomeEngine.js"></script>
+  <script src="js/calibrationEngine.js"></script>
+  <script src="js/riskEngine.js"></script>
+  <script src="js/decisionEngine.js"></script>
+  <script src="js/auditEngine.js"></script>
+  <script src="js/uiEngine.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
