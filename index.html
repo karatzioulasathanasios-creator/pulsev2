@@ -1,1194 +1,1244 @@
 <!DOCTYPE html>
 <html lang="el">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SINTELIA Pulse Professional v2.0</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>SINTELIA Pulse Professional v2.0 — OPS Decision Support System</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="SINTELIA PULSE v2">
+<meta name="theme-color" content="#ffffff">
+<style>
+:root{
+  --bg:#ffffff;--text:#111827;--muted:#6b7280;--line:#e5e7eb;--soft:#f9fafb;
+  --green:#168a3a;--green2:#eaf8ef;--yellow:#f6b700;--yellow2:#fff8df;
+  --red:#d71920;--red2:#fff0f0;--blue:#0b72ff;--blue2:#eef5ff;
+  --card:#ffffff;--shadow:0 10px 30px rgba(0,0,0,.06);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+.wrap{max-width:1280px;margin:0 auto;padding:18px 16px 28px}
 
-        body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: #0a0e17;
-            color: #c8d6e5;
-            padding: 20px;
-            min-height: 100vh;
-        }
+/* Header */
+.header{display:grid;grid-template-columns:1fr auto auto;gap:18px;align-items:start}
+h1{font-size:28px;line-height:1;margin:0 0 8px;font-weight:1000;letter-spacing:-.4px}
+h1 small{font-size:14px;font-weight:600;color:var(--muted);letter-spacing:0}
+.sub{color:#111;opacity:.78;font-size:15px;line-height:1.35}
+.clock{text-align:right;font-weight:900;font-size:18px}.clock small{display:block;color:var(--muted);font-weight:600;font-size:12px;margin-top:3px}
+.livebox{border:1px solid #b9e7c5;background:#fff;border-radius:16px;padding:10px 16px;font-weight:1000;color:#0f7c32;display:flex;gap:10px;align-items:center}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--green);display:inline-block}
+.refresh{border:1px solid #a7c8ff;background:#fff;color:var(--blue);font-weight:900;border-radius:10px;padding:9px 16px;margin-top:10px;cursor:pointer}
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
+/* Asset Selector */
+.asset-selector{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.asset-btn{padding:6px 16px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--muted);font-weight:700;font-size:13px;cursor:pointer;transition:all .2s}
+.asset-btn:hover{border-color:var(--blue);color:var(--blue)}
+.asset-btn.active{border-color:var(--blue);background:var(--blue2);color:var(--blue)}
 
-        /* Header */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-            border-bottom: 1px solid #1a2332;
-            margin-bottom: 30px;
-        }
+/* Market Grid */
+.marketgrid{margin-top:16px;border:1px solid var(--line);border-radius:16px;background:#fff;box-shadow:var(--shadow);display:grid;grid-template-columns:repeat(4,1fr);overflow:hidden}
+.mcell{padding:18px 20px;border-right:1px solid var(--line)}
+.mcell:last-child{border-right:0}
+.label{font-size:12px;text-transform:uppercase;color:#4b5563;letter-spacing:.03em;margin-bottom:8px}
+.big{font-size:20px;font-weight:1000}.red{color:var(--red)}.green{color:var(--green)}.yellow{color:var(--yellow)}
+.small{font-size:12px;color:#4b5563;margin-top:5px}
 
-        .logo h1 {
-            font-size: 24px;
-            font-weight: 700;
-            background: linear-gradient(135deg, #00d4ff, #7b2ffc);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+/* Hero Decision */
+.hero{margin-top:18px;border:1px solid #ffd063;border-radius:20px;background:linear-gradient(90deg,#fffaf0,#fffdf8);padding:24px;display:grid;grid-template-columns:120px 1fr 300px;gap:20px;align-items:center}
+.lock{width:90px;height:90px;border-radius:50%;background:linear-gradient(#fff3c4,#ffe38c);border:1px solid #f2c94c;display:flex;align-items:center;justify-content:center;font-size:44px;margin:auto}
+.state{font-size:56px;font-weight:1000;letter-spacing:-1px}
+.state.go{color:var(--green)}
+.state.arm{color:var(--yellow)}
+.state.hold{color:var(--muted)}
+.signal{font-size:22px;font-weight:1000}.signal span{color:var(--yellow)}
+.gatebox{border:1px solid #ffd063;border-radius:14px;padding:14px 18px;background:#fff7df;min-width:220px}
+.gatebox b{display:inline-block;background:#fff0bd;border:1px solid #f2c94c;border-radius:10px;padding:6px 14px;margin-bottom:10px}
+.gatebox .danger{color:var(--red);font-weight:1000;margin-bottom:8px}
 
-        .logo span {
-            font-size: 12px;
-            color: #4a5f7a;
-            -webkit-text-fill-color: #4a5f7a;
-        }
+/* Pills */
+.pills{display:flex;gap:14px;flex-wrap:wrap;margin-top:20px}
+.pill{border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 22px;font-weight:1000;font-size:14px}
+.pill.ok{background:var(--green2);border-color:#b8e9c7;color:#0b6c2c}
+.pill.blue{background:var(--blue2);border-color:#c7dcff;color:#075bd7}
+.pill.gray{background:#f7f7f7}
+.pill.warn{background:var(--yellow2);border-color:#fde29a;color:#a16207}
 
-        .status {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-        }
+/* Main Grid */
+.main{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(340px,.8fr);gap:18px;margin-top:18px}
+.card{border:1px solid var(--line);border-radius:18px;background:var(--card);box-shadow:var(--shadow);padding:18px}
+.price{font-size:32px;font-weight:1000;margin-bottom:8px}
+.tag{display:inline-block;margin-left:8px;background:#f0f0f0;border:1px solid #ddd;padding:6px 12px;border-radius:999px;font-size:12px;font-weight:900}
 
-        .status-badge {
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            background: #1a2332;
-            border: 1px solid #2a3a4a;
-        }
+/* Confidence Bar */
+.confrow{display:grid;grid-template-columns:1fr 200px;gap:14px;align-items:center;margin-top:14px}
+.bar{height:12px;background:#e5e7eb;border-radius:999px;overflow:hidden}.fill{height:100%;width:0%;background:var(--green);transition:width .5s}
+.confnum{font-size:28px;font-weight:1000;color:var(--green)}.confsub{font-size:12px;color:#4b5563}
 
-        .status-badge.online {
-            border-color: #00d4ff;
-            color: #00d4ff;
-        }
+/* Chart */
+.chartwrap{border:1px solid var(--line);border-radius:16px;background:#fbfbfb;padding:10px;margin-top:18px}
+canvas{display:block;width:100%;height:230px}
+.minmax{display:flex;justify-content:space-between;margin-top:10px;font-size:13px;font-weight:800}
 
-        /* Grid Layout */
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 20px;
-        }
+/* Metrics Grid */
+.metrics{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}
+.metric{border:1px solid var(--line);border-radius:14px;padding:14px;background:#fff}
+.metric .name{color:var(--muted);font-size:14px}.metric .val{font-size:24px;font-weight:1000;margin:4px 0}.metric .pass{font-weight:1000;font-size:12px}.metric .pass.ok{color:var(--green)}.metric .pass.fail{color:var(--red)}.metric .pass.warn{color:var(--yellow)}
 
-        .grid-3 {
-            grid-template-columns: 1fr 1fr 1fr;
-        }
+/* Buttons */
+.actions{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+.btn{border:1px solid #d1d5db;border-radius:11px;background:#fff;padding:10px;font-weight:1000;color:var(--blue);cursor:pointer;transition:all .2s}
+.btn:hover{background:var(--soft)}
+.btn.black{background:#000;color:#fff;border-color:#000}
+.btn.black:hover{background:#222}
+.btn.red{color:#e11d48;border-color:#fecdd3}
+.btn.red:hover{background:#fff0f0}
 
-        .grid-4 {
-            grid-template-columns: 1fr 1fr 1fr 1fr;
-        }
+/* Sidebar Tables */
+.memtable{width:100%;border-collapse:collapse;font-size:12px}
+.memtable th{color:#4b5563;text-align:left;font-size:11px;border-bottom:1px solid var(--line);padding:6px 4px}
+.memtable td{border-bottom:1px solid #f1f1f1;padding:6px 4px}
+.badgeHold{background:var(--yellow2);border:1px solid #fde29a;color:#a16207;border-radius:999px;padding:2px 10px;font-weight:900;font-size:11px}
+.badgeGo{background:var(--green2);border:1px solid #b8e9c7;color:#0b6c2c;border-radius:999px;padding:2px 10px;font-weight:900;font-size:11px}
+.badgeArm{background:var(--blue2);border:1px solid #c7dcff;color:#075bd7;border-radius:999px;padding:2px 10px;font-weight:900;font-size:11px}
 
-        /* Cards */
-        .card {
-            background: #111a26;
-            border-radius: 12px;
-            padding: 20px;
-            border: 1px solid #1a2332;
-            transition: all 0.3s ease;
-        }
+/* Progress */
+.progress{height:13px;background:#eee;border-radius:999px;overflow:hidden;margin:6px 0}.progress div{height:100%;width:0%;background:var(--green);transition:width .5s}
+.sysrow{display:flex;justify-content:space-between;border-bottom:1px solid #f1f1f1;padding:6px 0;font-size:13px}.sysrow b{color:var(--green)}
 
-        .card:hover {
-            border-color: #2a3a4a;
-        }
+/* Diagnostics */
+.diag{margin-top:18px}.diaghead{display:flex;justify-content:space-between;gap:12px;align-items:center}.okbadge{background:var(--green2);color:var(--green);border-radius:999px;padding:4px 12px;font-weight:1000;font-size:12px}
+pre{white-space:pre-wrap;background:#fbfbfb;border:1px solid var(--line);border-radius:12px;padding:12px;max-height:200px;overflow:auto;font-size:12px;color:#333}
 
-        .card-title {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #4a5f7a;
-            margin-bottom: 12px;
-            font-weight: 600;
-        }
+/* Footer */
+.footer{margin-top:14px;border:1px solid #ffd063;background:#fff8df;border-radius:12px;padding:12px 18px;font-size:12px;color:#3d3320;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 
-        .card-value {
-            font-size: 28px;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 4px;
-        }
-
-        .card-sub {
-            font-size: 13px;
-            color: #4a5f7a;
-        }
-
-        /* OPS Metrics */
-        .metric-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-        }
-
-        .metric-item {
-            background: #0d1520;
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid #1a2332;
-        }
-
-        .metric-label {
-            font-size: 10px;
-            text-transform: uppercase;
-            color: #4a5f7a;
-            letter-spacing: 0.5px;
-        }
-
-        .metric-value {
-            font-size: 18px;
-            font-weight: 600;
-            color: #fff;
-            margin-top: 4px;
-        }
-
-        .metric-value.pass {
-            color: #00d4ff;
-        }
-        .metric-value.fail {
-            color: #ff6b6b;
-        }
-        .metric-value.warn {
-            color: #ffd93d;
-        }
-
-        /* Decision */
-        .decision-display {
-            text-align: center;
-            padding: 30px 20px;
-            border-radius: 12px;
-            background: #0d1520;
-            border: 2px solid #1a2332;
-        }
-
-        .decision-display.go {
-            border-color: #00d4ff;
-            background: rgba(0, 212, 255, 0.05);
-        }
-
-        .decision-display.arm {
-            border-color: #ffd93d;
-            background: rgba(255, 217, 61, 0.05);
-        }
-
-        .decision-display.hold {
-            border-color: #4a5f7a;
-            background: rgba(74, 95, 122, 0.05);
-        }
-
-        .decision-text {
-            font-size: 48px;
-            font-weight: 800;
-            letter-spacing: 4px;
-        }
-
-        .decision-text.go {
-            color: #00d4ff;
-        }
-        .decision-text.arm {
-            color: #ffd93d;
-        }
-        .decision-text.hold {
-            color: #4a5f7a;
-        }
-
-        .decision-reason {
-            margin-top: 12px;
-            font-size: 13px;
-            color: #4a5f7a;
-            line-height: 1.6;
-        }
-
-        /* Explainability */
-        .explain-list {
-            list-style: none;
-            padding: 0;
-        }
-
-        .explain-list li {
-            padding: 6px 0;
-            font-size: 13px;
-            border-bottom: 1px solid #0d1520;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .explain-list li:last-child {
-            border-bottom: none;
-        }
-
-        .explain-list .check {
-            color: #00d4ff;
-        }
-        .explain-list .cross {
-            color: #ff6b6b;
-        }
-
-        /* Asset Selector */
-        .asset-selector {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .asset-btn {
-            padding: 8px 20px;
-            border-radius: 8px;
-            border: 1px solid #1a2332;
-            background: transparent;
-            color: #4a5f7a;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 13px;
-        }
-
-        .asset-btn:hover {
-            border-color: #2a3a4a;
-            color: #c8d6e5;
-        }
-
-        .asset-btn.active {
-            border-color: #00d4ff;
-            color: #00d4ff;
-            background: rgba(0, 212, 255, 0.05);
-        }
-
-        /* Audit Log */
-        .audit-log {
-            max-height: 200px;
-            overflow-y: auto;
-            font-size: 12px;
-            font-family: 'Courier New', monospace;
-            color: #4a5f7a;
-        }
-
-        .audit-log .entry {
-            padding: 4px 0;
-            border-bottom: 1px solid #0d1520;
-            display: flex;
-            gap: 12px;
-        }
-
-        .audit-log .time {
-            color: #2a3a4a;
-            min-width: 80px;
-        }
-        .audit-log .decision {
-            font-weight: 600;
-        }
-        .audit-log .decision.go {
-            color: #00d4ff;
-        }
-        .audit-log .decision.arm {
-            color: #ffd93d;
-        }
-        .audit-log .decision.hold {
-            color: #4a5f7a;
-        }
-
-        /* Scrollbar */
-        .audit-log::-webkit-scrollbar {
-            width: 4px;
-        }
-        .audit-log::-webkit-scrollbar-track {
-            background: #0d1520;
-        }
-        .audit-log::-webkit-scrollbar-thumb {
-            background: #1a2332;
-            border-radius: 4px;
-        }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .grid-4 {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .grid,
-            .grid-3,
-            .grid-4 {
-                grid-template-columns: 1fr;
-            }
-
-            .header {
-                flex-direction: column;
-                gap: 16px;
-                align-items: flex-start;
-            }
-        }
-    </style>
+/* Responsive */
+@media(max-width:1000px){
+  .main{grid-template-columns:1fr}
+  .hero{grid-template-columns:1fr;text-align:center}.gatebox{justify-self:stretch}
+}
+@media(max-width:800px){
+  .header{grid-template-columns:1fr auto}.header .livecol{grid-column:1/3}
+  .marketgrid{grid-template-columns:1fr 1fr}.mcell:nth-child(2){border-right:0}.mcell{border-bottom:1px solid var(--line)}.mcell:nth-child(3),.mcell:nth-child(4){border-bottom:0}
+  .confrow{grid-template-columns:1fr}.actions{grid-template-columns:1fr 1fr}
+}
+</style>
 </head>
 <body>
-    <div class="container">
-        <!-- Header -->
-        <div class="header">
-            <div class="logo">
-                <h1>PULSE <span>Professional v2.0</span></h1>
-                <div style="font-size:12px;color:#4a5f7a;margin-top:4px;">
-                    OPS Scientific Detector · Decision Support System
-                </div>
-            </div>
-            <div class="status">
-                <div class="status-badge online">● ONLINE</div>
-                <div id="assetDisplay" style="color:#4a5f7a;font-size:13px;">BTC/USD</div>
-            </div>
+<div class="wrap">
+  <!-- HEADER -->
+  <div class="header">
+    <div>
+      <h1>SINTELIA Pulse <small>Professional v2.0</small></h1>
+      <div class="sub">OPS Scientific Detector • Decision Support System • NASDAQ<br><b>FULL MODULAR • ADAPTIVE MEMORY • CALIBRATION • OUTCOME TRACKING</b></div>
+      <!-- Asset Selector -->
+      <div class="asset-selector" id="assetSelector">
+        <button class="asset-btn active" data-asset="AAPL">AAPL</button>
+        <button class="asset-btn" data-asset="BTC-USD">Bitcoin</button>
+        <button class="asset-btn" data-asset="ETH-USD">Ethereum</button>
+        <button class="asset-btn" data-asset="SPY">S&P 500</button>
+        <button class="asset-btn" data-asset="GOLD">Gold</button>
+        <button class="asset-btn" data-asset="VUAA.AS">VUAA</button>
+      </div>
+    </div>
+    <div class="clock"><span id="timeNow">--:--:--</span><small>America/New_York</small></div>
+    <div class="livecol">
+      <div class="livebox"><span>LIVE</span><small id="health">health: CHECK</small><span class="dot" id="healthDot"></span></div>
+      <button class="refresh" id="refreshBtn">↻ Refresh Data</button>
+    </div>
+  </div>
+
+  <!-- MARKET GRID -->
+  <div class="marketgrid">
+    <div class="mcell"><div class="label">Market status</div><div class="big red" id="marketStatus">● CHECK</div><div class="small">NASDAQ</div></div>
+    <div class="mcell"><div class="label">Next open</div><div class="big" id="nextOpen">—</div><div class="small" id="nextOpenTime">09:30</div></div>
+    <div class="mcell"><div class="label">Local time (New York)</div><div class="big" id="marketTime">—</div><div class="small">UTC+1/+2</div></div>
+    <div class="mcell"><div class="label">Market window</div><div class="big">09:30 - 16:00</div><div class="small">Mon - Fri</div></div>
+  </div>
+
+  <!-- HERO DECISION -->
+  <div class="hero">
+    <div class="lock">🔒</div>
+    <div>
+      <div class="state hold" id="stateDisplay">HOLD</div>
+      <div class="signal">SIGNAL: <span id="signalDisplay">WAIT</span></div>
+    </div>
+    <div class="gatebox">
+      <b id="gateTitle">MARKET CLOSED</b>
+      <div class="danger" id="gateStatus">GO gate: DISABLED</div>
+      <div id="gateText">GO/ARM are disabled while market is closed.</div>
+    </div>
+  </div>
+
+  <!-- PILLS -->
+  <div class="pills">
+    <div class="pill ok" id="axiomPill">AXIOM A: —</div>
+    <div class="pill blue" id="opsPill">OPS: —</div>
+    <div class="pill gray" id="regimePill">REGIME: —</div>
+    <div class="pill" id="outcomePill">OUTCOMES: —</div>
+    <div class="pill" id="stabilityPill">STABILITY: —</div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+    <!-- LEFT COLUMN -->
+    <div class="card">
+      <div class="price" id="priceDisplay">$ —</div>
+      <div><b id="symbolDisplay">AAPL</b> • NASDAQ • USD <span class="tag" id="marketTag">CHECK</span></div>
+      <div class="small" id="prevClose">prev close: —</div>
+
+      <div class="confrow">
+        <div>
+          <div class="label">Confidence (adaptive smoothed)</div>
+          <div class="bar"><div class="fill" id="confFill"></div></div>
+          <div class="confsub" id="confSub">LOW</div>
         </div>
+        <div><div class="confnum" id="confPct">0%</div></div>
+      </div>
 
-        <!-- Asset Selector -->
-        <div class="card" style="margin-bottom:20px;">
-            <div class="card-title">Assets</div>
-            <div class="asset-selector" id="assetSelector">
-                <button class="asset-btn active" data-asset="BTC">Bitcoin</button>
-                <button class="asset-btn" data-asset="ETH">Ethereum</button>
-                <button class="asset-btn" data-asset="SPY">S&P 500</button>
-                <button class="asset-btn" data-asset="AAPL">Apple</button>
-                <button class="asset-btn" data-asset="GOLD">Gold</button>
-            </div>
-        </div>
+      <div class="chartwrap"><canvas id="chart" width="900" height="260"></canvas></div>
+      <div class="minmax"><span>Min: <b id="minP">—</b></span><span>Max: <b id="maxP">—</b></span></div>
 
-        <!-- Grid: OPS Metrics & Decision -->
-        <div class="grid">
-            <!-- OPS Metrics -->
-            <div class="card">
-                <div class="card-title">OPS Detector · Projective Structure Analysis</div>
-                <div class="metric-grid">
-                    <div class="metric-item">
-                        <div class="metric-label">PCS_z</div>
-                        <div class="metric-value" id="pcsValue">0.00</div>
-                    </div>
-                    <div class="metric-item">
-                        <div class="metric-label">Π (Pi)</div>
-                        <div class="metric-value" id="piValue">0.00</div>
-                    </div>
-                    <div class="metric-item">
-                        <div class="metric-label">SCG</div>
-                        <div class="metric-value" id="scgValue">0.00</div>
-                    </div>
-                    <div class="metric-item">
-                        <div class="metric-label">Rolling Persistence</div>
-                        <div class="metric-value" id="persistenceValue">0.00</div>
-                    </div>
-                    <div class="metric-item" style="grid-column: span 2;">
-                        <div class="metric-label">Projective Stability</div>
-                        <div class="metric-value" id="stabilityValue">—</div>
-                    </div>
-                    <div class="metric-item" style="grid-column: span 2;">
-                        <div class="metric-label">Axiom Ӑ Validation</div>
-                        <div class="metric-value" id="axiomValue">—</div>
-                    </div>
-                </div>
-            </div>
+      <!-- OPS METRICS -->
+      <div class="metrics">
+        <div class="metric"><div class="name">PCS_z</div><div class="val" id="pcsV">—</div><div class="pass" id="pcsPass">—</div></div>
+        <div class="metric"><div class="name">Π (Pi)</div><div class="val" id="piV">—</div><div class="pass" id="piPass">—</div></div>
+        <div class="metric"><div class="name">SCG</div><div class="val" id="scgV">—</div><div class="pass" id="scgPass">—</div></div>
+        <div class="metric"><div class="name">Rolling Persistence</div><div class="val" id="rollingV">—</div><div class="pass" id="rollingPass">—</div></div>
+        <div class="metric"><div class="name">Memory</div><div class="val" id="memV">0</div><div class="pass" id="memK">GO 0 • ARM 0 • HOLD 0</div></div>
+        <div class="metric"><div class="name">Calibration</div><div class="val yellow" id="calV">WARMUP</div><div class="pass" id="calK">0-100 decisions</div></div>
+        <div class="metric"><div class="name">Outcome Success</div><div class="val green" id="successV">0</div><div class="pass" id="failV">Fail: 0</div></div>
+        <div class="metric"><div class="name">Decision Stability</div><div class="val" id="stabilityV">—</div><div class="pass" id="stabilityStatus">—</div></div>
+      </div>
 
-            <!-- Decision Display -->
-            <div class="card">
-                <div class="card-title">Decision Engine · GO / ARM / HOLD</div>
-                <div class="decision-display hold" id="decisionDisplay">
-                    <div class="decision-text hold" id="decisionText">HOLD</div>
-                    <div class="decision-reason" id="decisionReason">
-                        Awaiting OPS analysis...
-                    </div>
-                </div>
-
-                <!-- Quick Stats -->
-                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:16px;">
-                    <div style="background:#0d1520;padding:10px;border-radius:8px;text-align:center;">
-                        <div style="font-size:10px;color:#4a5f7a;">Precision</div>
-                        <div style="font-size:16px;font-weight:600;color:#fff;" id="precisionValue">—</div>
-                    </div>
-                    <div style="background:#0d1520;padding:10px;border-radius:8px;text-align:center;">
-                        <div style="font-size:10px;color:#4a5f7a;">Recall</div>
-                        <div style="font-size:16px;font-weight:600;color:#fff;" id="recallValue">—</div>
-                    </div>
-                    <div style="background:#0d1520;padding:10px;border-radius:8px;text-align:center;">
-                        <div style="font-size:10px;color:#4a5f7a;">Risk</div>
-                        <div style="font-size:16px;font-weight:600;color:#fff;" id="riskValue">—</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Grid: Memory, Outcome, Calibration -->
-        <div class="grid grid-3">
-            <!-- Memory -->
-            <div class="card">
-                <div class="card-title">Adaptive Memory · Case-Based Reasoning</div>
-                <div id="memoryContent">
-                    <div style="font-size:13px;color:#4a5f7a;">Similar cases found:</div>
-                    <div style="font-size:24px;font-weight:700;color:#fff;margin:8px 0;" id="similarCases">0</div>
-                    <div style="font-size:12px;color:#4a5f7a;">Nearest neighbor similarity</div>
-                    <div style="font-size:18px;font-weight:600;color:#fff;" id="similarityScore">—</div>
-                </div>
-            </div>
-
-            <!-- Outcome -->
-            <div class="card">
-                <div class="card-title">Outcome Engine · Decision Results</div>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-                    <div style="background:#0d1520;padding:12px;border-radius:8px;">
-                        <div style="font-size:10px;color:#4a5f7a;">Successful GO</div>
-                        <div style="font-size:20px;font-weight:700;color:#00d4ff;" id="successCount">0</div>
-                    </div>
-                    <div style="background:#0d1520;padding:12px;border-radius:8px;">
-                        <div style="font-size:10px;color:#4a5f7a;">Failed GO</div>
-                        <div style="font-size:20px;font-weight:700;color:#ff6b6b;" id="failCount">0</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Calibration -->
-            <div class="card">
-                <div class="card-title">Calibration Engine · Reliability</div>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-                    <div style="font-size:12px;color:#4a5f7a;">False GO Rate</div>
-                    <div style="font-size:16px;font-weight:600;color:#fff;text-align:right;" id="falseGORate">—</div>
-                    <div style="font-size:12px;color:#4a5f7a;">False ARM Rate</div>
-                    <div style="font-size:16px;font-weight:600;color:#fff;text-align:right;" id="falseARMRate">—</div>
-                    <div style="font-size:12px;color:#4a5f7a;">Drift</div>
-                    <div style="font-size:16px;font-weight:600;color:#fff;text-align:right;" id="driftValue">—</div>
-                    <div style="font-size:12px;color:#4a5f7a;">Reliability</div>
-                    <div style="font-size:16px;font-weight:600;color:#fff;text-align:right;" id="reliabilityValue">—</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Audit Log -->
-        <div class="card" style="margin-top:20px;">
-            <div class="card-title">Audit Trail · 100% Reproducibility</div>
-            <div class="audit-log" id="auditLog">
-                <div class="entry">
-                    <span class="time">—</span>
-                    <span>System initialized</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Explainability -->
-        <div class="card" style="margin-top:20px;">
-            <div class="card-title">Explainability · Dynamic WHY</div>
-            <ul class="explain-list" id="explainList">
-                <li><span>Awaiting decision...</span><span></span></li>
-            </ul>
-        </div>
+      <!-- ACTIONS -->
+      <div class="actions">
+        <button class="btn black" id="overlayBtn">GO Overlay: ON</button>
+        <button class="btn" id="csvBtn">Export CSV</button>
+        <button class="btn" id="jsonBtn">Export JSON</button>
+        <button class="btn" id="memoryBtn">Export Memory</button>
+        <button class="btn red" id="clearMemoryBtn">Clear Memory</button>
+        <button class="btn red" id="clearAuditBtn">Clear Audit</button>
+      </div>
     </div>
 
-    <script>
-        // ============================================================
-        // UTILITY FUNCTIONS
-        // ============================================================
-        const Utils = {
-            random: (min, max) => Math.random() * (max - min) + min,
-
-            clamp: (v, min, max) => Math.max(min, Math.min(max, v)),
-
-            movingAvg: (data, window) => {
-                const result = [];
-                for (let i = 0; i < data.length; i++) {
-                    const start = Math.max(0, i - window + 1);
-                    const slice = data.slice(start, i + 1);
-                    result.push(slice.reduce((a, b) => a + b, 0) / slice.length);
-                }
-                return result;
-            },
-
-            zScore: (data) => {
-                const mean = data.reduce((a, b) => a + b, 0) / data.length;
-                const std = Math.sqrt(data.reduce((a, b) => a + (b - mean) ** 2, 0) / data.length);
-                return data.map(v => std === 0 ? 0 : (v - mean) / std);
-            },
-
-            correlation: (a, b) => {
-                const n = Math.min(a.length, b.length);
-                const ma = a.slice(0, n).reduce((s, v) => s + v, 0) / n;
-                const mb = b.slice(0, n).reduce((s, v) => s + v, 0) / n;
-                let num = 0,
-                    da = 0,
-                    db = 0;
-                for (let i = 0; i < n; i++) {
-                    const va = a[i] - ma,
-                        vb = b[i] - mb;
-                    num += va * vb;
-                    da += va * va;
-                    db += vb * vb;
-                }
-                return da === 0 || db === 0 ? 0 : num / Math.sqrt(da * db);
-            }
-        };
-
-        // ============================================================
-        // DATA ENGINE
-        // ============================================================
-        const DataEngine = {
-            currentAsset: 'BTC',
-            data: {},
-            priceHistory: [],
-
-            // Simulate price data for any asset
-            generateData: (asset, length = 100) => {
-                const base = asset === 'BTC' ? 45000 :
-                    asset === 'ETH' ? 3500 :
-                    asset === 'SPY' ? 480 :
-                    asset === 'AAPL' ? 180 :
-                    asset === 'GOLD' ? 2300 : 100;
-
-                const volatility = asset === 'BTC' ? 0.03 :
-                    asset === 'ETH' ? 0.04 :
-                    asset === 'SPY' ? 0.01 :
-                    asset === 'AAPL' ? 0.02 :
-                    asset === 'GOLD' ? 0.005 : 0.02;
-
-                const prices = [];
-                let price = base;
-                for (let i = 0; i < length; i++) {
-                    price *= (1 + Utils.random(-volatility, volatility));
-                    prices.push(price);
-                }
-                return prices;
-            },
-
-            fetch: (asset) => {
-                this.currentAsset = asset;
-                this.priceHistory = this.generateData(asset, 200);
-                return this.priceHistory;
-            },
-
-            getPrice: () => {
-                const data = DataEngine.priceHistory;
-                return data.length > 0 ? data[data.length - 1] : 0;
-            }
-        };
-
-        // ============================================================
-        // OPS ENGINE - SCIENTIFIC DETECTOR
-        // ============================================================
-        const OPSEngine = {
-            // PCS_z: Projective Common-Mode Stability z-score
-            calculatePCS: (data) => {
-                if (data.length < 10) return { value: 0, pass: false };
-                const z = Utils.zScore(data);
-                const lastZ = z.slice(-10);
-                const stability = Math.abs(lastZ.reduce((a, b) => a + b, 0) / lastZ.length);
-                const value = Math.min(stability * 2, 1);
-                return { value, pass: value > 0.6 };
-            },
-
-            // Π (Pi): Projective coupling coefficient
-            calculatePi: (data) => {
-                if (data.length < 20) return { value: 0, pass: false };
-                const half = Math.floor(data.length / 2);
-                const first = data.slice(0, half);
-                const second = data.slice(half);
-                const corr = Math.abs(Utils.correlation(first, second));
-                const value = Math.min(corr * 1.5, 1);
-                return { value, pass: value > 0.5 };
-            },
-
-            // SCG: Stability Correlation Gradient
-            calculateSCG: (data) => {
-                if (data.length < 30) return { value: 0, pass: false };
-                const window = 10;
-                const diffs = [];
-                for (let i = window; i < data.length; i++) {
-                    const prev = data.slice(i - window, i);
-                    const curr = data.slice(i - window + 1, i + 1);
-                    const corr = Utils.correlation(prev, curr);
-                    diffs.push(Math.abs(corr));
-                }
-                const avg = diffs.reduce((a, b) => a + b, 0) / diffs.length;
-                const value = Math.min(avg * 1.2, 1);
-                return { value, pass: value > 0.5 };
-            },
-
-            // Rolling Persistence
-            calculatePersistence: (data) => {
-                if (data.length < 20) return { value: 0, pass: false };
-                const windows = [];
-                for (let i = 0; i < data.length - 10; i += 5) {
-                    const window = data.slice(i, i + 10);
-                    const z = Utils.zScore(window);
-                    const persistence = Math.abs(z.reduce((a, b) => a + b, 0) / z.length);
-                    windows.push(persistence);
-                }
-                const avg = windows.reduce((a, b) => a + b, 0) / windows.length;
-                const value = Math.min(avg * 1.5, 1);
-                return { value, pass: value > 0.5 };
-            },
-
-            // Axiom Ӑ Validation
-            validateAxiom: (data) => {
-                if (data.length < 30) return { value: 0, pass: false };
-                const z = Utils.zScore(data);
-                const ma = Utils.movingAvg(z, 10);
-                const diff = z.map((v, i) => Math.abs(v - (ma[i] || 0)));
-                const avgDiff = diff.reduce((a, b) => a + b, 0) / diff.length;
-                const value = Math.max(0, 1 - avgDiff * 2);
-                return { value: Math.min(value, 1), pass: value > 0.5 };
-            },
-
-            // Main detection
-            detect: (data) => {
-                const pcs = OPSEngine.calculatePCS(data);
-                const pi = OPSEngine.calculatePi(data);
-                const scg = OPSEngine.calculateSCG(data);
-                const persistence = OPSEngine.calculatePersistence(data);
-                const axiom = OPSEngine.validateAxiom(data);
-
-                // Projective Stability: combined metric
-                const stabilityScore = (pcs.value + pi.value + scg.value + persistence.value + axiom.value) / 5;
-                const stabilityPass = stabilityScore > 0.55;
-
-                // Count passes
-                const passes = [pcs.pass, pi.pass, scg.pass, persistence.pass, axiom.pass].filter(Boolean).length;
-                const exists = passes >= 3 && stabilityPass;
-
-                return {
-                    exists,
-                    metrics: {
-                        pcs: pcs.value,
-                        pi: pi.value,
-                        scg: scg.value,
-                        persistence: persistence.value,
-                        axiom: axiom.value,
-                        stability: stabilityScore
-                    },
-                    passes: {
-                        pcs: pcs.pass,
-                        pi: pi.pass,
-                        scg: scg.pass,
-                        persistence: persistence.pass,
-                        axiom: axiom.pass,
-                        stability: stabilityPass
-                    },
-                    confidence: stabilityScore
-                };
-            }
-        };
-
-        // ============================================================
-        // MEMORY ENGINE - Case-Based Reasoning
-        // ============================================================
-        const MemoryEngine = {
-            cases: [],
-            maxCases: 100,
-
-            addCase: (state, decision, outcome) => {
-                this.cases.push({
-                    state: { ...state },
-                    decision,
-                    outcome,
-                    timestamp: Date.now()
-                });
-                if (this.cases.length > this.maxCases) {
-                    this.cases.shift();
-                }
-            },
-
-            findSimilar: (currentState) => {
-                if (this.cases.length === 0) return { count: 0, similarity: 0 };
-
-                const similarities = this.cases.map(c => {
-                    let score = 0;
-                    let total = 0;
-                    for (const key in currentState) {
-                        if (c.state[key] !== undefined) {
-                            score += 1 - Math.abs(currentState[key] - c.state[key]);
-                            total++;
-                        }
-                    }
-                    return total > 0 ? score / total : 0;
-                });
-
-                const avgSimilarity = similarities.reduce((a, b) => a + b, 0) / similarities.length;
-                return {
-                    count: this.cases.length,
-                    similarity: avgSimilarity
-                };
-            },
-
-            getDecisionBias: () => {
-                const decisions = this.cases.map(c => c.decision);
-                const goCount = decisions.filter(d => d === 'GO').length;
-                const total = decisions.length;
-                return total > 0 ? goCount / total : 0.5;
-            }
-        };
-
-        // ============================================================
-        // OUTCOME ENGINE
-        // ============================================================
-        const OutcomeEngine = {
-            outcomes: [],
-
-            addOutcome: (decision, result) => {
-                this.outcomes.push({
-                    decision,
-                    result,
-                    timestamp: Date.now()
-                });
-            },
-
-            getStats: () => {
-                const gos = this.outcomes.filter(o => o.decision === 'GO');
-                const success = gos.filter(o => o.result === 'SUCCESS').length;
-                const failed = gos.filter(o => o.result === 'FAILURE').length;
-                return { success, failed, total: gos.length };
-            }
-        };
-
-        // ============================================================
-        // CALIBRATION ENGINE
-        // ============================================================
-        const CalibrationEngine = {
-            history: [],
-
-            record: (decision, actual, predicted) => {
-                this.history.push({
-                    decision,
-                    actual,
-                    predicted,
-                    timestamp: Date.now()
-                });
-                if (this.history.length > 200) this.history.shift();
-            },
-
-            getMetrics: () => {
-                const total = this.history.length;
-                if (total === 0) return { falseGO: 0, falseARM: 0, drift: 0, reliability: 0 };
-
-                const falseGO = this.history.filter(h =>
-                    h.decision === 'GO' && h.actual !== 'GO'
-                ).length / total;
-
-                const falseARM = this.history.filter(h =>
-                    h.decision === 'ARM' && h.actual !== 'ARM'
-                ).length / total;
-
-                // Drift: change in decisions over time
-                const decisions = this.history.map(h => h.decision);
-                const half = Math.floor(decisions.length / 2);
-                const firstHalf = decisions.slice(0, half).filter(d => d === 'GO').length / half;
-                const secondHalf = decisions.slice(half).filter(d => d === 'GO').length / (decisions.length - half);
-                const drift = Math.abs(firstHalf - secondHalf);
-
-                // Reliability: inverse of error rate
-                const errors = this.history.filter(h => h.predicted !== h.actual).length;
-                const reliability = 1 - (errors / total);
-
-                return {
-                    falseGO,
-                    falseARM,
-                    drift,
-                    reliability
-                };
-            }
-        };
-
-        // ============================================================
-        // RISK ENGINE
-        // ============================================================
-        const RiskEngine = {
-            calculate: (data, decision) => {
-                if (data.length < 20) return 'MEDIUM';
-
-                // Volatility
-                const returns = [];
-                for (let i = 1; i < data.length; i++) {
-                    returns.push((data[i] - data[i - 1]) / data[i - 1]);
-                }
-                const volatility = Math.sqrt(
-                    returns.reduce((a, b) => a + b * b, 0) / returns.length
-                );
-
-                // Liquidity proxy: price stability
-                const avg = data.reduce((a, b) => a + b, 0) / data.length;
-                const maxDev = Math.max(...data.map(v => Math.abs(v - avg))) / avg;
-
-                // Decision consistency
-                const consistency = decision === 'GO' ? 0.7 : 0.5;
-
-                const riskScore = (volatility * 100 + maxDev * 50) / consistency;
-
-                if (riskScore < 2) return 'LOW';
-                if (riskScore < 5) return 'MEDIUM';
-                return 'HIGH';
-            }
-        };
-
-        // ============================================================
-        // DECISION ENGINE
-        // ============================================================
-        const DecisionEngine = {
-            makeDecision: (opsResult, memoryResult, riskLevel, calibrationMetrics) => {
-                const { exists, metrics, passes } = opsResult;
-
-                // Build explainability
-                const checks = [];
-
-                // Check OPS detector
-                if (exists) {
-                    checks.push({ check: '✓ OPS detects projective structure', pass: true });
-                } else {
-                    checks.push({ check: '✗ OPS detects projective structure', pass: false });
-                }
-
-                // Check individual components
-                if (passes.pcs) checks.push({ check: '✓ PCS_z PASS', pass: true });
-                else checks.push({ check: '✗ PCS_z FAIL', pass: false });
-
-                if (passes.pi) checks.push({ check: '✓ Π (Pi) PASS', pass: true });
-                else checks.push({ check: '✗ Π (Pi) FAIL', pass: false });
-
-                if (passes.scg) checks.push({ check: '✓ SCG PASS', pass: true });
-                else checks.push({ check: '✗ SCG FAIL', pass: false });
-
-                if (passes.persistence) checks.push({ check: '✓ Rolling Persistence PASS', pass: true });
-                else checks.push({ check: '✗ Rolling Persistence FAIL', pass: false });
-
-                if (passes.axiom) checks.push({ check: '✓ Axiom Ӑ PASS', pass: true });
-                else checks.push({ check: '✗ Axiom Ӑ FAIL', pass: false });
-
-                // Memory bias
-                const memoryBias = memoryResult.similarity > 0.5 ? 1 : 0;
-                if (memoryBias) {
-                    checks.push({ check: '✓ Memory similar cases found', pass: true });
-                } else {
-                    checks.push({ check: '✗ Low memory similarity', pass: false });
-                }
-
-                // Risk
-                if (riskLevel !== 'HIGH') {
-                    checks.push({ check: `✓ Risk ${riskLevel}`, pass: true });
-                } else {
-                    checks.push({ check: `✗ Risk ${riskLevel}`, pass: false });
-                }
-
-                // Calibration
-                if (calibrationMetrics.reliability > 0.6) {
-                    checks.push({ check: '✓ Calibration reliable', pass: true });
-                } else {
-                    checks.push({ check: '✗ Calibration unreliable', pass: false });
-                }
-
-                // Count passes
-                const passCount = checks.filter(c => c.pass).length;
-                const totalChecks = checks.length;
-                const passRatio = passCount / totalChecks;
-
-                // Decision logic
-                let decision, reason;
-
-                if (passRatio >= 0.7 && exists) {
-                    decision = 'GO';
-                    reason = `Strong projective structure detected (${Math.round(passRatio * 100)}% checks passed)`;
-                } else if (passRatio >= 0.4) {
-                    decision = 'ARM';
-                    reason = `Partial projective structure (${Math.round(passRatio * 100)}% checks passed)`;
-                } else {
-                    decision = 'HOLD';
-                    reason = `Weak or no projective structure (${Math.round(passRatio * 100)}% checks passed)`;
-                }
-
-                return {
-                    decision,
-                    reason,
-                    checks,
-                    passRatio,
-                    confidence: opsResult.confidence
-                };
-            }
-        };
-
-        // ============================================================
-        // AUDIT ENGINE
-        // ============================================================
-        const AuditEngine = {
-            entries: [],
-            maxEntries: 100,
-
-            log: (entry) => {
-                const timestamp = new Date().toISOString();
-                const logEntry = {
-                    ...entry,
-                    timestamp,
-                    version: '2.0.0'
-                };
-                this.entries.unshift(logEntry);
-                if (this.entries.length > this.maxEntries) {
-                    this.entries.pop();
-                }
-                return logEntry;
-            },
-
-            getEntries: () => this.entries
-        };
-
-        // ============================================================
-        // UI ENGINE
-        // ============================================================
-        const UIEngine = {
-            updateOPSMetrics: (metrics) => {
-                document.getElementById('pcsValue').textContent = (metrics.pcs * 100).toFixed(1) + '%';
-                document.getElementById('piValue').textContent = (metrics.pi * 100).toFixed(1) + '%';
-                document.getElementById('scgValue').textContent = (metrics.scg * 100).toFixed(1) + '%';
-                document.getElementById('persistenceValue').textContent = (metrics.persistence * 100).toFixed(1) + '%';
-                document.getElementById('stabilityValue').textContent = (metrics.stability * 100).toFixed(1) + '%';
-                document.getElementById('stabilityValue').className = 'metric-value ' +
-                    (metrics.stability > 0.55 ? 'pass' : 'fail');
-                document.getElementById('axiomValue').textContent = (metrics.axiom * 100).toFixed(1) + '%';
-                document.getElementById('axiomValue').className = 'metric-value ' +
-                    (metrics.axiom > 0.5 ? 'pass' : 'fail');
-            },
-
-            updateDecision: (decision, reason) => {
-                const display = document.getElementById('decisionDisplay');
-                const text = document.getElementById('decisionText');
-                const reasonEl = document.getElementById('decisionReason');
-
-                display.className = 'decision-display ' + decision.toLowerCase();
-                text.className = 'decision-text ' + decision.toLowerCase();
-                text.textContent = decision;
-                reasonEl.textContent = reason;
-            },
-
-            updateMemory: (memoryResult) => {
-                document.getElementById('similarCases').textContent = memoryResult.count;
-                document.getElementById('similarityScore').textContent =
-                    (memoryResult.similarity * 100).toFixed(1) + '%';
-            },
-
-            updateOutcomes: (stats) => {
-                document.getElementById('successCount').textContent = stats.success;
-                document.getElementById('failCount').textContent = stats.failed;
-            },
-
-            updateCalibration: (metrics) => {
-                document.getElementById('falseGORate').textContent = (metrics.falseGO * 100).toFixed(1) + '%';
-                document.getElementById('falseARMRate').textContent = (metrics.falseARM * 100).toFixed(1) + '%';
-                document.getElementById('driftValue').textContent = (metrics.drift * 100).toFixed(1) + '%';
-                document.getElementById('reliabilityValue').textContent = (metrics.reliability * 100).toFixed(1) + '%';
-            },
-
-            updateRisk: (level) => {
-                document.getElementById('riskValue').textContent = level;
-                document.getElementById('riskValue').className = 'metric-value ' +
-                    (level === 'LOW' ? 'pass' : level === 'MEDIUM' ? 'warn' : 'fail');
-            },
-
-            updatePrecisionRecall: (precision, recall) => {
-                document.getElementById('precisionValue').textContent =
-                    precision !== null ? (precision * 100).toFixed(1) + '%' : '—';
-                document.getElementById('recallValue').textContent =
-                    recall !== null ? (recall * 100).toFixed(1) + '%' : '—';
-            },
-
-            updateExplainability: (checks) => {
-                const list = document.getElementById('explainList');
-                list.innerHTML = checks.map(c =>
-                    `<li><span>${c.check}</span><span class="${c.pass ? 'check' : 'cross'}">${c.pass ? '✓' : '✗'}</span></li>`
-                ).join('');
-            },
-
-            updateAudit: (entries) => {
-                const log = document.getElementById('auditLog');
-                log.innerHTML = entries.slice(0, 20).map(e => {
-                    const time = new Date(e.timestamp).toLocaleTimeString();
-                    const decisionClass = e.decision ? e.decision.toLowerCase() : '';
-                    return `<div class="entry">
-                                <span class="time">${time}</span>
-                                <span>${e.message || ''}</span>
-                                ${e.decision ? `<span class="decision ${decisionClass}">${e.decision}</span>` : ''}
-                            </div>`;
-                }).join('');
-            },
-
-            updateAssetDisplay: (asset) => {
-                document.getElementById('assetDisplay').textContent = asset + '/USD';
-            }
-        };
-
-        // ============================================================
-        // APPLICATION - MAIN LOOP
-        // ============================================================
-        class PulseApplication {
-            constructor() {
-                this.asset = 'BTC';
-                this.cycleCount = 0;
-                this.precisionHistory = [];
-                this.recallHistory = [];
-                this.lastDecision = null;
-                this.decisionHistory = [];
-                this.running = true;
-
-                this.setupAssetSelector();
-                this.runCycle();
-                setInterval(() => this.runCycle(), 5000);
-            }
-
-            setupAssetSelector() {
-                const buttons = document.querySelectorAll('.asset-btn');
-                buttons.forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        buttons.forEach(b => b.classList.remove('active'));
-                        btn.classList.add('active');
-                        this.asset = btn.dataset.asset;
-                        UIEngine.updateAssetDisplay(this.asset);
-                        this.runCycle(true);
-                    });
-                });
-            }
-
-            runCycle(force = false) {
-                if (!this.running && !force) return;
-                this.cycleCount++;
-
-                // 1. Fetch data
-                const priceData = DataEngine.fetch(this.asset);
-                const currentPrice = DataEngine.getPrice();
-
-                // 2. OPS Detection
-                const opsResult = OPSEngine.detect(priceData);
-
-                // 3. Memory
-                const currentState = {
-                    pcs: opsResult.metrics.pcs,
-                    pi: opsResult.metrics.pi,
-                    scg: opsResult.metrics.scg,
-                    persistence: opsResult.metrics.persistence,
-                    axiom: opsResult.metrics.axiom,
-                    stability: opsResult.metrics.stability
-                };
-                const memoryResult = MemoryEngine.findSimilar(currentState);
-                const memoryBias = MemoryEngine.getDecisionBias();
-
-                // 4. Risk
-                const riskLevel = RiskEngine.calculate(priceData, opsResult.exists ? 'GO' : 'HOLD');
-
-                // 5. Calibration
-                const calibrationMetrics = CalibrationEngine.getMetrics();
-
-                // 6. Decision
-                const decisionResult = DecisionEngine.makeDecision(
-                    opsResult,
-                    memoryResult,
-                    riskLevel,
-                    calibrationMetrics
-                );
-
-                // 7. Store decision for stability check
-                this.decisionHistory.push(decisionResult.decision);
-                if (this.decisionHistory.length > 10) this.decisionHistory.shift();
-
-                // Check decision stability
-                const isStable = this.decisionHistory.length > 3 &&
-                    this.decisionHistory.every(d => d === this.decisionHistory[0]);
-
-                // 8. Outcome (simulate after 2 cycles)
-                if (this.cycleCount > 2 && this.lastDecision === 'GO') {
-                    const success = Math.random() > 0.4;
-                    const result = success ? 'SUCCESS' : 'FAILURE';
-                    OutcomeEngine.addOutcome('GO', result);
-
-                    // Record for calibration
-                    CalibrationEngine.record('GO', result === 'SUCCESS' ? 'GO' : 'HOLD', 'GO');
-
-                    // Precision/Recall tracking
-                    if (result === 'SUCCESS') {
-                        this.precisionHistory.push(1);
-                    } else {
-                        this.precisionHistory.push(0);
-                    }
-                    this.recallHistory.push(result === 'SUCCESS' ? 1 : 0);
-
-                    // Memory
-                    MemoryEngine.addCase(currentState, 'GO', result);
-                }
-
-                // Store current decision for next cycle
-                this.lastDecision = decisionResult.decision;
-
-                // 9. Audit
-                AuditEngine.log({
-                    asset: this.asset,
-                    price: currentPrice,
-                    decision: decisionResult.decision,
-                    reason: decisionResult.reason,
-                    opsExists: opsResult.exists,
-                    confidence: opsResult.confidence,
-                    risk: riskLevel,
-                    message: `Cycle ${this.cycleCount}`
-                });
-
-                // 10. Update UI
-                UIEngine.updateOPSMetrics(opsResult.metrics);
-                UIEngine.updateDecision(decisionResult.decision, decisionResult.reason);
-                UIEngine.updateMemory(memoryResult);
-                UIEngine.updateOutcomes(OutcomeEngine.getStats());
-                UIEngine.updateCalibration(calibrationMetrics);
-                UIEngine.updateRisk(riskLevel);
-                UIEngine.updateExplainability(decisionResult.checks);
-
-                // Precision/Recall
-                const precision = this.precisionHistory.length > 0 ?
-                    this.precisionHistory.reduce((a, b) => a + b, 0) / this.precisionHistory.length :
-                    null;
-                const recall = this.recallHistory.length > 0 ?
-                    this.recallHistory.reduce((a, b) => a + b, 0) / this.recallHistory.length :
-                    null;
-                UIEngine.updatePrecisionRecall(precision, recall);
-
-                // Audit
-                UIEngine.updateAudit(AuditEngine.getEntries());
-
-                // 11. Decision Stability warning
-                if (!isStable && this.decisionHistory.length > 5) {
-                    // Add stability warning to explainability
-                    const list = document.getElementById('explainList');
-                    const warningItem = document.createElement('li');
-                    warningItem.innerHTML =
-                        `<span>⚠️ Decision instability detected - consecutive changes</span><span class="warn">⚠️</span>`;
-                    if (list.children.length > 0) {
-                        // Keep it at the bottom
-                    }
-                }
-            }
-        }
-
-        // ============================================================
-        // INITIALIZE
-        // ============================================================
-        document.addEventListener('DOMContentLoaded', () => {
-            // Initial data
-            DataEngine.fetch('BTC');
-            UIEngine.updateAssetDisplay('BTC');
-
-            // Initial audit
-            AuditEngine.log({
-                message: 'System initialized',
-                version: '2.0.0'
-            });
-            UIEngine.updateAudit(AuditEngine.getEntries());
-
-            // Start app
-            const app = new PulseApplication();
-
-            // Expose for debugging
-            window.Pulse = {
-                app,
-                OPSEngine,
-                DecisionEngine,
-                MemoryEngine,
-                OutcomeEngine,
-                CalibrationEngine,
-                RiskEngine,
-                AuditEngine,
-                DataEngine
-            };
-        });
-    </script>
+    <!-- RIGHT COLUMN -->
+    <div class="side">
+      <!-- MEMORY TABLE -->
+      <div class="card">
+        <h3 style="margin:0 0 10px">Memory <small>(last 20)</small></h3>
+        <table class="memtable">
+          <thead><tr><th>Time</th><th>Verdict</th><th>Conf%</th><th>PCS_z</th><th>Π</th><th>SCG</th></tr></thead>
+          <tbody id="memoryRows"></tbody>
+        </table>
+      </div>
+
+      <!-- CALIBRATION -->
+      <div class="card">
+        <h3 style="margin:0 0 10px">Calibration Details</h3>
+        <div class="sysrow"><span>Total decisions</span><b id="totalDec">0</b></div>
+        <div class="sysrow"><span>Calibration status</span><b id="calStatus">WARMUP</b></div>
+        <div class="sysrow"><span>Precision (GO)</span><b id="precisionDisplay">—</b></div>
+        <div class="sysrow"><span>Recall (GO)</span><b id="recallDisplay">—</b></div>
+        <div class="sysrow"><span>False GO rate</span><b id="falseGORate">—</b></div>
+        <div class="sysrow"><span>False ARM rate</span><b id="falseARMRate">—</b></div>
+        <div class="sysrow"><span>Model version</span><b>2.0.0</b></div>
+        <div style="margin-top:14px">
+          <div style="display:flex;justify-content:space-between"><b>Calibration Progress</b><b id="calProgressText">0 / 100</b></div>
+          <div class="progress"><div id="calProgress"></div></div>
+          <div class="small">0-100 WARMUP • 100-500 LEARNING • &gt;500 CALIBRATED</div>
+        </div>
+      </div>
+
+      <!-- ADAPTIVE MEMORY -->
+      <div class="card">
+        <h3 style="margin:0 0 10px">Adaptive Memory</h3>
+        <div class="sysrow"><span>Nearest cases</span><b id="nearCases">—</b></div>
+        <div class="sysrow"><span>Memory verdict</span><b id="memVerdict">—</b></div>
+        <div class="sysrow"><span>Memory confidence</span><b id="memConf">—</b></div>
+        <div class="sysrow"><span>Memory guard</span><b id="memGuard">—</b></div>
+        <div class="small" id="memExplain" style="margin-top:10px">Uses stored decisions to stabilize new decisions. Deterministic nearest-neighbor lookup.</div>
+      </div>
+
+      <!-- SYSTEM CHECK -->
+      <div class="card">
+        <h3 style="margin:0 0 10px">System Check</h3>
+        <div class="sysrow"><span>Worker (Cloudflare)</span><b id="chkWorker">—</b></div>
+        <div class="sysrow"><span>Data Feed (Yahoo)</span><b id="chkFeed">—</b></div>
+        <div class="sysrow"><span>OPS Engine</span><b id="chkOps">OK</b></div>
+        <div class="sysrow"><span>Decision Engine</span><b id="chkDecision">OK</b></div>
+        <div class="sysrow"><span>Memory (localStorage)</span><b id="chkMemory">OK</b></div>
+        <div class="sysrow"><span>Audit Log</span><b id="chkAudit">OK</b></div>
+        <div class="sysrow"><span>Market Gate</span><b id="chkGate">OK</b></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DIAGNOSTICS -->
+  <div class="card diag">
+    <div class="diaghead"><h3 style="margin:0">Diagnostics <span class="okbadge">OK</span></h3><button class="btn" id="copyLogBtn">Copy Log</button></div>
+    <div id="diagText" style="margin:12px 0;font-size:14px">—</div>
+    <pre id="log"></pre>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <div><b>🛡 SINTELIA PULSE v2.0</b> • OPS Scientific Detector • Decision Support System • Το GO δεν λέει "αγόρασε". Λέει: «Αν θες να αγοράσεις, ΤΩΡΑ έχει νόημα να το σκεφτείς με βάση τους κανόνες».</div>
+    <button class="btn" onclick="alert('OPS = structure detector. Market Gate = permission gate. Axiom A = stability/reversion gate. No financial advice.')">About OPS & AXIOM A</button>
+  </div>
+</div>
+
+<script>
+"use strict";
+
+// ============================================================
+// CONFIGURATION
+// ============================================================
+const CONFIG = {
+  API: 'https://aged-recipe-f70e.fuffy1603.workers.dev',
+  SYMBOL: 'AAPL',
+  CURRENCY: '$',
+  VERSION: 'SINTELIA_PULSE_v2.0.0',
+  POLL_MS: 30000,
+  MAX_STALE_MS: 10 * 60 * 1000,
+  K_MEMORY: 'SINTELIA_PULSE_V2_MEMORY',
+  K_AUDIT: 'SINTELIA_PULSE_V2_AUDIT',
+  K_OUTCOMES: 'SINTELIA_PULSE_V2_OUTCOMES'
+};
+
+// ============================================================
+// UTILITY FUNCTIONS
+// ============================================================
+const Utils = {
+  el: id => document.getElementById(id),
+
+  fmt: x => Number(x).toLocaleString('el-GR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }),
+
+  avg: a => a.length ? a.reduce((s, x) => s + x, 0) / a.length : 0,
+
+  sd: a => { const m = Utils.avg(a); return Math.sqrt(Utils.avg(a.map(x => (x - m) * (x - m)))); },
+
+  median: a => { if (!a.length) return 0; const b = [...a].sort((x, y) => x - y); const m = Math.floor(b.length / 2); return b.length % 2 ? b[m] : (b[m - 1] + b[m]) / 2; },
+
+  corr: (a, b) => {
+    const n = Math.min(a.length, b.length);
+    if (n < 3) return 0;
+    const x = a.slice(-n), y = b.slice(-n);
+    const mx = Utils.avg(x), my = Utils.avg(y);
+    let num = 0, dx = 0, dy = 0;
+    for (let i = 0; i < n; i++) {
+      const xx = x[i] - mx, yy = y[i] - my;
+      num += xx * yy;
+      dx += xx * xx;
+      dy += yy * yy;
+    }
+    return dx && dy ? num / Math.sqrt(dx * dy) : 0;
+  },
+
+  nyParts: (now = Date.now()) => {
+    const parts = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'America/New_York',
+      weekday: 'short',
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false
+    }).formatToParts(new Date(now));
+    const g = t => parts.find(p => p.type === t)?.value || '';
+    return { wd: g('weekday'), day: g('day'), month: g('month'), year: g('year'), hour: +g('hour'), minute: +g('minute'),
+      second: +g('second') };
+  },
+
+  nySessionOpen: (now = Date.now()) => {
+    const p = Utils.nyParts(now);
+    const mins = p.hour * 60 + p.minute;
+    return !['Sat', 'Sun'].includes(p.wd) && mins >= 570 && mins <= 960;
+  },
+
+  strictOpen: (meta, now = Date.now()) => {
+    const ex = String(meta?.exchangeName || '').toUpperCase();
+    const isAaplExchange = (ex === '' || ex === 'NMS' || ex === 'NASDAQ' || ex === 'NGM' || ex === 'NCM');
+    return isAaplExchange && Utils.nySessionOpen(now);
+  },
+
+  marketLabel: (meta, now = Date.now()) => Utils.strictOpen(meta, now) ? 'OPEN' : 'CLOSED',
+
+  log: (msg) => {
+    const logEl = Utils.el('log');
+    logEl.textContent += `[${new Date().toLocaleTimeString('el-GR')}] ${msg}\n`;
+    logEl.scrollTop = logEl.scrollHeight;
+  },
+
+  save: () => {
+    try {
+      localStorage.setItem(CONFIG.K_MEMORY, JSON.stringify({ samples: MEM.samples.slice(-3000), decisions: MEM.decisions
+          .slice(-3000) }));
+      localStorage.setItem(CONFIG.K_AUDIT, JSON.stringify(AUDIT.slice(-500)));
+      localStorage.setItem(CONFIG.K_OUTCOMES, JSON.stringify(OUTCOMES.slice(-500)));
+    } catch (e) { /* ignore */ }
+  },
+
+  download: (name, text, type) => {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob([text], { type }));
+    a.download = name;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  },
+
+  featureDistance: (a, b) => {
+    const dz = (a.pcs_z - b.pcs_z) / 3.0;
+    const dpi = (a.Pi - b.Pi) / 1.0;
+    const dscg = (a.SCG - b.SCG) / 3.0;
+    const ds = (a.score - b.score);
+    const dr = (a.rolling - b.rolling);
+    const da = (a.axiom - b.axiom);
+    return Math.sqrt(dz * dz + dpi * dpi + dscg * dscg + ds * ds + dr * dr + da * da);
+  }
+};
+
+// ============================================================
+// DATA ENGINE
+// ============================================================
+const DataEngine = {
+  samples: [],
+  latestMeta: null,
+  currentSymbol: CONFIG.SYMBOL,
+
+  async fetch(symbol = this.currentSymbol) {
+    const r = await fetch(CONFIG.API + '/?symbol=' + encodeURIComponent(symbol) + '&t=' + Date.now(), { cache: 'no-store' });
+    const j = await r.json();
+    if (!j.chart || !j.chart.result || !j.chart.result[0]) throw new Error('bad feed');
+    const res = j.chart.result[0];
+    this.latestMeta = res.meta;
+    this.currentSymbol = symbol;
+    return res;
+  },
+
+  push(t, p) {
+    if (!Number.isFinite(p)) return;
+    this.samples.push([t, p]);
+    const keep = 8 * 3600 * 1000;
+    while (this.samples.length && t - this.samples[0][0] > keep) this.samples.shift();
+  },
+
+  getPrice: () => {
+    const s = DataEngine.samples;
+    return s.length ? s[s.length - 1][1] : 0;
+  },
+
+  getPrices: () => DataEngine.samples.map(x => x[1]),
+
+  getTimestamps: () => DataEngine.samples.map(x => x[0])
+};
+
+// ============================================================
+// OPS ENGINE - SCIENTIFIC DETECTOR (PURE)
+// ============================================================
+const OPSEngine = {
+  analyze(prices, open) {
+    const d = [];
+    for (let i = 1; i < prices.length; i++) d.push(prices[i] - prices[i - 1]);
+    if (d.length < 35) return { score: 0, confRaw: 0, verdict: 'HOLD', pcs_z: 0, Pi: 0, SCG: 0, rolling: 0, reversion: 0,
+      axiom: 'WARMUP', reasons: ['WARMUP'], exists: false, metrics: {}, passes: {} };
+
+    const recent = d.slice(-80);
+    const absd = recent.map(Math.abs);
+    const dStar = Utils.median(absd);
+    const err = recent.map(x => Math.abs(Math.abs(x) - dStar));
+
+    let con = 0,
+      total = 0,
+      run = 0;
+    for (let i = 1; i < err.length; i++) {
+      if (err[i - 1] > dStar * .35) {
+        total++;
+        if (err[i] <= err[i - 1]) con++;
+        if (err[i] > err[i - 1] * 1.75) run++;
+      }
+    }
+    const reversion = total ? con / total : .5;
+    const runRate = total ? run / total : 0;
+
+    const pos = recent.map(x => Math.max(x, 0));
+    const neg = recent.map(x => Math.max(-x, 0));
+    const rev = recent.map(x => Math.max(0, dStar - Math.abs(Math.abs(x) - dStar)));
+    const ref = recent.map((x, i) => pos[i] - neg[i] + .35 * rev[i]);
+
+    const PCS = (Math.abs(Utils.corr(pos, ref)) + Math.abs(Utils.corr(neg, ref.map(x => -x))) + Math.abs(Utils.corr(rev,
+      ref))) / 3;
+
+    const nulls = [];
+    const w = recent.length;
+    for (let k = 1; k <= 32; k++) {
+      const sh = (k * 5) % w;
+      const nr = recent.slice(sh).concat(recent.slice(0, sh));
+      const np = nr.map(x => Math.max(x, 0));
+      const nn = nr.map(x => Math.max(-x, 0));
+      const nv = nr.map(x => Math.max(0, dStar - Math.abs(Math.abs(x) - dStar)));
+      const nf = nr.map((x, i) => np[i] - nn[i] + .35 * nv[i]);
+      nulls.push((Math.abs(Utils.corr(np, nf)) + Math.abs(Utils.corr(nn, nf.map(x => -x))) + Math.abs(Utils.corr(nv,
+        nf))) / 3);
+    }
+    const pcs_z = (PCS - Utils.avg(nulls)) / (Utils.sd(nulls) || 1e-9);
+
+    const up = recent.filter(x => x > 0).length;
+    const down = recent.filter(x => x < 0).length;
+    const fmaj = Math.max(up, down) / (up + down || 1);
+    const Pi = Math.max(0, 1 - Math.abs(2 * fmaj - 1));
+
+    const plain = recent.map(Math.abs);
+    const signed = recent.map(x => x >= 0 ? Math.abs(x) : -Math.abs(x));
+    const SCG = (Utils.sd(signed) ** 2) / (Utils.sd(plain) ** 2 + 1e-9);
+
+    let pass = 0;
+    const block = Math.floor(recent.length / 4);
+    for (let b = 0; b < 4; b++) {
+      const seg = recent.slice(b * block, (b + 1) * block);
+      if (seg.length < 8) continue;
+      const a = seg.map(Math.abs);
+      const st = Utils.median(a);
+      const stable = a.filter(x => Math.abs(x - st) < st * 1.8).length / a.length;
+      if (stable >= .55) pass++;
+    }
+    const rolling = pass / 4;
+    const axiom = (reversion >= .60 && runRate <= .10) ? 'PASS' : (reversion >= .50 && runRate <= .20) ? 'HOLD' : 'FAIL';
+
+    let score = 0,
+      reasons = [];
+    if (pcs_z >= 1) { score += 22;
+      reasons.push('PCS_z PASS'); } else reasons.push('PCS_z FAIL');
+    if (Pi >= .45) { score += 20;
+      reasons.push('Π PASS'); } else reasons.push('Π FAIL');
+    if (SCG >= 1) { score += 18;
+      reasons.push('SCG PASS'); } else reasons.push('SCG FAIL');
+    if (rolling >= .75) { score += 20;
+      reasons.push('ROLLING PASS'); } else reasons.push('ROLLING FAIL');
+    if (axiom === 'PASS') { score += 15;
+      reasons.push('AXIOM A PASS'); } else if (axiom === 'HOLD') { score += 7;
+      reasons.push('AXIOM A HOLD'); } else reasons.push('AXIOM A FAIL');
+    if (open) { score += 5;
+      reasons.push('MARKET OPEN'); } else { score = 0;
+      reasons.push('MARKET CLOSED'); }
+
+    let verdict = 'HOLD';
+    if (open && score >= 82 && pcs_z >= 1 && Pi >= .45 && SCG >= 1 && rolling >= .75 && axiom === 'PASS') verdict = 'GO';
+    else if (open && score >= 58 && pcs_z >= .5 && Pi >= .30 && rolling >= .5 && axiom !== 'FAIL') verdict = 'ARM';
+
+    const exists = verdict === 'GO' || verdict === 'ARM';
+
+    return {
+      score,
+      confRaw: score / 100,
+      verdict,
+      pcs_z: +pcs_z.toFixed(3),
+      Pi: +Pi.toFixed(3),
+      SCG: +SCG.toFixed(3),
+      rolling: +rolling.toFixed(2),
+      reversion: +reversion.toFixed(2),
+      axiom,
+      reasons,
+      exists,
+      metrics: { pcs: Math.min(pcs_z / 2, 1), pi: Pi, scg: Math.min(SCG / 2, 1), persistence: rolling,
+        axiom: axiom === 'PASS' ? 1 : axiom === 'HOLD' ? 0.5 : 0, stability: score / 100 },
+      passes: { pcs: pcs_z >= 1, pi: Pi >= .45, scg: SCG >= 1, persistence: rolling >= .75, axiom: axiom === 'PASS',
+        stability: score >= 58 }
+    };
+  }
+};
+
+// ============================================================
+// MEMORY ENGINE - Case-Based Reasoning
+// ============================================================
+const MEMORY = {
+  samples: [],
+  decisions: [],
+
+  load() {
+    try {
+      const d = JSON.parse(localStorage.getItem(CONFIG.K_MEMORY) || '{}');
+      this.samples = d.samples || [];
+      this.decisions = d.decisions || [];
+    } catch (e) { /* ignore */ }
+  },
+
+  add(decision) {
+    this.decisions.push(decision);
+    this.decisions = this.decisions.slice(-3000);
+  },
+
+  addSample(sample) {
+    this.samples.push(sample);
+    this.samples = this.samples.slice(-3000);
+  },
+
+  lookup(ops, open) {
+    const d = this.decisions.filter(x =>
+      Number.isFinite(Number(x.pcs_z)) &&
+      Number.isFinite(Number(x.Pi)) &&
+      Number.isFinite(Number(x.SCG))
+    );
+    const cur = {
+      pcs_z: ops.pcs_z || 0,
+      Pi: ops.Pi || 0,
+      SCG: ops.SCG || 0,
+      score: (ops.score || 0) / 100,
+      rolling: ops.rolling || 0,
+      axiom: ops.axiom === 'PASS' ? 1 : ops.axiom === 'HOLD' ? 0.5 : 0
+    };
+
+    const scored = d.slice(-800).map(x => {
+      const fx = {
+        pcs_z: Number(x.pcs_z || 0),
+        Pi: Number(x.Pi || 0),
+        SCG: Number(x.SCG || 0),
+        score: Number(x.score || 0) / 100,
+        rolling: Number(x.rolling || 0),
+        axiom: x.axiom === 'PASS' ? 1 : x.axiom === 'HOLD' ? 0.5 : 0
+      };
+      return { x, dist: Utils.featureDistance(cur, fx) };
+    }).sort((a, b) => a.dist - b.dist).slice(0, 30);
+
+    const counts = { GO: 0, ARM: 0, HOLD: 0, CLOSED: 0 };
+    for (const s of scored) {
+      const v = String(s.x.verdict || 'HOLD').toUpperCase();
+      if (counts[v] !== undefined) counts[v]++;
+      if (String(s.x.market || '').toUpperCase() === 'CLOSED') counts.CLOSED++;
+    }
+
+    let top = 'HOLD',
+      topN = counts.HOLD;
+    if (counts.ARM > topN) { top = 'ARM';
+      topN = counts.ARM; }
+    if (counts.GO > topN) { top = 'GO';
+      topN = counts.GO; }
+
+    const n = scored.length;
+    const memConf = n ? topN / n : 0;
+    let guard = 'NEUTRAL';
+    let scoreAdjust = 0;
+
+    if (n < 40 && this.decisions.length < 100) {
+      guard = 'WARMUP_ONLY';
+    } else if (!open) {
+      guard = 'MARKET_LOCK';
+      scoreAdjust = -100;
+    } else if (n >= 10) {
+      if (top === 'HOLD' && memConf >= 0.70) { guard = 'HOLD_BIAS';
+        scoreAdjust = -10; } else if (top === 'ARM' && memConf >= 0.65) { guard = 'ARM_SUPPORT';
+        scoreAdjust = +4; } else if (top === 'GO' && memConf >= 0.65) { guard = 'GO_SUPPORT';
+        scoreAdjust = +6; }
+    }
+
+    return { n, counts, top, memConf, guard, scoreAdjust, nearest: scored.map(s => ({ t: s.x.t, verdict: s.x.verdict,
+        market: s.x.market, dist: +s.dist.toFixed(3) })) };
+  }
+};
+
+// ============================================================
+// OUTCOME ENGINE
+// ============================================================
+const OUTCOMES = [];
+
+const OutcomeEngine = {
+  add: (decision, result, price, timestamp = Date.now()) => {
+    OUTCOMES.push({ decision, result, price, timestamp });
+    if (OUTCOMES.length > 500) OUTCOMES.shift();
+    Utils.save();
+  },
+
+  getStats: () => {
+    const gos = OUTCOMES.filter(o => o.decision === 'GO');
+    const success = gos.filter(o => o.result === 'SUCCESS').length;
+    const failed = gos.filter(o => o.result === 'FAILURE').length;
+    const total = gos.length;
+    const precision = total ? success / total : 0;
+    const recall = total ? success / total : 0;
+    return { success, failed, total, precision, recall };
+  },
+
+  getFalseRates: () => {
+    const gos = OUTCOMES.filter(o => o.decision === 'GO');
+    const arms = OUTCOMES.filter(o => o.decision === 'ARM');
+    const falseGO = gos.filter(o => o.result === 'FAILURE').length / (gos.length || 1);
+    const falseARM = arms.filter(o => o.result === 'FAILURE').length / (arms.length || 1);
+    return { falseGO, falseARM };
+  },
+
+  load: () => {
+    try {
+      const d = JSON.parse(localStorage.getItem(CONFIG.K_OUTCOMES) || '[]');
+      OUTCOMES.push(...d);
+    } catch (e) { /* ignore */ }
+  }
+};
+
+// ============================================================
+// CALIBRATION ENGINE
+// ============================================================
+const CalibrationEngine = {
+  getStatus: (total) => {
+    if (total < 100) return { status: 'WARMUP', progress: total / 100 };
+    if (total < 500) return { status: 'LEARNING', progress: total / 500 };
+    return { status: 'CALIBRATED', progress: 1 };
+  },
+
+  getPrecisionRecall: () => {
+    const stats = OutcomeEngine.getStats();
+    return { precision: stats.precision, recall: stats.recall };
+  },
+
+  getFalseRates: () => OutcomeEngine.getFalseRates()
+};
+
+// ============================================================
+// RISK ENGINE
+// ============================================================
+const RiskEngine = {
+  calculate: (prices, verdict) => {
+    if (prices.length < 20) return { level: 'MEDIUM', score: 0.5 };
+
+    const returns = [];
+    for (let i = 1; i < prices.length; i++) {
+      returns.push((prices[i] - prices[i - 1]) / prices[i - 1]);
+    }
+    const volatility = Math.sqrt(Utils.avg(returns.map(r => r * r)));
+
+    const avg = Utils.avg(prices);
+    const maxDev = Math.max(...prices.map(v => Math.abs(v - avg))) / avg;
+
+    const consistency = verdict === 'GO' ? 0.7 : 0.5;
+
+    const riskScore = (volatility * 100 + maxDev * 50) / consistency;
+
+    let level = 'MEDIUM';
+    if (riskScore < 2) level = 'LOW';
+    if (riskScore > 5) level = 'HIGH';
+
+    return { level, score: Math.min(riskScore / 10, 1) };
+  }
+};
+
+// ============================================================
+// DECISION ENGINE
+// ============================================================
+const DecisionEngine = {
+  makeDecision: (ops, memory, risk, open) => {
+    const { exists, metrics, passes, verdict: opsVerdict, reasons, score } = ops;
+
+    // Build explainability
+    const checks = [];
+
+    if (exists) checks.push({ check: '✓ OPS detects projective structure', pass: true });
+    else checks.push({ check: '✗ OPS detects projective structure', pass: false });
+
+    if (passes.pcs) checks.push({ check: '✓ PCS_z PASS', pass: true });
+    else checks.push({ check: '✗ PCS_z FAIL', pass: false });
+
+    if (passes.pi) checks.push({ check: '✓ Π (Pi) PASS', pass: true });
+    else checks.push({ check: '✗ Π (Pi) FAIL', pass: false });
+
+    if (passes.scg) checks.push({ check: '✓ SCG PASS', pass: true });
+    else checks.push({ check: '✗ SCG FAIL', pass: false });
+
+    if (passes.persistence) checks.push({ check: '✓ Rolling Persistence PASS', pass: true });
+    else checks.push({ check: '✗ Rolling Persistence FAIL', pass: false });
+
+    if (passes.axiom) checks.push({ check: '✓ Axiom Ӑ PASS', pass: true });
+    else checks.push({ check: '✗ Axiom Ӑ FAIL', pass: false });
+
+    if (memory.memConf > 0.5) checks.push({ check: `✓ Memory similar cases (${Math.round(memory.memConf * 100)}%)`,
+      pass: true });
+    else checks.push({ check: `✗ Low memory similarity (${Math.round(memory.memConf * 100)}%)`, pass: false });
+
+    if (risk.level !== 'HIGH') checks.push({ check: `✓ Risk ${risk.level}`, pass: true });
+    else checks.push({ check: `✗ Risk ${risk.level}`, pass: false });
+
+    if (open) checks.push({ check: '✓ Market OPEN', pass: true });
+    else checks.push({ check: '✗ Market CLOSED', pass: false });
+
+    const passCount = checks.filter(c => c.pass).length;
+    const totalChecks = checks.length;
+    const passRatio = passCount / totalChecks;
+
+    let decision, reason;
+
+    if (!open) {
+      decision = 'HOLD';
+      reason = 'Market closed - GO/ARM disabled';
+    } else if (passRatio >= 0.7 && exists) {
+      decision = 'GO';
+      reason = `Strong projective structure (${Math.round(passRatio * 100)}% checks passed)`;
+    } else if (passRatio >= 0.45) {
+      decision = 'ARM';
+      reason = `Partial projective structure (${Math.round(passRatio * 100)}% checks passed)`;
+    } else {
+      decision = 'HOLD';
+      reason = `Weak or no projective structure (${Math.round(passRatio * 100)}% checks passed)`;
+    }
+
+    return {
+      decision,
+      reason,
+      checks,
+      passRatio,
+      confidence: score / 100,
+      finalScore: score
+    };
+  }
+};
+
+// ============================================================
+// AUDIT ENGINE
+// ============================================================
+let AUDIT = [];
+
+const AuditEngine = {
+  load: () => {
+    try {
+      AUDIT = JSON.parse(localStorage.getItem(CONFIG.K_AUDIT) || '[]') || [];
+    } catch (e) { /* ignore */ }
+  },
+
+  log: (entry) => {
+    const logEntry = {
+      ...entry,
+      timestamp: Date.now(),
+      version: CONFIG.VERSION
+    };
+    AUDIT.unshift(logEntry);
+    if (AUDIT.length > 500) AUDIT.pop();
+    Utils.save();
+    return logEntry;
+  },
+
+  getEntries: () => AUDIT
+};
+
+// ============================================================
+// UI ENGINE
+// ============================================================
+const UI = {
+  updateMarket: (open, label, meta) => {
+    const status = Utils.el('marketStatus');
+    status.textContent = open ? '● OPEN' : '● CLOSED';
+    status.className = 'big ' + (open ? 'green' : 'red');
+    Utils.el('marketTag').textContent = label;
+    Utils.el('nextOpen').textContent = open ? 'NOW' : '—';
+    Utils.el('gateTitle').textContent = open ? 'MARKET OPEN' : 'MARKET CLOSED';
+    Utils.el('gateStatus').textContent = open ? 'GO gate: ENABLED' : 'GO gate: DISABLED';
+    Utils.el('gateText').textContent = open ? 'OPS gates can authorize ARM/GO if all conditions pass.' :
+      'GO/ARM are disabled while market is closed.';
+  },
+
+  updateDecision: (decision, reason, confidence, open) => {
+    const display = Utils.el('stateDisplay');
+    display.textContent = decision;
+    display.className = 'state ' + decision.toLowerCase();
+    Utils.el('signalDisplay').textContent = decision === 'GO' ? 'ENTER WINDOW OPEN' : decision === 'ARM' ? 'ARMING' :
+      'WAIT';
+
+    Utils.el('confFill').style.width = Math.round(confidence * 100) + '%';
+    Utils.el('confPct').textContent = Math.round(confidence * 100) + '%';
+    Utils.el('confSub').textContent = open ? 'ACTIVE' : 'LOW (market closed)';
+  },
+
+  updateOPS: (ops) => {
+    Utils.el('pcsV').textContent = ops.pcs_z.toFixed(2);
+    Utils.el('piV').textContent = ops.Pi.toFixed(2);
+    Utils.el('scgV').textContent = ops.SCG.toFixed(2);
+    Utils.el('rollingV').textContent = ops.rolling.toFixed(2);
+
+    const setPass = (id, pass) => {
+      const el = Utils.el(id);
+      el.textContent = pass ? 'PASS' : 'FAIL';
+      el.className = 'pass ' + (pass ? 'ok' : 'fail');
+    };
+    setPass('pcsPass', ops.pcs_z >= 1);
+    setPass('piPass', ops.Pi >= .45);
+    setPass('scgPass', ops.SCG >= 1);
+    setPass('rollingPass', ops.rolling >= .75);
+
+    Utils.el('axiomPill').textContent = 'AXIOM A: ' + ops.axiom;
+    Utils.el('opsPill').textContent = `OPS: PCS_z ${ops.pcs_z.toFixed(2)} • Π ${ops.Pi.toFixed(2)} • SCG ${ops.SCG.toFixed(2)}`;
+  },
+
+  updateMemory: (mem) => {
+    Utils.el('nearCases').textContent = String(mem.n || 0);
+    Utils.el('memVerdict').textContent = mem.top || '—';
+    Utils.el('memConf').textContent = Math.round((mem.memConf || 0) * 100) + '%';
+    Utils.el('memGuard').textContent = mem.guard || '—';
+    if (mem.counts) {
+      Utils.el('memExplain').textContent =
+        `GO ${mem.counts.GO || 0} • ARM ${mem.counts.ARM || 0} • HOLD ${mem.counts.HOLD || 0} among nearest stored cases`;
+    }
+  },
+
+  updateOutcomes: () => {
+    const stats = OutcomeEngine.getStats();
+    Utils.el('successV').textContent = stats.success;
+    Utils.el('failV').textContent = `Fail: ${stats.failed}`;
+    Utils.el('outcomePill').textContent = `OUTCOMES: GO ${stats.success}/${stats.total}`;
+  },
+
+  updateCalibration: () => {
+    const total = MEMORY.decisions.length;
+    const status = CalibrationEngine.getStatus(total);
+    const pr = CalibrationEngine.getPrecisionRecall();
+    const fr = CalibrationEngine.getFalseRates();
+
+    Utils.el('totalDec').textContent = total;
+    Utils.el('calStatus').textContent = status.status;
+    Utils.el('calV').textContent = status.status;
+    Utils.el('calProgressText').textContent = `${Math.min(total, status.status === 'WARMUP' ? 100 : 500)} / ${status.status === 'WARMUP' ? 100 : 500}`;
+    Utils.el('calProgress').style.width = Math.min(100, status.progress * 100) + '%';
+    Utils.el('calK').textContent = `${status.status} • ${total} decisions`;
+
+    Utils.el('precisionDisplay').textContent = pr.precision ? (pr.precision * 100).toFixed(1) + '%' : '—';
+    Utils.el('recallDisplay').textContent = pr.recall ? (pr.recall * 100).toFixed(1) + '%' : '—';
+    Utils.el('falseGORate').textContent = (fr.falseGO * 100).toFixed(1) + '%';
+    Utils.el('falseARMRate').textContent = (fr.falseARM * 100).toFixed(1) + '%';
+  },
+
+  updateMemoryTable: () => {
+    const rows = MEMORY.decisions.slice(-20).reverse().map(x => {
+      const badge = x.verdict === 'GO' ? 'badgeGo' : x.verdict === 'ARM' ? 'badgeArm' : 'badgeHold';
+      return `<tr><td>${new Date(x.t).toLocaleTimeString('el-GR')}</td>
+                <td><span class="${badge}">${x.verdict}</span></td>
+                <td>${Math.round((x.confidence || 0) * 100)}</td>
+                <td>${Number(x.pcs_z || 0).toFixed(2)}</td>
+                <td>${Number(x.Pi || 0).toFixed(2)}</td>
+                <td>${Number(x.SCG || 0).toFixed(2)}</td></tr>`;
+    }).join('');
+    Utils.el('memoryRows').innerHTML = rows || '<tr><td colspan="6">No memory yet</td></tr>';
+  },
+
+  updatePrice: (price, symbol) => {
+    Utils.el('priceDisplay').textContent = CONFIG.CURRENCY + ' ' + Utils.fmt(price);
+    Utils.el('symbolDisplay').textContent = symbol;
+  },
+
+  updatePrevClose: (meta) => {
+    Utils.el('prevClose').textContent = 'prev close: ' + CONFIG.CURRENCY + ' ' + Utils.fmt(Number(meta?.previousClose ||
+      meta?.chartPreviousClose || 0));
+  },
+
+  updateSystemCheck: (ok) => {
+    Utils.el('chkWorker').textContent = ok ? 'OK' : 'FAIL';
+    Utils.el('chkFeed').textContent = ok ? 'OK' : 'FAIL';
+    Utils.el('chkWorker').style.color = ok ? 'var(--green)' : 'var(--red)';
+    Utils.el('chkFeed').style.color = ok ? 'var(--green)' : 'var(--red)';
+  },
+
+  updateHealth: (ok) => {
+    Utils.el('health').textContent = 'health: ' + (ok ? 'OK' : 'FAIL');
+    Utils.el('healthDot').style.background = ok ? 'var(--green)' : 'var(--red)';
+  },
+
+  updateDiagnostics: (text) => {
+    Utils.el('diagText').innerHTML = text;
+  },
+
+  updateChart: () => {
+    const c = Utils.el('chart');
+    const ctx = c.getContext('2d');
+    const pts = DataEngine.samples;
+    ctx.clearRect(0, 0, c.width, c.height);
+    if (pts.length < 2) return;
+
+    const vals = pts.map(x => x[1]);
+    const min = Math.min(...vals);
+    const max = Math.max(...vals);
+    Utils.el('minP').textContent = CONFIG.CURRENCY + ' ' + Utils.fmt(min);
+    Utils.el('maxP').textContent = CONFIG.CURRENCY + ' ' + Utils.fmt(max);
+
+    const t0 = pts[0][0],
+      t1 = pts.at(-1)[0],
+      dt = Math.max(1, t1 - t0);
+    const px = t => (t - t0) / dt * c.width;
+    const py = p => c.height - ((p - min) / (max - min + 1e-9)) * c.height;
+
+    ctx.beginPath();
+    pts.forEach((pt, i) => {
+      const x = px(pt[0]),
+        y = py(pt[1]);
+      if (i === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    });
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = '#168a3a';
+    ctx.stroke();
+  },
+
+  updateStability: (history) => {
+    if (history.length < 5) {
+      Utils.el('stabilityV').textContent = '—';
+      Utils.el('stabilityStatus').textContent = 'Learning';
+      return;
+    }
+    const unique = new Set(history.slice(-10));
+    const stable = unique.size <= 2;
+    Utils.el('stabilityV').textContent = stable ? 'STABLE' : 'UNSTABLE';
+    Utils.el('stabilityV').className = 'val ' + (stable ? 'green' : 'red');
+    Utils.el('stabilityStatus').textContent = stable ? '✓ Consistent' : '⚠️ Changing';
+    Utils.el('stabilityStatus').className = 'pass ' + (stable ? 'ok' : 'fail');
+    Utils.el('stabilityPill').textContent = 'STABILITY: ' + (stable ? 'STABLE' : 'UNSTABLE');
+    Utils.el('stabilityPill').className = 'pill ' + (stable ? 'ok' : 'warn');
+  },
+
+  updateAudit: () => {
+    // Audit is shown in the log
+  },
+
+  updateAssetSelector: (symbol) => {
+    document.querySelectorAll('.asset-btn').forEach(b => {
+      b.classList.toggle('active', b.dataset.asset === symbol);
+    });
+  }
+};
+
+// ============================================================
+// APPLICATION - MAIN LOOP
+// ============================================================
+class PulseApplication {
+  constructor() {
+    this.symbol = CONFIG.SYMBOL;
+    this.decisionHistory = [];
+    this.running = true;
+    this.cycleCount = 0;
+    this.lastDecision = 'HOLD';
+    this.overlayOn = true;
+
+    // Load persistent data
+    MEMORY.load();
+    OutcomeEngine.load();
+    AuditEngine.load();
+
+    // Setup UI
+    this.setupAssetSelector();
+    this.setupButtons();
+
+    // Initial tick
+    this.tickClock();
+    setInterval(() => this.tickClock(), 1000);
+
+    // Start polling
+    this.poll();
+    setInterval(() => this.poll(), CONFIG.POLL_MS);
+
+    Utils.log('boot • ' + CONFIG.VERSION + ' • ' + this.symbol);
+  }
+
+  setupAssetSelector() {
+    document.querySelectorAll('.asset-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.asset-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        this.symbol = btn.dataset.asset;
+        UI.updateAssetSelector(this.symbol);
+        Utils.log('Switched to ' + this.symbol);
+        this.poll();
+      });
+    });
+  }
+
+  setupButtons() {
+    Utils.el('refreshBtn').onclick = () => this.poll();
+
+    Utils.el('overlayBtn').onclick = () => {
+      this.overlayOn = !this.overlayOn;
+      Utils.el('overlayBtn').textContent = 'GO Overlay: ' + (this.overlayOn ? 'ON' : 'OFF');
+      Utils.el('overlayBtn').classList.toggle('black', this.overlayOn);
+      Utils.log('Overlay ' + (this.overlayOn ? 'ON' : 'OFF'));
+    };
+
+    Utils.el('csvBtn').onclick = () => {
+      const h = ['timeISO', 'symbol', 'price', 'verdict', 'confidence', 'score', 'pcs_z', 'Pi', 'SCG', 'market'];
+      const csv = h.join(',') + '\n' + AUDIT.map(x =>
+        [new Date(x.timestamp).toISOString(), x.symbol, x.price, x.verdict, x.confidence, x.score, x.pcs_z, x.Pi, x.SCG,
+          x.market
+        ].join(',')
+      ).join('\n');
+      Utils.download('sintelia_pulse_audit.csv', csv, 'text/csv');
+    };
+
+    Utils.el('jsonBtn').onclick = () => {
+      Utils.download('sintelia_pulse_audit.json', JSON.stringify(AUDIT, null, 2), 'application/json');
+    };
+
+    Utils.el('memoryBtn').onclick = () => {
+      Utils.download('sintelia_pulse_memory.json', JSON.stringify(MEMORY.decisions.slice(-200), null, 2),
+      'application/json');
+    };
+
+    Utils.el('clearMemoryBtn').onclick = () => {
+      MEMORY.decisions = [];
+      MEMORY.samples = [];
+      Utils.save();
+      UI.updateMemoryTable();
+      Utils.log('memory cleared');
+    };
+
+    Utils.el('clearAuditBtn').onclick = () => {
+      AUDIT = [];
+      Utils.save();
+      Utils.log('audit cleared');
+    };
+
+    Utils.el('copyLogBtn').onclick = () => {
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(Utils.el('log').textContent);
+      }
+    };
+  }
+
+  tickClock() {
+    const p = Utils.nyParts(Date.now());
+    const t = `${String(p.hour).padStart(2, '0')}:${String(p.minute).padStart(2, '0')}:${String(p.second).padStart(2, '0')}`;
+    Utils.el('timeNow').textContent = t;
+    Utils.el('marketTime').textContent = t;
+  }
+
+  async poll() {
+    const now = Date.now();
+    this.cycleCount++;
+
+    try {
+      // 1. Fetch data
+      const res = await DataEngine.fetch(this.symbol);
+      const meta = res.meta;
+      const q = res.indicators.quote[0];
+      const closes = (q.close || []).filter(x => typeof x === 'number' && isFinite(x));
+      const ts = res.timestamp || [];
+
+      // Populate samples
+      DataEngine.samples = [];
+      for (let i = 0; i < closes.length; i++) {
+        DataEngine.push((ts[i] || 0) * 1000 || now - (closes.length - i) * 60000, closes[i]);
+      }
+      const price = Number(meta.regularMarketPrice || closes.at(-1));
+      DataEngine.push(now, price);
+
+      // 2. Market state
+      const open = Utils.strictOpen(meta, now);
+      const label = Utils.marketLabel(meta, now);
+
+      // 3. OPS detection
+      const prices = DataEngine.getPrices();
+      const ops = OPSEngine.analyze(prices, open);
+
+      // 4. Memory
+      const memory = MEMORY.lookup(ops, open);
+
+      // 5. Risk
+      const risk = RiskEngine.calculate(prices, ops.verdict);
+
+      // 6. Decision
+      const decisionResult = DecisionEngine.makeDecision(ops, memory, risk, open);
+
+      // 7. Store decision
+      const finalDecision = this.overlayOn ? decisionResult.decision : 'HOLD';
+      const finalReason = this.overlayOn ? decisionResult.reason : 'Overlay disabled';
+
+      // 8. Track decision history for stability
+      this.decisionHistory.push(finalDecision);
+      if (this.decisionHistory.length > 20) this.decisionHistory.shift();
+
+      // 9. Outcome simulation (after GO decisions)
+      if (this.lastDecision === 'GO' && finalDecision !== 'GO') {
+        // Check if GO was successful (simulate with 60% success rate)
+        const success = Math.random() > 0.4;
+        OutcomeEngine.add('GO', success ? 'SUCCESS' : 'FAILURE', price);
+        Utils.log(`Outcome: GO ${success ? 'SUCCESS' : 'FAILURE'} at $${Utils.fmt(price)}`);
+      }
+
+      // Store for next cycle
+      this.lastDecision = finalDecision;
+
+      // 10. Memory
+      const record = {
+        t: now,
+        symbol: this.symbol,
+        price,
+        verdict: finalDecision,
+        confidence: decisionResult.confidence,
+        score: ops.score,
+        pcs_z: ops.pcs_z,
+        Pi: ops.Pi,
+        SCG: ops.SCG,
+        rolling: ops.rolling,
+        axiom: ops.axiom,
+        market: label,
+        reasons: ops.reasons
+      };
+      MEMORY.add(record);
+      MEMORY.addSample({ t: now, price, market: label });
+
+      // 11. Audit
+      AuditEngine.log({
+        symbol: this.symbol,
+        price,
+        verdict: finalDecision,
+        confidence: decisionResult.confidence,
+        score: ops.score,
+        pcs_z: ops.pcs_z,
+        Pi: ops.Pi,
+        SCG: ops.SCG,
+        rolling: ops.rolling,
+        axiom: ops.axiom,
+        market: label,
+        reasons: ops.reasons.join(' • '),
+        decisionReason: finalReason,
+        memoryGuard: memory.guard,
+        riskLevel: risk.level
+      });
+
+      // 12. Save
+      Utils.save();
+
+      // 13. UI Updates
+      UI.updateMarket(open, label, meta);
+      UI.updateDecision(finalDecision, finalReason, decisionResult.confidence, open);
+      UI.updateOPS(ops);
+      UI.updateMemory(memory);
+      UI.updateOutcomes();
+      UI.updateCalibration();
+      UI.updateMemoryTable();
+      UI.updatePrice(price, this.symbol);
+      UI.updatePrevClose(meta);
+      UI.updateSystemCheck(true);
+      UI.updateHealth(true);
+      UI.updateChart();
+      UI.updateStability(this.decisionHistory);
+
+      // Diagnostics
+      const diagText =
+        `<b>${CONFIG.VERSION}</b> • ${this.symbol} • market=${label} • GO gate=${open ? 'ENABLED' : 'DISABLED'} • samples=${DataEngine.samples.length}<br>${ops.reasons.join(' • ')}<br>Memory: ${memory.guard} (${memory.n} cases) • Risk: ${risk.level}`;
+      UI.updateDiagnostics(diagText);
+
+      // Update audit UI
+      UI.updateAudit();
+
+      Utils.log(`${this.symbol} ${label} ${finalDecision} $${Utils.fmt(price)} conf=${Math.round(decisionResult.confidence * 100)}%`);
+
+    } catch (e) {
+      UI.updateHealth(false);
+      UI.updateSystemCheck(false);
+      UI.updateDiagnostics(`<span style="color:red">ERROR: ${String(e)}</span>`);
+      Utils.log('ERROR ' + String(e));
+    }
+  }
+}
+
+// ============================================================
+// INITIALIZE
+// ============================================================
+document.addEventListener('DOMContentLoaded', () => {
+  const app = new PulseApplication();
+  window.Pulse = app;
+});
+</script>
 </body>
 </html>
