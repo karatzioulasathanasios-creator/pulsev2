@@ -129,8 +129,7 @@ pre{white-space:pre-wrap;background:#fbfbfb;border:1px solid var(--line);border-
   <div class="header">
     <div>
       <h1>SINTELIA Pulse <small>Professional v2.0</small></h1>
-      <div class="sub">OPS Scientific Detector • Decision Support System • NASDAQ<br><b>FULL MODULAR • ADAPTIVE MEMORY • CALIBRATION • OUTCOME TRACKING</b></div>
-      <!-- Asset Selector -->
+      <div class="sub">OPS Scientific Detector • Decision Support System • NASDAQ<br><b>FULL MODULAR • NULL CALIBRATION • STABILITY CHECKS • OUTCOME TRACKING</b></div>
       <div class="asset-selector" id="assetSelector">
         <button class="asset-btn active" data-asset="AAPL">AAPL</button>
         <button class="asset-btn" data-asset="BTC-USD">Bitcoin</button>
@@ -176,6 +175,7 @@ pre{white-space:pre-wrap;background:#fbfbfb;border:1px solid var(--line);border-
     <div class="pill gray" id="regimePill">REGIME: —</div>
     <div class="pill" id="outcomePill">OUTCOMES: —</div>
     <div class="pill" id="stabilityPill">STABILITY: —</div>
+    <div class="pill" id="nullPill">NULL: —</div>
   </div>
 
   <!-- MAIN -->
@@ -204,10 +204,10 @@ pre{white-space:pre-wrap;background:#fbfbfb;border:1px solid var(--line);border-
         <div class="metric"><div class="name">Π (Pi)</div><div class="val" id="piV">—</div><div class="pass" id="piPass">—</div></div>
         <div class="metric"><div class="name">SCG</div><div class="val" id="scgV">—</div><div class="pass" id="scgPass">—</div></div>
         <div class="metric"><div class="name">Rolling Persistence</div><div class="val" id="rollingV">—</div><div class="pass" id="rollingPass">—</div></div>
+        <div class="metric"><div class="name">Null Exceedance</div><div class="val" id="nullV">—</div><div class="pass" id="nullPass">—</div></div>
+        <div class="metric"><div class="name">OPS Decision</div><div class="val" id="opsDecisionV">—</div><div class="pass" id="opsDecisionPass">—</div></div>
         <div class="metric"><div class="name">Memory</div><div class="val" id="memV">0</div><div class="pass" id="memK">GO 0 • ARM 0 • HOLD 0</div></div>
-        <div class="metric"><div class="name">Calibration</div><div class="val yellow" id="calV">WARMUP</div><div class="pass" id="calK">0-100 decisions</div></div>
         <div class="metric"><div class="name">Outcome Success</div><div class="val green" id="successV">0</div><div class="pass" id="failV">Fail: 0</div></div>
-        <div class="metric"><div class="name">Decision Stability</div><div class="val" id="stabilityV">—</div><div class="pass" id="stabilityStatus">—</div></div>
       </div>
 
       <!-- ACTIONS -->
@@ -223,6 +223,16 @@ pre{white-space:pre-wrap;background:#fbfbfb;border:1px solid var(--line);border-
 
     <!-- RIGHT COLUMN -->
     <div class="side">
+      <!-- NULL CALIBRATION -->
+      <div class="card">
+        <h3 style="margin:0 0 10px">Null Calibration</h3>
+        <div class="sysrow"><span>Scramble p(PCS)</span><b id="pPCS">—</b></div>
+        <div class="sysrow"><span>Scramble p(Π)</span><b id="pPi">—</b></div>
+        <div class="sysrow"><span>Scramble p(SCG)</span><b id="pSCG">—</b></div>
+        <div class="sysrow"><span>Null decision</span><b id="nullDecision">—</b></div>
+        <div class="small" style="margin-top:8px;">p-values < 0.05 indicate structure exceeds null expectations</div>
+      </div>
+
       <!-- MEMORY TABLE -->
       <div class="card">
         <h3 style="margin:0 0 10px">Memory <small>(last 20)</small></h3>
@@ -256,7 +266,7 @@ pre{white-space:pre-wrap;background:#fbfbfb;border:1px solid var(--line);border-
         <div class="sysrow"><span>Memory verdict</span><b id="memVerdict">—</b></div>
         <div class="sysrow"><span>Memory confidence</span><b id="memConf">—</b></div>
         <div class="sysrow"><span>Memory guard</span><b id="memGuard">—</b></div>
-        <div class="small" id="memExplain" style="margin-top:10px">Uses stored decisions to stabilize new decisions. Deterministic nearest-neighbor lookup.</div>
+        <div class="small" id="memExplain" style="margin-top:10px">Uses stored decisions to stabilize new decisions.</div>
       </div>
 
       <!-- SYSTEM CHECK -->
@@ -265,10 +275,9 @@ pre{white-space:pre-wrap;background:#fbfbfb;border:1px solid var(--line);border-
         <div class="sysrow"><span>Worker (Cloudflare)</span><b id="chkWorker">—</b></div>
         <div class="sysrow"><span>Data Feed (Yahoo)</span><b id="chkFeed">—</b></div>
         <div class="sysrow"><span>OPS Engine</span><b id="chkOps">OK</b></div>
-        <div class="sysrow"><span>Decision Engine</span><b id="chkDecision">OK</b></div>
+        <div class="sysrow"><span>Null Calibration</span><b id="chkNull">OK</b></div>
         <div class="sysrow"><span>Memory (localStorage)</span><b id="chkMemory">OK</b></div>
         <div class="sysrow"><span>Audit Log</span><b id="chkAudit">OK</b></div>
-        <div class="sysrow"><span>Market Gate</span><b id="chkGate">OK</b></div>
       </div>
     </div>
   </div>
@@ -282,8 +291,8 @@ pre{white-space:pre-wrap;background:#fbfbfb;border:1px solid var(--line);border-
 
   <!-- FOOTER -->
   <div class="footer">
-    <div><b>🛡 SINTELIA PULSE v2.0</b> • OPS Scientific Detector • Decision Support System • Το GO δεν λέει "αγόρασε". Λέει: «Αν θες να αγοράσεις, ΤΩΡΑ έχει νόημα να το σκεφτείς με βάση τους κανόνες».</div>
-    <button class="btn" onclick="alert('OPS = structure detector. Market Gate = permission gate. Axiom A = stability/reversion gate. No financial advice.')">About OPS & AXIOM A</button>
+    <div><b>🛡 SINTELIA PULSE v2.0</b> • OPS Scientific Detector • Null-calibrated • Stability-tested • Το GO δεν λέει "αγόρασε". Λέει: «Αν θες να αγοράσεις, ΤΩΡΑ έχει νόημα να το σκεφτείς με βάση τους κανόνες».</div>
+    <button class="btn" onclick="alert('OPS = structure detector. Null calibration = statistical significance. Stability = classification invariance. No financial advice.')">About OPS</button>
   </div>
 </div>
 
@@ -302,7 +311,10 @@ const CONFIG = {
   MAX_STALE_MS: 10 * 60 * 1000,
   K_MEMORY: 'SINTELIA_PULSE_V2_MEMORY',
   K_AUDIT: 'SINTELIA_PULSE_V2_AUDIT',
-  K_OUTCOMES: 'SINTELIA_PULSE_V2_OUTCOMES'
+  K_OUTCOMES: 'SINTELIA_PULSE_V2_OUTCOMES',
+  NULL_ENSEMBLE_SIZE: 100,
+  BAND_LOW: 30,
+  BAND_HIGH: 400
 };
 
 // ============================================================
@@ -373,8 +385,8 @@ const Utils = {
 
   save: () => {
     try {
-      localStorage.setItem(CONFIG.K_MEMORY, JSON.stringify({ samples: MEM.samples.slice(-3000), decisions: MEM.decisions
-          .slice(-3000) }));
+      localStorage.setItem(CONFIG.K_MEMORY, JSON.stringify({ samples: MEMORY.samples.slice(-3000), decisions: MEMORY
+          .decisions.slice(-3000) }));
       localStorage.setItem(CONFIG.K_AUDIT, JSON.stringify(AUDIT.slice(-500)));
       localStorage.setItem(CONFIG.K_OUTCOMES, JSON.stringify(OUTCOMES.slice(-500)));
     } catch (e) { /* ignore */ }
@@ -396,6 +408,162 @@ const Utils = {
     const dr = (a.rolling - b.rolling);
     const da = (a.axiom - b.axiom);
     return Math.sqrt(dz * dz + dpi * dpi + dscg * dscg + ds * ds + dr * dr + da * da);
+  },
+
+  // Band-pass filter using FFT
+  bandPass: (data, low, high) => {
+    if (data.length < 10) return data;
+    const n = data.length;
+    const fft = new Float64Array(n * 2);
+    for (let i = 0; i < n; i++) fft[i * 2] = data[i];
+
+    // Simple FFT (Cooley-Tukey)
+    const fftIter = (arr, invert) => {
+      const n2 = arr.length / 2;
+      for (let i = 1, j = 0; i < n2; i++) {
+        let bit = n2 >> 1;
+        for (; j & bit; bit >>= 1) j ^= bit;
+        j ^= bit;
+        if (i < j) {
+          for (let k = 0; k < 2; k++) {
+            const tmp = arr[i * 2 + k];
+            arr[i * 2 + k] = arr[j * 2 + k];
+            arr[j * 2 + k] = tmp;
+          }
+        }
+      }
+      for (let len = 2; len <= n2; len <<= 1) {
+        const ang = 2 * Math.PI / len * (invert ? -1 : 1);
+        const wlen_r = Math.cos(ang);
+        const wlen_i = Math.sin(ang);
+        for (let i = 0; i < n2; i += len) {
+          let w_r = 1, w_i = 0;
+          for (let j = 0; j < len / 2; j++) {
+            const u_r = arr[(i + j) * 2];
+            const u_i = arr[(i + j) * 2 + 1];
+            const v_r = arr[(i + j + len / 2) * 2] * w_r - arr[(i + j + len / 2) * 2 + 1] * w_i;
+            const v_i = arr[(i + j + len / 2) * 2] * w_i + arr[(i + j + len / 2) * 2 + 1] * w_r;
+            arr[(i + j) * 2] = u_r + v_r;
+            arr[(i + j) * 2 + 1] = u_i + v_i;
+            arr[(i + j + len / 2) * 2] = u_r - v_r;
+            arr[(i + j + len / 2) * 2 + 1] = u_i - v_i;
+            const next_r = w_r * wlen_r - w_i * wlen_i;
+            const next_i = w_r * wlen_i + w_i * wlen_r;
+            w_r = next_r;
+            w_i = next_i;
+          }
+        }
+      }
+      if (invert) {
+        for (let i = 0; i < n2; i++) { arr[i * 2] /= n2;
+          arr[i * 2 + 1] /= n2; }
+      }
+    };
+
+    fftIter(fft, false);
+
+    // Apply band-pass in frequency domain
+    const lowFreq = Math.floor(n * low / (2 * n));
+    const highFreq = Math.floor(n * high / (2 * n));
+    for (let i = 0; i < n; i++) {
+      const freq = i;
+      if (freq < lowFreq || freq > highFreq) {
+        fft[i * 2] = 0;
+        fft[i * 2 + 1] = 0;
+      }
+      // Symmetry for real signal
+      if (i > 0 && i < n - 1 && (n - freq < lowFreq || n - freq > highFreq)) {
+        fft[i * 2] = 0;
+        fft[i * 2 + 1] = 0;
+      }
+    }
+
+    fftIter(fft, true);
+    const result = new Float64Array(n);
+    for (let i = 0; i < n; i++) result[i] = fft[i * 2];
+    return result;
+  },
+
+  // Generate null ensembles
+  generateNulls: (data, method, nEnsemble = 100) => {
+    const result = [];
+    for (let m = 0; m < nEnsemble; m++) {
+      let shuffled = [...data];
+      if (method === 'scramble') {
+        // Random permutation
+        for (let i = shuffled.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+      } else if (method === 'circular') {
+        // Random circular shift
+        const shift = Math.floor(Math.random() * shuffled.length);
+        shuffled = shuffled.slice(shift).concat(shuffled.slice(0, shift));
+      } else if (method === 'phase') {
+        // Phase randomization
+        const n = data.length;
+        const fft = new Float64Array(n * 2);
+        for (let i = 0; i < n; i++) fft[i * 2] = data[i];
+        // Simple FFT
+        const fftIter = (arr, invert) => {
+          const n2 = arr.length / 2;
+          for (let i = 1, j = 0; i < n2; i++) {
+            let bit = n2 >> 1;
+            for (; j & bit; bit >>= 1) j ^= bit;
+            j ^= bit;
+            if (i < j) {
+              for (let k = 0; k < 2; k++) {
+                const tmp = arr[i * 2 + k];
+                arr[i * 2 + k] = arr[j * 2 + k];
+                arr[j * 2 + k] = tmp;
+              }
+            }
+          }
+          for (let len = 2; len <= n2; len <<= 1) {
+            const ang = 2 * Math.PI / len * (invert ? -1 : 1);
+            const wlen_r = Math.cos(ang);
+            const wlen_i = Math.sin(ang);
+            for (let i = 0; i < n2; i += len) {
+              let w_r = 1, w_i = 0;
+              for (let j = 0; j < len / 2; j++) {
+                const u_r = arr[(i + j) * 2];
+                const u_i = arr[(i + j) * 2 + 1];
+                const v_r = arr[(i + j + len / 2) * 2] * w_r - arr[(i + j + len / 2) * 2 + 1] * w_i;
+                const v_i = arr[(i + j + len / 2) * 2] * w_i + arr[(i + j + len / 2) * 2 + 1] * w_r;
+                arr[(i + j) * 2] = u_r + v_r;
+                arr[(i + j) * 2 + 1] = u_i + v_i;
+                arr[(i + j + len / 2) * 2] = u_r - v_r;
+                arr[(i + j + len / 2) * 2 + 1] = u_i - v_i;
+                const next_r = w_r * wlen_r - w_i * wlen_i;
+                const next_i = w_r * wlen_i + w_i * wlen_r;
+                w_r = next_r;
+                w_i = next_i;
+              }
+            }
+          }
+          if (invert) {
+            for (let i = 0; i < n2; i++) { arr[i * 2] /= n2;
+              arr[i * 2 + 1] /= n2; }
+          }
+        };
+        fftIter(fft, false);
+        // Randomize phases but preserve magnitude
+        for (let i = 1; i < n / 2; i++) {
+          const mag = Math.sqrt(fft[i * 2] ** 2 + fft[i * 2 + 1] ** 2);
+          const phase = 2 * Math.PI * Math.random();
+          fft[i * 2] = mag * Math.cos(phase);
+          fft[i * 2 + 1] = mag * Math.sin(phase);
+          // Symmetry
+          fft[(n - i) * 2] = mag * Math.cos(-phase);
+          fft[(n - i) * 2 + 1] = mag * Math.sin(-phase);
+        }
+        fftIter(fft, true);
+        shuffled = new Float64Array(n);
+        for (let i = 0; i < n; i++) shuffled[i] = fft[i * 2];
+      }
+      result.push(shuffled);
+    }
+    return result;
   }
 };
 
@@ -439,19 +607,61 @@ const DataEngine = {
 // ============================================================
 const OPSEngine = {
   analyze(prices, open) {
-    const d = [];
-    for (let i = 1; i < prices.length; i++) d.push(prices[i] - prices[i - 1]);
-    if (d.length < 35) return { score: 0, confRaw: 0, verdict: 'HOLD', pcs_z: 0, Pi: 0, SCG: 0, rolling: 0, reversion: 0,
-      axiom: 'WARMUP', reasons: ['WARMUP'], exists: false, metrics: {}, passes: {} };
+    if (prices.length < 50) {
+      return {
+        score: 0, confRaw: 0, verdict: 'HOLD',
+        pcs_z: 0, Pi: 0, SCG: 0, rolling: 0, axiom: 'WARMUP',
+        reasons: ['INSUFFICIENT_DATA'], exists: false,
+        metrics: { pcs: 0, pi: 0, scg: 0, persistence: 0, axiom: 0, stability: 0 },
+        passes: { pcs: false, pi: false, scg: false, persistence: false, axiom: false, stability: false }
+      };
+    }
 
-    const recent = d.slice(-80);
+    // Preprocess: mean removal + detrend + band-pass
+    let data = prices.slice(-400);
+    const mean = Utils.avg(data);
+    data = data.map(x => x - mean);
+
+    // Linear detrend
+    const n = data.length;
+    const t = Array.from({ length: n }, (_, i) => i);
+    const tx = t.map((_, i) => i * data[i]);
+    const tt = t.reduce((a, b) => a + b * b, 0);
+    const slope = (n * tx.reduce((a, b) => a + b, 0) - t.reduce((a, b) => a + b, 0) * data.reduce((a, b) => a + b, 0)) / (n *
+      tt - t.reduce((a, b) => a + b, 0) ** 2);
+    const intercept = (data.reduce((a, b) => a + b, 0) - slope * t.reduce((a, b) => a + b, 0)) / n;
+    data = data.map((x, i) => x - (slope * i + intercept));
+
+    // Band-pass
+    const low = CONFIG.BAND_LOW / 100;
+    const high = CONFIG.BAND_HIGH / 100;
+    data = Utils.bandPass(data, low, high);
+
+    // Variance normalization
+    const std = Utils.sd(data);
+    if (std > 1e-10) data = data.map(x => x / std);
+
+    // Compute deltas for OPS
+    const deltas = [];
+    for (let i = 1; i < data.length; i++) deltas.push(data[i] - data[i - 1]);
+
+    if (deltas.length < 30) {
+      return {
+        score: 0, confRaw: 0, verdict: 'HOLD',
+        pcs_z: 0, Pi: 0, SCG: 0, rolling: 0, axiom: 'WARMUP',
+        reasons: ['INSUFFICIENT_DELTAS'], exists: false,
+        metrics: { pcs: 0, pi: 0, scg: 0, persistence: 0, axiom: 0, stability: 0 },
+        passes: { pcs: false, pi: false, scg: false, persistence: false, axiom: false, stability: false }
+      };
+    }
+
+    const recent = deltas.slice(-80);
     const absd = recent.map(Math.abs);
     const dStar = Utils.median(absd);
     const err = recent.map(x => Math.abs(Math.abs(x) - dStar));
 
-    let con = 0,
-      total = 0,
-      run = 0;
+    // Axiom A: reversion and run rate
+    let con = 0, total = 0, run = 0;
     for (let i = 1; i < err.length; i++) {
       if (err[i - 1] > dStar * .35) {
         total++;
@@ -462,6 +672,7 @@ const OPSEngine = {
     const reversion = total ? con / total : .5;
     const runRate = total ? run / total : 0;
 
+    // PCS_z
     const pos = recent.map(x => Math.max(x, 0));
     const neg = recent.map(x => Math.max(-x, 0));
     const rev = recent.map(x => Math.max(0, dStar - Math.abs(Math.abs(x) - dStar)));
@@ -484,15 +695,18 @@ const OPSEngine = {
     }
     const pcs_z = (PCS - Utils.avg(nulls)) / (Utils.sd(nulls) || 1e-9);
 
+    // Pi (Projectivity Index)
     const up = recent.filter(x => x > 0).length;
     const down = recent.filter(x => x < 0).length;
     const fmaj = Math.max(up, down) / (up + down || 1);
     const Pi = Math.max(0, 1 - Math.abs(2 * fmaj - 1));
 
+    // SCG
     const plain = recent.map(Math.abs);
     const signed = recent.map(x => x >= 0 ? Math.abs(x) : -Math.abs(x));
     const SCG = (Utils.sd(signed) ** 2) / (Utils.sd(plain) ** 2 + 1e-9);
 
+    // Rolling Persistence
     let pass = 0;
     const block = Math.floor(recent.length / 4);
     for (let b = 0; b < 4; b++) {
@@ -504,47 +718,139 @@ const OPSEngine = {
       if (stable >= .55) pass++;
     }
     const rolling = pass / 4;
+
+    // Axiom A
     const axiom = (reversion >= .60 && runRate <= .10) ? 'PASS' : (reversion >= .50 && runRate <= .20) ? 'HOLD' : 'FAIL';
 
-    let score = 0,
-      reasons = [];
-    if (pcs_z >= 1) { score += 22;
+    // Score
+    let score = 0, reasons = [];
+    const pcsPass = pcs_z >= 1;
+    const piPass = Pi >= .45;
+    const scgPass = SCG >= 1;
+    const rollingPass = rolling >= .75;
+    const axiomPass = axiom === 'PASS';
+
+    if (pcsPass) { score += 22;
       reasons.push('PCS_z PASS'); } else reasons.push('PCS_z FAIL');
-    if (Pi >= .45) { score += 20;
+    if (piPass) { score += 20;
       reasons.push('Π PASS'); } else reasons.push('Π FAIL');
-    if (SCG >= 1) { score += 18;
+    if (scgPass) { score += 18;
       reasons.push('SCG PASS'); } else reasons.push('SCG FAIL');
-    if (rolling >= .75) { score += 20;
+    if (rollingPass) { score += 20;
       reasons.push('ROLLING PASS'); } else reasons.push('ROLLING FAIL');
-    if (axiom === 'PASS') { score += 15;
+    if (axiomPass) { score += 15;
       reasons.push('AXIOM A PASS'); } else if (axiom === 'HOLD') { score += 7;
       reasons.push('AXIOM A HOLD'); } else reasons.push('AXIOM A FAIL');
+
     if (open) { score += 5;
       reasons.push('MARKET OPEN'); } else { score = 0;
       reasons.push('MARKET CLOSED'); }
 
-    let verdict = 'HOLD';
-    if (open && score >= 82 && pcs_z >= 1 && Pi >= .45 && SCG >= 1 && rolling >= .75 && axiom === 'PASS') verdict = 'GO';
-    else if (open && score >= 58 && pcs_z >= .5 && Pi >= .30 && rolling >= .5 && axiom !== 'FAIL') verdict = 'ARM';
-
-    const exists = verdict === 'GO' || verdict === 'ARM';
+    const exists = open && score >= 82 && pcs_z >= 1 && Pi >= .45 && SCG >= 1 && rolling >= .75 && axiom === 'PASS';
 
     return {
       score,
       confRaw: score / 100,
-      verdict,
+      verdict: exists ? 'GO' : (open && score >= 58 ? 'ARM' : 'HOLD'),
       pcs_z: +pcs_z.toFixed(3),
       Pi: +Pi.toFixed(3),
       SCG: +SCG.toFixed(3),
       rolling: +rolling.toFixed(2),
-      reversion: +reversion.toFixed(2),
       axiom,
       reasons,
       exists,
       metrics: { pcs: Math.min(pcs_z / 2, 1), pi: Pi, scg: Math.min(SCG / 2, 1), persistence: rolling,
         axiom: axiom === 'PASS' ? 1 : axiom === 'HOLD' ? 0.5 : 0, stability: score / 100 },
-      passes: { pcs: pcs_z >= 1, pi: Pi >= .45, scg: SCG >= 1, persistence: rolling >= .75, axiom: axiom === 'PASS',
-        stability: score >= 58 }
+      passes: { pcs: pcsPass, pi: piPass, scg: scgPass, persistence: rollingPass, axiom: axiomPass,
+        stability: score >= 58 },
+      // Raw data for null calibration
+      rawData: data,
+      deltas: recent
+    };
+  },
+
+  // NULL CALIBRATION - Generate null ensembles and compute p-values
+  nullCalibrate(opsResult, nEnsemble = CONFIG.NULL_ENSEMBLE_SIZE) {
+    const { pcs_z, Pi, SCG, deltas } = opsResult;
+
+    if (!deltas || deltas.length < 30) {
+      return { pPCS: 1, pPi: 1, pSCG: 1, nullPass: false, decision: 'INCONCLUSIVE' };
+    }
+
+    // Generate null ensembles
+    const nullScramble = Utils.generateNulls(deltas, 'scramble', nEnsemble);
+    const nullCircular = Utils.generateNulls(deltas, 'circular', nEnsemble);
+    const nullPhase = Utils.generateNulls(deltas, 'phase', nEnsemble);
+
+    // Compute metrics for each null realization
+    const computeMetrics = (data) => {
+      const d = data;
+      const absd = d.map(Math.abs);
+      const dStar = Utils.median(absd);
+      const pos = d.map(x => Math.max(x, 0));
+      const neg = d.map(x => Math.max(-x, 0));
+      const rev = d.map(x => Math.max(0, dStar - Math.abs(Math.abs(x) - dStar)));
+      const ref = d.map((x, i) => pos[i] - neg[i] + .35 * rev[i]);
+
+      const PCS = (Math.abs(Utils.corr(pos, ref)) + Math.abs(Utils.corr(neg, ref.map(x => -x))) + Math.abs(Utils.corr(rev,
+        ref))) / 3;
+
+      const up = d.filter(x => x > 0).length;
+      const down = d.filter(x => x < 0).length;
+      const fmaj = Math.max(up, down) / (up + down || 1);
+      const Pi_val = Math.max(0, 1 - Math.abs(2 * fmaj - 1));
+
+      const plain = d.map(Math.abs);
+      const signed = d.map(x => x >= 0 ? Math.abs(x) : -Math.abs(x));
+      const SCG_val = (Utils.sd(signed) ** 2) / (Utils.sd(plain) ** 2 + 1e-9);
+
+      return { PCS, Pi: Pi_val, SCG: SCG_val };
+    };
+
+    const nullMetrics = {
+      scramble: nullScramble.map(computeMetrics),
+      circular: nullCircular.map(computeMetrics),
+      phase: nullPhase.map(computeMetrics)
+    };
+
+    // Compute p-values (exceedance probabilities)
+    const pValue = (observed, nullDist) => {
+      const count = nullDist.filter(v => v >= observed).length;
+      return count / nullDist.length;
+    };
+
+    // Use scramble null for primary p-values (most conservative)
+    const pPCS = pValue(pcs_z, nullMetrics.scramble.map(m => m.PCS));
+    const pPi = pValue(Pi, nullMetrics.scramble.map(m => m.Pi));
+    const pSCG = pValue(SCG, nullMetrics.scramble.map(m => m.SCG));
+
+    // Check if structure exceeds null expectations
+    const nullPass = pPCS < 0.05 && pPi < 0.05 && pSCG < 0.05;
+
+    // Check stability across null families
+    const pPCS_circ = pValue(pcs_z, nullMetrics.circular.map(m => m.PCS));
+    const pPi_circ = pValue(Pi, nullMetrics.circular.map(m => m.Pi));
+    const pSCG_circ = pValue(SCG, nullMetrics.circular.map(m => m.SCG));
+
+    const nullStable = pPCS_circ < 0.10 && pPi_circ < 0.10 && pSCG_circ < 0.10;
+
+    // Decision based on null calibration
+    let decision = 'FAIL';
+    if (nullPass && nullStable) decision = 'PASS';
+    else if (nullPass && !nullStable) decision = 'INCONCLUSIVE';
+    else decision = 'FAIL';
+
+    return {
+      pPCS,
+      pPi,
+      pSCG,
+      pPCS_circ,
+      pPi_circ,
+      pSCG_circ,
+      nullPass,
+      nullStable,
+      decision,
+      nullEnsembleSize: nEnsemble
     };
   }
 };
@@ -608,8 +914,7 @@ const MEMORY = {
       if (String(s.x.market || '').toUpperCase() === 'CLOSED') counts.CLOSED++;
     }
 
-    let top = 'HOLD',
-      topN = counts.HOLD;
+    let top = 'HOLD', topN = counts.HOLD;
     if (counts.ARM > topN) { top = 'ARM';
       topN = counts.ARM; }
     if (counts.GO > topN) { top = 'GO';
@@ -725,15 +1030,17 @@ const RiskEngine = {
 // DECISION ENGINE
 // ============================================================
 const DecisionEngine = {
-  makeDecision: (ops, memory, risk, open) => {
+  makeDecision: (ops, nullResult, memory, risk, open) => {
     const { exists, metrics, passes, verdict: opsVerdict, reasons, score } = ops;
 
     // Build explainability
     const checks = [];
 
+    // OPS detection
     if (exists) checks.push({ check: '✓ OPS detects projective structure', pass: true });
     else checks.push({ check: '✗ OPS detects projective structure', pass: false });
 
+    // Individual passes
     if (passes.pcs) checks.push({ check: '✓ PCS_z PASS', pass: true });
     else checks.push({ check: '✗ PCS_z FAIL', pass: false });
 
@@ -749,13 +1056,23 @@ const DecisionEngine = {
     if (passes.axiom) checks.push({ check: '✓ Axiom Ӑ PASS', pass: true });
     else checks.push({ check: '✗ Axiom Ӑ FAIL', pass: false });
 
+    // Null calibration
+    if (nullResult.nullPass) checks.push({ check: '✓ Null calibration PASS', pass: true });
+    else checks.push({ check: '✗ Null calibration FAIL', pass: false });
+
+    if (nullResult.nullStable) checks.push({ check: '✓ Null stability PASS', pass: true });
+    else checks.push({ check: '✗ Null stability FAIL', pass: false });
+
+    // Memory
     if (memory.memConf > 0.5) checks.push({ check: `✓ Memory similar cases (${Math.round(memory.memConf * 100)}%)`,
       pass: true });
     else checks.push({ check: `✗ Low memory similarity (${Math.round(memory.memConf * 100)}%)`, pass: false });
 
+    // Risk
     if (risk.level !== 'HIGH') checks.push({ check: `✓ Risk ${risk.level}`, pass: true });
     else checks.push({ check: `✗ Risk ${risk.level}`, pass: false });
 
+    // Market
     if (open) checks.push({ check: '✓ Market OPEN', pass: true });
     else checks.push({ check: '✗ Market CLOSED', pass: false });
 
@@ -768,7 +1085,10 @@ const DecisionEngine = {
     if (!open) {
       decision = 'HOLD';
       reason = 'Market closed - GO/ARM disabled';
-    } else if (passRatio >= 0.7 && exists) {
+    } else if (nullResult.decision !== 'PASS') {
+      decision = 'HOLD';
+      reason = `Null calibration ${nullResult.decision} - structure not distinguishable from noise`;
+    } else if (passRatio >= 0.65 && exists) {
       decision = 'GO';
       reason = `Strong projective structure (${Math.round(passRatio * 100)}% checks passed)`;
     } else if (passRatio >= 0.45) {
@@ -785,7 +1105,9 @@ const DecisionEngine = {
       checks,
       passRatio,
       confidence: score / 100,
-      finalScore: score
+      finalScore: score,
+      opsDecision: nullResult.decision,
+      nullPass: nullResult.nullPass
     };
   }
 };
@@ -845,7 +1167,7 @@ const UI = {
     Utils.el('confSub').textContent = open ? 'ACTIVE' : 'LOW (market closed)';
   },
 
-  updateOPS: (ops) => {
+  updateOPS: (ops, nullResult) => {
     Utils.el('pcsV').textContent = ops.pcs_z.toFixed(2);
     Utils.el('piV').textContent = ops.Pi.toFixed(2);
     Utils.el('scgV').textContent = ops.SCG.toFixed(2);
@@ -861,8 +1183,35 @@ const UI = {
     setPass('scgPass', ops.SCG >= 1);
     setPass('rollingPass', ops.rolling >= .75);
 
+    // Null calibration
+    Utils.el('nullV').textContent = nullResult.nullPass ? 'PASS' : 'FAIL';
+    Utils.el('nullV').className = 'val ' + (nullResult.nullPass ? 'green' : 'red');
+    Utils.el('nullPass').textContent = nullResult.nullPass ? `p=${nullResult.pPCS.toFixed(3)}` : `p=${nullResult.pPCS.toFixed(3)}`;
+    Utils.el('nullPass').className = 'pass ' + (nullResult.nullPass ? 'ok' : 'fail');
+
+    // OPS Decision
+    Utils.el('opsDecisionV').textContent = nullResult.decision;
+    Utils.el('opsDecisionV').className = 'val ' + (nullResult.decision === 'PASS' ? 'green' : nullResult.decision ===
+      'INCONCLUSIVE' ? 'yellow' : 'red');
+    Utils.el('opsDecisionPass').textContent = nullResult.decision;
+    Utils.el('opsDecisionPass').className = 'pass ' + (nullResult.decision === 'PASS' ? 'ok' : nullResult.decision ===
+      'INCONCLUSIVE' ? 'warn' : 'fail');
+
+    // Pills
     Utils.el('axiomPill').textContent = 'AXIOM A: ' + ops.axiom;
     Utils.el('opsPill').textContent = `OPS: PCS_z ${ops.pcs_z.toFixed(2)} • Π ${ops.Pi.toFixed(2)} • SCG ${ops.SCG.toFixed(2)}`;
+    Utils.el('nullPill').textContent = `NULL: ${nullResult.decision} (p=${nullResult.pPCS.toFixed(3)})`;
+    Utils.el('nullPill').className = 'pill ' + (nullResult.decision === 'PASS' ? 'ok' : nullResult.decision ===
+      'INCONCLUSIVE' ? 'warn' : 'gray');
+  },
+
+  updateNullCalibration: (nullResult) => {
+    Utils.el('pPCS').textContent = nullResult.pPCS.toFixed(3);
+    Utils.el('pPi').textContent = nullResult.pPi.toFixed(3);
+    Utils.el('pSCG').textContent = nullResult.pSCG.toFixed(3);
+    Utils.el('nullDecision').textContent = nullResult.decision;
+    Utils.el('nullDecision').style.color = nullResult.decision === 'PASS' ? 'var(--green)' : nullResult.decision ===
+      'INCONCLUSIVE' ? 'var(--yellow)' : 'var(--red)';
   },
 
   updateMemory: (mem) => {
@@ -881,6 +1230,7 @@ const UI = {
     Utils.el('successV').textContent = stats.success;
     Utils.el('failV').textContent = `Fail: ${stats.failed}`;
     Utils.el('outcomePill').textContent = `OUTCOMES: GO ${stats.success}/${stats.total}`;
+    Utils.el('outcomePill').className = 'pill ' + (stats.total > 0 && stats.precision > 0.5 ? 'ok' : 'gray');
   },
 
   updateCalibration: () => {
@@ -891,10 +1241,8 @@ const UI = {
 
     Utils.el('totalDec').textContent = total;
     Utils.el('calStatus').textContent = status.status;
-    Utils.el('calV').textContent = status.status;
     Utils.el('calProgressText').textContent = `${Math.min(total, status.status === 'WARMUP' ? 100 : 500)} / ${status.status === 'WARMUP' ? 100 : 500}`;
     Utils.el('calProgress').style.width = Math.min(100, status.progress * 100) + '%';
-    Utils.el('calK').textContent = `${status.status} • ${total} decisions`;
 
     Utils.el('precisionDisplay').textContent = pr.precision ? (pr.precision * 100).toFixed(1) + '%' : '—';
     Utils.el('recallDisplay').textContent = pr.recall ? (pr.recall * 100).toFixed(1) + '%' : '—';
@@ -913,6 +1261,13 @@ const UI = {
                 <td>${Number(x.SCG || 0).toFixed(2)}</td></tr>`;
     }).join('');
     Utils.el('memoryRows').innerHTML = rows || '<tr><td colspan="6">No memory yet</td></tr>';
+
+    // Memory count
+    Utils.el('memV').textContent = MEMORY.decisions.length;
+    const go = MEMORY.decisions.filter(x => x.verdict === 'GO').length;
+    const arm = MEMORY.decisions.filter(x => x.verdict === 'ARM').length;
+    const hold = MEMORY.decisions.filter(x => x.verdict === 'HOLD').length;
+    Utils.el('memK').textContent = `GO ${go} • ARM ${arm} • HOLD ${hold}`;
   },
 
   updatePrice: (price, symbol) => {
@@ -974,16 +1329,12 @@ const UI = {
 
   updateStability: (history) => {
     if (history.length < 5) {
-      Utils.el('stabilityV').textContent = '—';
-      Utils.el('stabilityStatus').textContent = 'Learning';
+      Utils.el('stabilityPill').textContent = 'STABILITY: LEARNING';
+      Utils.el('stabilityPill').className = 'pill gray';
       return;
     }
     const unique = new Set(history.slice(-10));
     const stable = unique.size <= 2;
-    Utils.el('stabilityV').textContent = stable ? 'STABLE' : 'UNSTABLE';
-    Utils.el('stabilityV').className = 'val ' + (stable ? 'green' : 'red');
-    Utils.el('stabilityStatus').textContent = stable ? '✓ Consistent' : '⚠️ Changing';
-    Utils.el('stabilityStatus').className = 'pass ' + (stable ? 'ok' : 'fail');
     Utils.el('stabilityPill').textContent = 'STABILITY: ' + (stable ? 'STABLE' : 'UNSTABLE');
     Utils.el('stabilityPill').className = 'pill ' + (stable ? 'ok' : 'warn');
   },
@@ -1010,6 +1361,8 @@ class PulseApplication {
     this.cycleCount = 0;
     this.lastDecision = 'HOLD';
     this.overlayOn = true;
+    this.lastOpsResult = null;
+    this.lastNullResult = null;
 
     // Load persistent data
     MEMORY.load();
@@ -1055,10 +1408,12 @@ class PulseApplication {
     };
 
     Utils.el('csvBtn').onclick = () => {
-      const h = ['timeISO', 'symbol', 'price', 'verdict', 'confidence', 'score', 'pcs_z', 'Pi', 'SCG', 'market'];
+      const h = ['timeISO', 'symbol', 'price', 'verdict', 'confidence', 'score', 'pcs_z', 'Pi', 'SCG', 'market',
+        'nullDecision'
+      ];
       const csv = h.join(',') + '\n' + AUDIT.map(x =>
         [new Date(x.timestamp).toISOString(), x.symbol, x.price, x.verdict, x.confidence, x.score, x.pcs_z, x.Pi, x.SCG,
-          x.market
+          x.market, x.nullDecision || '—'
         ].join(',')
       ).join('\n');
       Utils.download('sintelia_pulse_audit.csv', csv, 'text/csv');
@@ -1128,27 +1483,31 @@ class PulseApplication {
       // 3. OPS detection
       const prices = DataEngine.getPrices();
       const ops = OPSEngine.analyze(prices, open);
+      this.lastOpsResult = ops;
 
-      // 4. Memory
+      // 4. Null calibration
+      const nullResult = OPSEngine.nullCalibrate(ops, CONFIG.NULL_ENSEMBLE_SIZE);
+      this.lastNullResult = nullResult;
+
+      // 5. Memory
       const memory = MEMORY.lookup(ops, open);
 
-      // 5. Risk
+      // 6. Risk
       const risk = RiskEngine.calculate(prices, ops.verdict);
 
-      // 6. Decision
-      const decisionResult = DecisionEngine.makeDecision(ops, memory, risk, open);
+      // 7. Decision
+      const decisionResult = DecisionEngine.makeDecision(ops, nullResult, memory, risk, open);
 
-      // 7. Store decision
+      // 8. Store decision
       const finalDecision = this.overlayOn ? decisionResult.decision : 'HOLD';
       const finalReason = this.overlayOn ? decisionResult.reason : 'Overlay disabled';
 
-      // 8. Track decision history for stability
+      // 9. Track decision history for stability
       this.decisionHistory.push(finalDecision);
       if (this.decisionHistory.length > 20) this.decisionHistory.shift();
 
-      // 9. Outcome simulation (after GO decisions)
+      // 10. Outcome simulation (after GO decisions)
       if (this.lastDecision === 'GO' && finalDecision !== 'GO') {
-        // Check if GO was successful (simulate with 60% success rate)
         const success = Math.random() > 0.4;
         OutcomeEngine.add('GO', success ? 'SUCCESS' : 'FAILURE', price);
         Utils.log(`Outcome: GO ${success ? 'SUCCESS' : 'FAILURE'} at $${Utils.fmt(price)}`);
@@ -1157,7 +1516,7 @@ class PulseApplication {
       // Store for next cycle
       this.lastDecision = finalDecision;
 
-      // 10. Memory
+      // 11. Memory
       const record = {
         t: now,
         symbol: this.symbol,
@@ -1171,12 +1530,14 @@ class PulseApplication {
         rolling: ops.rolling,
         axiom: ops.axiom,
         market: label,
-        reasons: ops.reasons
+        reasons: ops.reasons,
+        nullDecision: nullResult.decision,
+        nullPass: nullResult.nullPass
       };
       MEMORY.add(record);
       MEMORY.addSample({ t: now, price, market: label });
 
-      // 11. Audit
+      // 12. Audit
       AuditEngine.log({
         symbol: this.symbol,
         price,
@@ -1192,16 +1553,22 @@ class PulseApplication {
         reasons: ops.reasons.join(' • '),
         decisionReason: finalReason,
         memoryGuard: memory.guard,
-        riskLevel: risk.level
+        riskLevel: risk.level,
+        nullDecision: nullResult.decision,
+        nullPass: nullResult.nullPass,
+        pPCS: nullResult.pPCS,
+        pPi: nullResult.pPi,
+        pSCG: nullResult.pSCG
       });
 
-      // 12. Save
+      // 13. Save
       Utils.save();
 
-      // 13. UI Updates
+      // 14. UI Updates
       UI.updateMarket(open, label, meta);
       UI.updateDecision(finalDecision, finalReason, decisionResult.confidence, open);
-      UI.updateOPS(ops);
+      UI.updateOPS(ops, nullResult);
+      UI.updateNullCalibration(nullResult);
       UI.updateMemory(memory);
       UI.updateOutcomes();
       UI.updateCalibration();
@@ -1215,13 +1582,15 @@ class PulseApplication {
 
       // Diagnostics
       const diagText =
-        `<b>${CONFIG.VERSION}</b> • ${this.symbol} • market=${label} • GO gate=${open ? 'ENABLED' : 'DISABLED'} • samples=${DataEngine.samples.length}<br>${ops.reasons.join(' • ')}<br>Memory: ${memory.guard} (${memory.n} cases) • Risk: ${risk.level}`;
+        `<b>${CONFIG.VERSION}</b> • ${this.symbol} • market=${label} • GO gate=${open ? 'ENABLED' : 'DISABLED'} • samples=${DataEngine.samples.length}<br>` +
+        `OPS: ${ops.reasons.join(' • ')}<br>` +
+        `Null: ${nullResult.decision} (pPCS=${nullResult.pPCS.toFixed(3)}, pPi=${nullResult.pPi.toFixed(3)}, pSCG=${nullResult.pSCG.toFixed(3)})<br>` +
+        `Memory: ${memory.guard} (${memory.n} cases) • Risk: ${risk.level}`;
       UI.updateDiagnostics(diagText);
 
-      // Update audit UI
-      UI.updateAudit();
-
-      Utils.log(`${this.symbol} ${label} ${finalDecision} $${Utils.fmt(price)} conf=${Math.round(decisionResult.confidence * 100)}%`);
+      Utils.log(
+        `${this.symbol} ${label} ${finalDecision} $${Utils.fmt(price)} conf=${Math.round(decisionResult.confidence * 100)}% null=${nullResult.decision}`
+        );
 
     } catch (e) {
       UI.updateHealth(false);
