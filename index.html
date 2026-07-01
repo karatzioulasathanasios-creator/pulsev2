@@ -3,34 +3,60 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>SINTELIA Pulse v4.2 — OPS Detector</title>
+<title>SINTELIA Pulse v4.3 — OPS Detector + Layer 2</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="SINTELIA PULSE v4.2">
+<meta name="apple-mobile-web-app-title" content="SINTELIA PULSE v4.3">
 <meta name="theme-color" content="#ffffff">
 <style>
 :root{--bg:#fff;--text:#111827;--muted:#6b7280;--line:#e5e7eb;--soft:#f9fafb;--green:#168a3a;--green2:#eaf8ef;--yellow:#f6b700;--yellow2:#fff8df;--red:#d71920;--red2:#fff0f0;--blue:#0b72ff;--blue2:#eef5ff;--card:#fff;--shadow:0 10px 30px rgba(0,0,0,.06)}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}.wrap{max-width:1280px;margin:0 auto;padding:18px 16px 28px}.header{display:grid;grid-template-columns:1fr auto auto;gap:18px;align-items:start}h1{font-size:28px;line-height:1;margin:0 0 8px;font-weight:1000;letter-spacing:-.4px}h1 small{font-size:14px;font-weight:600;color:var(--muted);letter-spacing:0}.sub{color:#111;opacity:.78;font-size:15px;line-height:1.35}.clock{text-align:right;font-weight:900;font-size:18px}.clock small{display:block;color:var(--muted);font-weight:600;font-size:12px;margin-top:3px}.livebox{border:1px solid #b9e7c5;background:#fff;border-radius:16px;padding:10px 16px;font-weight:1000;color:#0f7c32;display:flex;gap:10px;align-items:center}.dot{width:10px;height:10px;border-radius:50%;background:var(--green);display:inline-block}.refresh{border:1px solid #a7c8ff;background:#fff;color:var(--blue);font-weight:900;border-radius:10px;padding:9px 16px;margin-top:10px;cursor:pointer}.asset-selector{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.asset-btn{padding:6px 16px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--muted);font-weight:700;font-size:13px;cursor:pointer;transition:all .2s}.asset-btn:hover{border-color:var(--blue);color:var(--blue)}.asset-btn.active{border-color:var(--blue);background:var(--blue2);color:var(--blue)}.marketgrid{margin-top:16px;border:1px solid var(--line);border-radius:16px;background:#fff;box-shadow:var(--shadow);display:grid;grid-template-columns:repeat(4,1fr);overflow:hidden}.mcell{padding:18px 20px;border-right:1px solid var(--line)}.mcell:last-child{border-right:0}.label{font-size:12px;text-transform:uppercase;color:#4b5563;letter-spacing:.03em;margin-bottom:8px}.big{font-size:20px;font-weight:1000}.red{color:var(--red)}.green{color:var(--green)}.yellow{color:var(--yellow)}.small{font-size:12px;color:#4b5563;margin-top:5px}.hero{margin-top:18px;border:1px solid #ffd063;border-radius:20px;background:linear-gradient(90deg,#fffaf0,#fffdf8);padding:24px;display:grid;grid-template-columns:120px 1fr 300px;gap:20px;align-items:center}.lock{width:90px;height:90px;border-radius:50%;background:linear-gradient(#fff3c4,#ffe38c);border:1px solid #f2c94c;display:flex;align-items:center;justify-content:center;font-size:44px;margin:auto}.state{font-size:56px;font-weight:1000;letter-spacing:-1px}.state.go{color:var(--green)}.state.arm{color:var(--yellow)}.state.hold{color:var(--muted)}.signal{font-size:22px;font-weight:1000}.signal span{color:var(--yellow)}.gatebox{border:1px solid #ffd063;border-radius:14px;padding:14px 18px;background:#fff7df;min-width:220px}.gatebox b{display:inline-block;background:#fff0bd;border:1px solid #f2c94c;border-radius:10px;padding:6px 14px;margin-bottom:10px}.gatebox .danger{color:var(--red);font-weight:1000;margin-bottom:8px}.pills{display:flex;gap:14px;flex-wrap:wrap;margin-top:20px}.pill{border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 22px;font-weight:1000;font-size:14px}.pill.ok{background:var(--green2);border-color:#b8e9c7;color:#0b6c2c}.pill.blue{background:var(--blue2);border-color:#c7dcff;color:#075bd7}.pill.gray{background:#f7f7f7}.pill.warn{background:var(--yellow2);border-color:#fde29a;color:#a16207}.main{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(340px,.8fr);gap:18px;margin-top:18px}.card{border:1px solid var(--line);border-radius:18px;background:var(--card);box-shadow:var(--shadow);padding:18px}.price{font-size:32px;font-weight:1000;margin-bottom:8px}.tag{display:inline-block;margin-left:8px;background:#f0f0f0;border:1px solid #ddd;padding:6px 12px;border-radius:999px;font-size:12px;font-weight:900}.confrow{display:grid;grid-template-columns:1fr 200px;gap:14px;align-items:center;margin-top:14px}.bar{height:12px;background:#e5e7eb;border-radius:999px;overflow:hidden}.fill{height:100%;width:0%;background:var(--green);transition:width .5s}.confnum{font-size:28px;font-weight:1000;color:var(--green)}.confsub{font-size:12px;color:#4b5563}.chartwrap{border:1px solid var(--line);border-radius:16px;background:#fbfbfb;padding:10px;margin-top:18px}canvas{display:block;width:100%;height:230px}.minmax{display:flex;justify-content:space-between;margin-top:10px;font-size:13px;font-weight:800}.metrics{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}.metric{border:1px solid var(--line);border-radius:14px;padding:14px;background:#fff}.metric .name{color:var(--muted);font-size:14px}.metric .val{font-size:24px;font-weight:1000;margin:4px 0}.metric .pass{font-weight:1000;font-size:12px}.metric .pass.ok{color:var(--green)}.metric .pass.fail{color:var(--red)}.metric .pass.warn{color:var(--yellow)}.actions{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}.btn{border:1px solid #d1d5db;border-radius:11px;background:#fff;padding:10px;font-weight:1000;color:var(--blue);cursor:pointer;transition:all .2s}.btn:hover{background:var(--soft)}.btn.black{background:#000;color:#fff;border-color:#000}.btn.red{color:#e11d48;border-color:#fecdd3}.memtable{width:100%;border-collapse:collapse;font-size:12px}.memtable th{color:#4b5563;text-align:left;font-size:11px;border-bottom:1px solid var(--line);padding:6px 4px}.memtable td{border-bottom:1px solid #f1f1f1;padding:6px 4px}.badgeHold{background:var(--yellow2);border:1px solid #fde29a;color:#a16207;border-radius:999px;padding:2px 10px;font-weight:900;font-size:11px}.badgeGo{background:var(--green2);border:1px solid #b8e9c7;color:#0b6c2c;border-radius:999px;padding:2px 10px;font-weight:900;font-size:11px}.badgeArm{background:var(--blue2);border:1px solid #c7dcff;color:#075bd7;border-radius:999px;padding:2px 10px;font-weight:900;font-size:11px}.progress{height:13px;background:#eee;border-radius:999px;overflow:hidden;margin:6px 0}.progress div{height:100%;width:0%;background:var(--green);transition:width .5s}.sysrow{display:flex;justify-content:space-between;border-bottom:1px solid #f1f1f1;padding:6px 0;font-size:13px}.sysrow b{color:var(--green)}.diag{margin-top:18px}.diaghead{display:flex;justify-content:space-between;gap:12px;align-items:center}.okbadge{background:var(--green2);color:var(--green);border-radius:999px;padding:4px 12px;font-weight:1000;font-size:12px}pre{white-space:pre-wrap;background:#fbfbfb;border:1px solid var(--line);border-radius:12px;padding:12px;max-height:200px;overflow:auto;font-size:12px;color:#333}.footer{margin-top:14px;border:1px solid #ffd063;background:#fff8df;border-radius:12px;padding:12px 18px;font-size:12px;color:#3d3320;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}@media(max-width:1000px){.main{grid-template-columns:1fr}.hero{grid-template-columns:1fr;text-align:center}.gatebox{justify-self:stretch}}@media(max-width:800px){.header{grid-template-columns:1fr auto}.header .livecol{grid-column:1/3}.marketgrid{grid-template-columns:1fr 1fr}.mcell:nth-child(2){border-right:0}.mcell{border-bottom:1px solid var(--line)}.mcell:nth-child(3),.mcell:nth-child(4){border-bottom:0}.confrow{grid-template-columns:1fr}.actions{grid-template-columns:1fr 1fr}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}.wrap{max-width:1280px;margin:0 auto;padding:18px 16px 28px}.header{display:grid;grid-template-columns:1fr auto auto;gap:18px;align-items:start}h1{font-size:28px;line-height:1;margin:0 0 8px;font-weight:1000;letter-spacing:-.4px}h1 small{font-size:14px;font-weight:600;color:var(--muted);letter-spacing:0}.sub{color:#111;opacity:.78;font-size:15px;line-height:1.35}.clock{text-align:right;font-weight:900;font-size:18px}.clock small{display:block;color:var(--muted);font-weight:600;font-size:12px;margin-top:3px}.livebox{border:1px solid #b9e7c5;background:#fff;border-radius:16px;padding:10px 16px;font-weight:1000;color:#0f7c32;display:flex;gap:10px;align-items:center}.dot{width:10px;height:10px;border-radius:50%;background:var(--green);display:inline-block}.refresh{border:1px solid #a7c8ff;background:#fff;color:var(--blue);font-weight:900;border-radius:10px;padding:9px 16px;margin-top:10px;cursor:pointer}.asset-selector{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.asset-btn{padding:6px 16px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--muted);font-weight:700;font-size:13px;cursor:pointer;transition:all .2s}.asset-btn:hover{border-color:var(--blue);color:var(--blue)}.asset-btn.active{border-color:var(--blue);background:var(--blue2);color:var(--blue)}.marketgrid{margin-top:16px;border:1px solid var(--line);border-radius:16px;background:#fff;box-shadow:var(--shadow);display:grid;grid-template-columns:repeat(4,1fr);overflow:hidden}.mcell{padding:18px 20px;border-right:1px solid var(--line)}.mcell:last-child{border-right:0}.label{font-size:12px;text-transform:uppercase;color:#4b5563;letter-spacing:.03em;margin-bottom:8px}.big{font-size:20px;font-weight:1000}.red{color:var(--red)}.green{color:var(--green)}.yellow{color:var(--yellow)}.small{font-size:12px;color:#4b5563;margin-top:5px}.hero{margin-top:18px;border:1px solid #ffd063;border-radius:20px;background:linear-gradient(90deg,#fffaf0,#fffdf8);padding:24px;display:grid;grid-template-columns:120px 1fr 300px;gap:20px;align-items:center}.lock{width:90px;height:90px;border-radius:50%;background:linear-gradient(#fff3c4,#ffe38c);border:1px solid #f2c94c;display:flex;align-items:center;justify-content:center;font-size:44px;margin:auto}.state{font-size:56px;font-weight:1000;letter-spacing:-1px}.state.go{color:var(--green)}.state.arm{color:var(--yellow)}.state.hold{color:var(--muted)}.signal{font-size:22px;font-weight:1000}.signal span{color:var(--yellow)}.gatebox{border:1px solid #ffd063;border-radius:14px;padding:14px 18px;background:#fff7df;min-width:220px}.gatebox b{display:inline-block;background:#fff0bd;border:1px solid #f2c94c;border-radius:10px;padding:6px 14px;margin-bottom:10px}.gatebox .danger{color:var(--red);font-weight:1000;margin-bottom:8px}.pills{display:flex;gap:14px;flex-wrap:wrap;margin-top:20px}.pill{border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 22px;font-weight:1000;font-size:14px}.pill.ok{background:var(--green2);border-color:#b8e9c7;color:#0b6c2c}.pill.blue{background:var(--blue2);border-color:#c7dcff;color:#075bd7}.pill.gray{background:#f7f7f7}.pill.warn{background:var(--yellow2);border-color:#fde29a;color:#a16207}.main{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(340px,.8fr);gap:18px;margin-top:18px}.card{border:1px solid var(--line);border-radius:18px;background:var(--card);box-shadow:var(--shadow);padding:18px}.price{font-size:32px;font-weight:1000;margin-bottom:8px}.tag{display:inline-block;margin-left:8px;background:#f0f0f0;border:1px solid #ddd;padding:6px 12px;border-radius:999px;font-size:12px;font-weight:900}.confrow{display:grid;grid-template-columns:1fr 200px;gap:14px;align-items:center;margin-top:14px}.bar{height:12px;background:#e5e7eb;border-radius:999px;overflow:hidden}.fill{height:100%;width:0%;background:var(--green);transition:width .5s}.confnum{font-size:28px;font-weight:1000;color:var(--green)}.confsub{font-size:12px;color:#4b5563}.chartwrap{border:1px solid var(--line);border-radius:16px;background:#fbfbfb;padding:10px;margin-top:18px}canvas{display:block;width:100%;height:230px}.minmax{display:flex;justify-content:space-between;margin-top:10px;font-size:13px;font-weight:800}.metrics{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px}.metric{border:1px solid var(--line);border-radius:14px;padding:14px;background:#fff}.metric .name{color:var(--muted);font-size:14px}.metric .val{font-size:24px;font-weight:1000;margin:4px 0}.metric .pass{font-weight:1000;font-size:12px}.metric .pass.ok{color:var(--green)}.metric .pass.fail{color:var(--red)}.metric .pass.warn{color:var(--yellow)}.actions{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}.btn{border:1px solid #d1d5db;border-radius:11px;background:#fff;padding:10px;font-weight:1000;color:var(--blue);cursor:pointer;transition:all .2s}.btn:hover{background:var(--soft)}.btn.black{background:#000;color:#fff;border-color:#000}.btn.red{color:#e11d48;border-color:#fecdd3}.memtable{width:100%;border-collapse:collapse;font-size:12px}.memtable th{color:#4b5563;text-align:left;font-size:11px;border-bottom:1px solid var(--line);padding:6px 4px}.memtable td{border-bottom:1px solid #f1f1f1;padding:6px 4px}.badgeHold{background:var(--yellow2);border:1px solid #fde29a;color:#a16207;border-radius:999px;padding:2px 10px;font-weight:900;font-size:11px}.badgeGo{background:var(--green2);border:1px solid #b8e9c7;color:#0b6c2c;border-radius:999px;padding:2px 10px;font-weight:900;font-size:11px}.badgeArm{background:var(--blue2);border:1px solid #c7dcff;color:#075bd7;border-radius:999px;padding:2px 10px;font-weight:900;font-size:11px}.progress{height:13px;background:#eee;border-radius:999px;overflow:hidden;margin:6px 0}.progress div{height:100%;width:0%;background:var(--green);transition:width .5s}.sysrow{display:flex;justify-content:space-between;border-bottom:1px solid #f1f1f1;padding:6px 0;font-size:13px}.sysrow b{color:var(--green)}.diag{margin-top:18px}.diaghead{display:flex;justify-content:space-between;gap:12px;align-items:center}.okbadge{background:var(--green2);color:var(--green);border-radius:999px;padding:4px 12px;font-weight:1000;font-size:12px}pre{white-space:pre-wrap;background:#fbfbfb;border:1px solid var(--line);border-radius:12px;padding:12px;max-height:200px;overflow:auto;font-size:12px;color:#333}.footer{margin-top:14px;border:1px solid #ffd063;background:#fff8df;border-radius:12px;padding:12px 18px;font-size:12px;color:#3d3320;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}.layer2{background:var(--soft);border:1px solid #d4dcec}.layer2 .sysrow b{color:var(--blue)}.layer2 .sysrow .green{color:var(--green)}.layer2 .sysrow .red{color:var(--red)}.layer2 .sysrow .yellow{color:var(--yellow)}@media(max-width:1000px){.main{grid-template-columns:1fr}.hero{grid-template-columns:1fr;text-align:center}.gatebox{justify-self:stretch}}@media(max-width:800px){.header{grid-template-columns:1fr auto}.header .livecol{grid-column:1/3}.marketgrid{grid-template-columns:1fr 1fr}.mcell:nth-child(2){border-right:0}.mcell{border-bottom:1px solid var(--line)}.mcell:nth-child(3),.mcell:nth-child(4){border-bottom:0}.confrow{grid-template-columns:1fr}.actions{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <div class="header"><div><h1>SINTELIA Pulse <small>v4.2</small></h1><div class="sub">OPS Detector • AAPL / VUAA.MI • Operational Projective Stability<br><b>PRICE • VOLUME • RANGE • RETURN • VOLATILITY</b></div><div class="asset-selector" id="assetSelector"><button class="asset-btn active" data-asset="AAPL">AAPL</button><button class="asset-btn" data-asset="VUAA.MI">VUAA.MI</button></div></div><div class="clock"><span id="timeNow">--:--:--</span><small id="timezoneLabel">America/New_York</small></div><div class="livecol"><div class="livebox"><span>LIVE</span><small id="health">health: CHECK</small><span class="dot" id="healthDot"></span></div><button class="refresh" id="refreshBtn">↻ Refresh Data</button></div></div>
+  <div class="header"><div><h1>SINTELIA Pulse <small>v4.3</small></h1><div class="sub">OPS Detector + Layer 2 Financial Interpretation • AAPL / VUAA.MI<br><b>PRICE • VOLUME • RANGE • RETURN • VOLATILITY</b></div><div class="asset-selector" id="assetSelector"><button class="asset-btn active" data-asset="AAPL">AAPL</button><button class="asset-btn" data-asset="VUAA.MI">VUAA.MI</button></div></div><div class="clock"><span id="timeNow">--:--:--</span><small id="timezoneLabel">America/New_York</small></div><div class="livecol"><div class="livebox"><span>LIVE</span><small id="health">health: CHECK</small><span class="dot" id="healthDot"></span></div><button class="refresh" id="refreshBtn">↻ Refresh Data</button></div></div>
   <div class="marketgrid"><div class="mcell"><div class="label">Market status</div><div class="big red" id="marketStatus">● CHECK</div><div class="small" id="marketExchange">NASDAQ</div></div><div class="mcell"><div class="label" id="nextOpenLabel">Next open</div><div class="big" id="nextOpen">—</div><div class="small" id="nextOpenTime">09:30</div></div><div class="mcell"><div class="label">Local time</div><div class="big" id="marketTime">—</div><div class="small" id="marketTZ">UTC</div></div><div class="mcell"><div class="label">Market window</div><div class="big" id="marketWindow">09:30 - 16:00</div><div class="small" id="marketDays">Mon - Fri</div></div></div>
   <div class="hero"><div class="lock">🔒</div><div><div class="state hold" id="stateDisplay">HOLD</div><div class="signal">SIGNAL: <span id="signalDisplay">WAIT</span></div></div><div class="gatebox"><b id="gateTitle">MARKET CLOSED</b><div class="danger" id="gateStatus">GO gate: DISABLED</div><div id="gateText">OPS is paused while market is closed.</div></div></div>
   <div class="pills"><div class="pill ok" id="axiomPill">AXIOM A: —</div><div class="pill blue" id="opsPill">OPS: —</div><div class="pill gray" id="regimePill">REGIME: —</div><div class="pill" id="stabilityPill">STABILITY: —</div><div class="pill" id="nullPill">NULL: —</div><div class="pill blue" id="channelsPill">CHANNELS: 5</div></div>
   <div class="main"><div class="card"><div class="price" id="priceDisplay">$ —</div><div><b id="symbolDisplay">AAPL</b> • <span id="exchangeDisplay">NASDAQ</span> • <span id="currencyDisplay">USD</span> <span class="tag" id="marketTag">CHECK</span></div><div class="small" id="prevClose">prev close: —</div><div class="confrow"><div><div class="label">Confidence</div><div class="bar"><div class="fill" id="confFill"></div></div><div class="confsub" id="confSub">LOW</div></div><div><div class="confnum" id="confPct">0%</div></div></div><div class="chartwrap"><canvas id="chart" width="900" height="260"></canvas></div><div class="minmax"><span>Min: <b id="minP">—</b></span><span>Max: <b id="maxP">—</b></span></div><div class="metrics"><div class="metric"><div class="name">PCS</div><div class="val" id="pcsV">—</div><div class="pass" id="pcsPass">—</div></div><div class="metric"><div class="name">PCS_z</div><div class="val" id="pcsZV">—</div><div class="pass" id="pcsZPass">—</div></div><div class="metric"><div class="name">Π (Pi)</div><div class="val" id="piV">—</div><div class="pass" id="piPass">—</div></div><div class="metric"><div class="name">SCG</div><div class="val" id="scgV">—</div><div class="pass" id="scgPass">—</div></div><div class="metric"><div class="name">Rolling Persistence</div><div class="val" id="rollingV">—</div><div class="pass" id="rollingPass">—</div></div><div class="metric"><div class="name">Null Exceedance</div><div class="val" id="nullV">—</div><div class="pass" id="nullPass">—</div></div><div class="metric"><div class="name">OPS Decision</div><div class="val" id="opsDecisionV">—</div><div class="pass" id="opsDecisionPass">—</div></div><div class="metric"><div class="name">Memory</div><div class="val" id="memV">0</div><div class="pass" id="memK">GO 0 • ARM 0 • HOLD 0</div></div></div><div class="actions"><button class="btn black" id="overlayBtn">GO Overlay: ON</button><button class="btn" id="csvBtn">Export CSV</button><button class="btn" id="jsonBtn">Export JSON</button><button class="btn" id="memoryBtn">Export Memory</button><button class="btn red" id="clearMemoryBtn">Clear Memory</button><button class="btn red" id="clearAuditBtn">Clear Audit</button></div></div>
-    <div class="side"><div class="card"><h3 style="margin:0 0 10px">Null Calibration</h3><div class="sysrow"><span>Scramble p(PCS)</span><b id="pPCS">—</b></div><div class="sysrow"><span>Scramble p(Π)</span><b id="pPi">—</b></div><div class="sysrow"><span>Scramble p(SCG)</span><b id="pSCG">—</b></div><div class="sysrow"><span>Null decision</span><b id="nullDecision">—</b></div><div class="small">Full pipeline rerun per null family.</div></div><div class="card"><h3 style="margin:0 0 10px">Memory <small>(last 20)</small></h3><table class="memtable"><thead><tr><th>Time</th><th>Verdict</th><th>Conf%</th><th>PCS</th><th>Π</th><th>SCG</th></tr></thead><tbody id="memoryRows"></tbody></table></div><div class="card"><h3 style="margin:0 0 10px">Channel Weights</h3><div class="sysrow"><span>Price</span><b id="chPrice">—</b></div><div class="sysrow"><span>Volume</span><b id="chVolume">—</b></div><div class="sysrow"><span>High-Low Range</span><b id="chRange">—</b></div><div class="sysrow"><span>Return</span><b id="chReturn">—</b></div><div class="sysrow"><span>Volatility</span><b id="chVolatility">—</b></div></div><div class="card"><h3 style="margin:0 0 10px">Model</h3><div class="sysrow"><span>Model version</span><b>4.1.0</b></div><div class="small">Calibration UI removed.</div></div><div class="card"><h3 style="margin:0 0 10px">Adaptive Memory</h3><div class="sysrow"><span>Nearest cases</span><b id="nearCases">—</b></div><div class="sysrow"><span>Memory verdict</span><b id="memVerdict">—</b></div><div class="sysrow"><span>Memory confidence</span><b id="memConf">—</b></div><div class="sysrow"><span>Memory guard</span><b id="memGuard">—</b></div><div class="small" id="memExplain" style="margin-top:10px">Uses stored decisions to stabilize new decisions.</div></div><div class="card"><h3 style="margin:0 0 10px">System Check</h3><div class="sysrow"><span>Worker</span><b id="chkWorker">—</b></div><div class="sysrow"><span>Data Feed</span><b id="chkFeed">—</b></div><div class="sysrow"><span>OPS Engine</span><b id="chkOps">OK</b></div><div class="sysrow"><span>Null Calibration</span><b id="chkNull">OK</b></div><div class="sysrow"><span>Market Gate</span><b id="chkGate">OK</b></div><div class="sysrow"><span>Memory</span><b id="chkMemory">OK</b></div><div class="sysrow"><span>Audit Log</span><b id="chkAudit">OK</b></div><div class="sysrow"><span>Channels</span><b id="chkChannels">5</b></div><div class="sysrow"><span>Sampling</span><b id="chkSampling">—</b></div></div></div></div>
+    <div class="side"><div class="card"><h3 style="margin:0 0 10px">Null Calibration</h3><div class="sysrow"><span>Scramble p(PCS)</span><b id="pPCS">—</b></div><div class="sysrow"><span>Scramble p(Π)</span><b id="pPi">—</b></div><div class="sysrow"><span>Scramble p(SCG)</span><b id="pSCG">—</b></div><div class="sysrow"><span>Null decision</span><b id="nullDecision">—</b></div><div class="small">Full pipeline rerun per null family.</div></div><div class="card"><h3 style="margin:0 0 10px">Memory <small>(last 20)</small></h3><table class="memtable"><thead><tr><th>Time</th><th>Verdict</th><th>Conf%</th><th>PCS</th><th>Π</th><th>SCG</th></tr></thead><tbody id="memoryRows"></tbody></table></div><div class="card"><h3 style="margin:0 0 10px">Channel Weights</h3><div class="sysrow"><span>Price</span><b id="chPrice">—</b></div><div class="sysrow"><span>Volume</span><b id="chVolume">—</b></div><div class="sysrow"><span>High-Low Range</span><b id="chRange">—</b></div><div class="sysrow"><span>Return</span><b id="chReturn">—</b></div><div class="sysrow"><span>Volatility</span><b id="chVolatility">—</b></div></div><div class="card"><h3 style="margin:0 0 10px">Model</h3><div class="sysrow"><span>Model version</span><b>4.3.0</b></div><div class="small">Layer 2 Financial Interpretation added.</div></div><div class="card"><h3 style="margin:0 0 10px">Adaptive Memory</h3><div class="sysrow"><span>Nearest cases</span><b id="nearCases">—</b></div><div class="sysrow"><span>Memory verdict</span><b id="memVerdict">—</b></div><div class="sysrow"><span>Memory confidence</span><b id="memConf">—</b></div><div class="sysrow"><span>Memory guard</span><b id="memGuard">—</b></div><div class="small" id="memExplain" style="margin-top:10px">Uses stored decisions to stabilize new decisions.</div></div><div class="card"><h3 style="margin:0 0 10px">System Check</h3><div class="sysrow"><span>Worker</span><b id="chkWorker">—</b></div><div class="sysrow"><span>Data Feed</span><b id="chkFeed">—</b></div><div class="sysrow"><span>OPS Engine</span><b id="chkOps">OK</b></div><div class="sysrow"><span>Null Calibration</span><b id="chkNull">OK</b></div><div class="sysrow"><span>Market Gate</span><b id="chkGate">OK</b></div><div class="sysrow"><span>Memory</span><b id="chkMemory">OK</b></div><div class="sysrow"><span>Audit Log</span><b id="chkAudit">OK</b></div><div class="sysrow"><span>Channels</span><b id="chkChannels">5</b></div><div class="sysrow"><span>Sampling</span><b id="chkSampling">—</b></div></div></div></div>
+
+  <!-- ============================================================ -->
+  <!-- LAYER 2 — FINANCIAL INTERPRETATION -->
+  <!-- ============================================================ -->
+  <div class="card layer2" style="margin-top:18px;">
+    <h3 style="margin:0 0 10px">Layer 2 — Financial Interpretation</h3>
+    <div id="layer2Content">
+      <div class="sysrow"><span>Trend</span><b id="l2Trend">—</b></div>
+      <div class="sysrow"><span>Slope</span><b id="l2Slope">—</b></div>
+      <div class="sysrow"><span>Momentum</span><b id="l2Momentum">—</b></div>
+      <div class="sysrow"><span>Volatility</span><b id="l2Volatility">—</b></div>
+      <div class="sysrow"><span>RSI</span><b id="l2RSI">—</b></div>
+      <div class="sysrow"><span>MACD</span><b id="l2MACD">—</b></div>
+      <div class="sysrow"><span>ATR</span><b id="l2ATR">—</b></div>
+      <div class="sysrow"><span>Support</span><b id="l2Support">—</b></div>
+      <div class="sysrow"><span>Resistance</span><b id="l2Resistance">—</b></div>
+      <div class="sysrow"><span>Breakout Probability</span><b id="l2Breakout">—</b></div>
+      <div class="sysrow"><span>Mean Reversion</span><b id="l2MeanReversion">—</b></div>
+      <div class="sysrow"><span>Trend Strength</span><b id="l2TrendStrength">—</b></div>
+      <div class="sysrow"><span>Risk Zone</span><b id="l2RiskZone">—</b></div>
+      <div class="sysrow"><span>Candlestick Pattern</span><b id="l2Candlestick">—</b></div>
+      <div class="sysrow"><span>Financial Summary</span><b id="l2Summary">—</b></div>
+      <div class="sysrow"><span>Conclusion</span><b id="l2Conclusion">—</b></div>
+    </div>
+  </div>
+
   <div class="card diag"><div class="diaghead"><h3 style="margin:0">Diagnostics <span class="okbadge">OK</span></h3><button class="btn" id="copyLogBtn">Copy Log</button></div><div id="diagText" style="margin:12px 0;font-size:14px">—</div><pre id="log"></pre></div>
-  <div class="footer"><div><b>🛡 SINTELIA PULSE v4.2</b> • OPS Detector • AAPL/VUAA.MI • 5 real channels • No financial advice.</div><button class="btn" onclick="alert('SINTELIA Pulse v4.2 - Operational Projective Stability Detector. GO/ARM/HOLD indicates projective structure detection, not financial advice.')">About OPS</button></div>
+  <div class="footer"><div><b>🛡 SINTELIA PULSE v4.3</b> • OPS Detector + Layer 2 Financial Interpretation • AAPL/VUAA.MI • 5 real channels • No financial advice.</div><button class="btn" onclick="alert('SINTELIA Pulse v4.3 - Operational Projective Stability Detector + Layer 2 Financial Interpretation. GO/ARM/HOLD indicates projective structure detection, not financial advice.')">About OPS</button></div>
 </div>
 <script>
 "use strict";
 // ============================================================
-// SINTELIA PULSE v4.2.0 — OPS DETECTOR
+// SINTELIA PULSE v4.3.0 — OPS DETECTOR + LAYER 2
 // ============================================================
 // Assets: AAPL (NASDAQ), VUAA.MI (Borsa Italiana)
-// Market-aware: OPS/Memory/Audit/Calibration run ONLY when market OPEN
-// Removed: Social, Outcome, Position, Risk, RSS, Upload, Sentiment
+// Market-aware: OPS/Memory/Audit run ONLY when market OPEN
+// Layer 2: Financial Interpretation — does NOT affect OPS
 // ============================================================
 
 // ============================================================
@@ -39,7 +65,7 @@
 const CONFIG={
   API:'https://aged-recipe-f70e.fuffy1603.workers.dev',
   SYMBOL:'AAPL',
-  VERSION:'SINTELIA_PULSE_v4.2.0',
+  VERSION:'SINTELIA_PULSE_v4.3.0',
   POLL_MS:30000,
   K_MEMORY:'SINTELIA_PULSE_V4_MEMORY',
   K_AUDIT:'SINTELIA_PULSE_V4_AUDIT',
@@ -98,12 +124,418 @@ const Utils={
 };
 
 // ============================================================
+// LAYER 2 — FINANCIAL INTERPRETATION
+// ============================================================
+const Layer2 = {
+  // --- Curve Analysis ---
+  analyzeCurve: (prices) => {
+    if (!prices || prices.length < 30) return null;
+    const n = prices.length;
+    const last = prices.slice(-30);
+    const recent = prices.slice(-20);
+    const p0 = prices[0], p1 = prices[prices.length-1];
+    const change = (p1 - p0) / p0;
+    let trend = 'SIDEWAYS';
+    if (change > 0.02) trend = 'UP';
+    else if (change < -0.02) trend = 'DOWN';
+    
+    // Slope (linear regression on last 20)
+    const x = Array.from({length: recent.length}, (_,i) => i);
+    const y = recent;
+    const sx = x.reduce((a,b) => a+b, 0), sy = y.reduce((a,b) => a+b, 0);
+    const sxx = x.reduce((a,b) => a+b*b, 0), sxy = x.reduce((a,i) => a+i*y[i], 0);
+    const den = recent.length * sxx - sx * sx;
+    const slope = den ? (recent.length * sxy - sx * sy) / den : 0;
+    const slopePct = slope / (Utils.avg(recent) || 1) * 100;
+    
+    // Momentum (last 10 periods)
+    const mom = (prices[n-1] - prices[n-10]) / prices[n-10];
+    
+    // Volatility (standard deviation of returns)
+    const ret = []; for (let i=1; i<recent.length; i++) ret.push((recent[i]-recent[i-1])/recent[i-1]);
+    const vol = Utils.sd(ret);
+    
+    // Support / Resistance (simple: local min/max of last 20)
+    const window = 10;
+    let support = Infinity, resistance = -Infinity;
+    for (let i = window; i < recent.length - window; i++) {
+      let isMin = true, isMax = true;
+      for (let j = i - window; j <= i + window; j++) {
+        if (j === i) continue;
+        if (recent[j] < recent[i]) isMin = false;
+        if (recent[j] > recent[i]) isMax = false;
+      }
+      if (isMin && recent[i] < support) support = recent[i];
+      if (isMax && recent[i] > resistance) resistance = recent[i];
+    }
+    if (support === Infinity) support = Math.min(...recent);
+    if (resistance === -Infinity) resistance = Math.max(...recent);
+    
+    // Breakout probability
+    const range = (resistance - support) / (support || 1);
+    const breakoutProb = Math.min(1, range * 1.5 + vol * 2);
+    
+    // Mean reversion (distance from moving average)
+    const sma20 = Utils.avg(prices.slice(-20));
+    const meanReversion = Math.abs(prices[n-1] - sma20) / (sma20 || 1);
+    
+    // Trend Strength (ADX simplified)
+    const tr = []; for (let i=1; i<recent.length; i++) {
+      const hl = recent[i] - recent[i-1];
+      const hc = recent[i] - (recent[i-1] || recent[i]);
+      const lc = (recent[i-1] || recent[i]) - recent[i-1];
+      tr.push(Math.max(hl, Math.abs(hc), Math.abs(lc)));
+    }
+    const atr = Utils.avg(tr);
+    const trendStrength = Math.min(1, (Math.abs(slope) / (atr || 0.001)) * 0.5);
+    
+    // Risk Zone
+    let riskZone = 'LOW';
+    if (vol > 0.03 || meanReversion > 0.05) riskZone = 'HIGH';
+    else if (vol > 0.015 || meanReversion > 0.025) riskZone = 'MEDIUM';
+    
+    return { trend, slope: slopePct, momentum: mom, volatility: vol, support, resistance,
+             breakoutProb, meanReversion: meanReversion, trendStrength, riskZone, atr };
+  },
+  
+  // --- Candlestick Analysis ---
+  analyzeCandlesticks: (prices, highs, lows) => {
+    if (!prices || prices.length < 5) return { pattern: 'NONE', description: 'No candlestick pattern detected' };
+    const n = prices.length;
+    const last = prices[n-1], prev = prices[n-2];
+    const lastHigh = highs ? highs[highs.length-1] : Math.max(prices[n-1], prices[n-2]);
+    const lastLow = lows ? lows[lows.length-1] : Math.min(prices[n-1], prices[n-2]);
+    const body = Math.abs(last - prev);
+    const range = lastHigh - lastLow;
+    if (range === 0) return { pattern: 'NONE', description: 'No pattern' };
+    const bodyRatio = body / range;
+    const isGreen = last > prev;
+    const upperShadow = lastHigh - Math.max(last, prev);
+    const lowerShadow = Math.min(last, prev) - lastLow;
+    
+    let pattern = 'NONE', description = 'No clear candlestick pattern';
+    if (bodyRatio < 0.15 && range > 0.001) {
+      pattern = 'DOJI';
+      description = 'Doji — indecision, potential reversal';
+    } else if (bodyRatio < 0.35 && upperShadow > 2 * body && lowerShadow < body * 0.5) {
+      pattern = 'SHOOTING_STAR';
+      description = 'Shooting Star — bearish reversal signal after an uptrend';
+    } else if (bodyRatio < 0.35 && lowerShadow > 2 * body && upperShadow < body * 0.5) {
+      pattern = 'HAMMER';
+      description = 'Hammer — bullish reversal signal after a downtrend';
+    } else if (bodyRatio > 0.6 && isGreen) {
+      pattern = 'MARUBOZU_GREEN';
+      description = 'Green Marubozu — strong buying pressure';
+    } else if (bodyRatio > 0.6 && !isGreen) {
+      pattern = 'MARUBOZU_RED';
+      description = 'Red Marubozu — strong selling pressure';
+    }
+    // Engulfing (simple: check if current candle engulfs previous)
+    if (prices.length >= 3) {
+      const prevPrev = prices[n-3];
+      if (isGreen && last > prevPrev && prev < prevPrev) {
+        pattern = 'BULLISH_ENGULFING';
+        description = 'Bullish Engulfing — potential reversal to upside';
+      } else if (!isGreen && last < prevPrev && prev > prevPrev) {
+        pattern = 'BEARISH_ENGULFING';
+        description = 'Bearish Engulfing — potential reversal to downside';
+      }
+    }
+    return { pattern, description };
+  },
+  
+  // --- Technical Indicators ---
+  calculateIndicators: (prices, highs, lows, volumes) => {
+    if (!prices || prices.length < 50) return null;
+    const n = prices.length;
+    const close = prices;
+    
+    // SMA 20, 50, 200
+    const sma20 = Utils.avg(close.slice(-20));
+    const sma50 = close.length >= 50 ? Utils.avg(close.slice(-50)) : sma20;
+    const sma200 = close.length >= 200 ? Utils.avg(close.slice(-200)) : sma50;
+    
+    // EMA 20
+    const ema20 = (() => {
+      const k = 2 / (20 + 1);
+      let ema = Utils.avg(close.slice(0, 20));
+      for (let i = 20; i < close.length; i++) ema = close[i] * k + ema * (1 - k);
+      return ema;
+    })();
+    
+    // RSI 14
+    const rsi14 = (() => {
+      const period = 14;
+      if (close.length < period + 1) return 50;
+      const returns = []; for (let i=1; i<close.length; i++) returns.push(close[i] - close[i-1]);
+      let gain = 0, loss = 0;
+      for (let i = returns.length - period; i < returns.length; i++) {
+        if (returns[i] > 0) gain += returns[i];
+        else loss += Math.abs(returns[i]);
+      }
+      gain /= period; loss /= period;
+      if (loss === 0) return 100;
+      const rs = gain / loss;
+      return 100 - (100 / (1 + rs));
+    })();
+    
+    // MACD (12, 26, 9)
+    const macd = (() => {
+      const ema12 = (() => {
+        const k = 2 / (12 + 1); let ema = Utils.avg(close.slice(0, 12));
+        for (let i = 12; i < close.length; i++) ema = close[i] * k + ema * (1 - k);
+        return ema;
+      })();
+      const ema26 = (() => {
+        const k = 2 / (26 + 1); let ema = Utils.avg(close.slice(0, 26));
+        for (let i = 26; i < close.length; i++) ema = close[i] * k + ema * (1 - k);
+        return ema;
+      })();
+      const macdLine = ema12 - ema26;
+      const signal = (() => {
+        const k = 2 / (9 + 1); let ema = macdLine;
+        for (let i = 0; i < 9; i++) ema = macdLine * k + ema * (1 - k);
+        return ema;
+      })();
+      return { macd: macdLine, signal, histogram: macdLine - signal };
+    })();
+    
+    // ATR (14)
+    const atr14 = (() => {
+      const period = 14;
+      const tr = []; for (let i=1; i<close.length; i++) {
+        const hl = close[i] - close[i-1];
+        const hc = close[i] - (close[i-1] || close[i]);
+        const lc = (close[i-1] || close[i]) - close[i-1];
+        tr.push(Math.max(hl, Math.abs(hc), Math.abs(lc)));
+      }
+      if (tr.length < period) return Utils.avg(tr);
+      let atr = Utils.avg(tr.slice(0, period));
+      for (let i = period; i < tr.length; i++) atr = (tr[i] + (period - 1) * atr) / period;
+      return atr;
+    })();
+    
+    // Bollinger Bands (20, 2)
+    const bb = (() => {
+      const period = 20;
+      const sma = Utils.avg(close.slice(-period));
+      const std = Utils.sd(close.slice(-period));
+      return { upper: sma + 2 * std, middle: sma, lower: sma - 2 * std };
+    })();
+    
+    // ADX (simplified)
+    const adx = (() => {
+      const period = 14;
+      const tr = []; for (let i=1; i<close.length; i++) {
+        const hl = close[i] - close[i-1];
+        const hc = close[i] - (close[i-1] || close[i]);
+        const lc = (close[i-1] || close[i]) - close[i-1];
+        tr.push(Math.max(hl, Math.abs(hc), Math.abs(lc)));
+      }
+      if (tr.length < period + 1) return 25;
+      const dmPlus = [], dmMinus = [];
+      for (let i=1; i<tr.length; i++) {
+        const up = close[i] - close[i-1];
+        const down = close[i-1] - close[i];
+        dmPlus.push(up > down && up > 0 ? up : 0);
+        dmMinus.push(down > up && down > 0 ? down : 0);
+      }
+      const atr = Utils.avg(tr.slice(-period));
+      const diPlus = Utils.avg(dmPlus.slice(-period)) / (atr || 0.001) * 100;
+      const diMinus = Utils.avg(dmMinus.slice(-period)) / (atr || 0.001) * 100;
+      const dx = Math.abs(diPlus - diMinus) / (diPlus + diMinus || 0.001) * 100;
+      return Math.min(100, dx);
+    })();
+    
+    // ROC (Rate of Change, 10)
+    const roc = close.length > 10 ? (close[n-1] - close[n-10]) / close[n-10] * 100 : 0;
+    
+    // OBV (On-Balance Volume)
+    const obv = (() => {
+      if (!volumes || volumes.length < 2) return 0;
+      let obvVal = 0;
+      for (let i = 1; i < Math.min(volumes.length, close.length); i++) {
+        if (close[i] > close[i-1]) obvVal += volumes[i];
+        else if (close[i] < close[i-1]) obvVal -= volumes[i];
+      }
+      return obvVal;
+    })();
+    
+    return { sma20, sma50, sma200, ema20, rsi: rsi14, macd, atr: atr14, bollinger: bb, adx, roc, obv };
+  },
+  
+  // --- Market Structure ---
+  analyzeStructure: (prices) => {
+    if (!prices || prices.length < 20) return null;
+    const last = prices.slice(-30);
+    // Higher Highs / Lower Lows
+    let hh = 0, ll = 0;
+    for (let i = 5; i < last.length - 5; i++) {
+      const left = last.slice(i-5, i);
+      const right = last.slice(i+1, i+6);
+      if (last[i] > Math.max(...left) && last[i] > Math.max(...right)) hh++;
+      if (last[i] < Math.min(...left) && last[i] < Math.min(...right)) ll++;
+    }
+    // Consolidation (low range)
+    const range = (Math.max(...last) - Math.min(...last)) / (Utils.avg(last) || 1);
+    const consolidation = range < 0.02;
+    // Trend Channel (simple linear regression)
+    const x = Array.from({length: last.length}, (_,i) => i);
+    const y = last;
+    const sx = x.reduce((a,b) => a+b, 0), sy = y.reduce((a,b) => a+b, 0);
+    const sxx = x.reduce((a,b) => a+b*b, 0), sxy = x.reduce((a,i) => a+i*y[i], 0);
+    const den = last.length * sxx - sx * sx;
+    const slope = den ? (last.length * sxy - sx * sy) / den : 0;
+    const intercept = (sy - slope * sx) / last.length;
+    const channelWidth = Math.max(...last.map((v,i) => Math.abs(v - (slope*i + intercept)))) / (Utils.avg(last) || 1);
+    // Accumulation / Distribution (simplified: volume-price relationship)
+    const accDist = (() => {
+      if (!prices || prices.length < 20) return 'NEUTRAL';
+      const lastPrice = prices[prices.length-1];
+      const sma = Utils.avg(prices.slice(-20));
+      if (lastPrice > sma * 1.02) return 'ACCUMULATION';
+      if (lastPrice < sma * 0.98) return 'DISTRIBUTION';
+      return 'NEUTRAL';
+    })();
+    return { hh, ll, consolidation, channelWidth, accDist, trendChannelSlope: slope };
+  },
+  
+  // --- Financial Interpretation ---
+  interpret: (prices, highs, lows, volumes) => {
+    if (!prices || prices.length < 30) return { summary: 'Insufficient data for financial analysis', conclusion: 'Data insufficient' };
+    
+    const curve = Layer2.analyzeCurve(prices);
+    const candles = Layer2.analyzeCandlesticks(prices, highs, lows);
+    const indicators = Layer2.calculateIndicators(prices, highs, lows, volumes);
+    const structure = Layer2.analyzeStructure(prices);
+    
+    if (!curve) return { summary: 'Insufficient data for financial analysis', conclusion: 'Data insufficient' };
+    
+    // Build financial summary
+    let summaryParts = [];
+    const lastPrice = prices[prices.length-1];
+    
+    // Trend
+    if (curve.trend === 'UP') summaryParts.push('Ανοδική βραχυπρόθεσμη κλίση');
+    else if (curve.trend === 'DOWN') summaryParts.push('Καθοδική βραχυπρόθεσμη κλίση');
+    else summaryParts.push('Πλάγια κίνηση');
+    
+    // Volatility
+    if (curve.volatility > 0.025) summaryParts.push('με αυξημένη μεταβλητότητα');
+    else if (curve.volatility > 0.012) summaryParts.push('με μέτρια μεταβλητότητα');
+    else summaryParts.push('με χαμηλή μεταβλητότητα');
+    
+    // Range
+    if (structure && structure.consolidation) {
+      summaryParts.push('συσσώρευση/στενό εύρος');
+    } else {
+      const range = (curve.resistance - curve.support) / (curve.support || 1);
+      if (range > 0.05) summaryParts.push('εύρος τιμών διευρύνεται');
+      else if (range > 0.02) summaryParts.push('εύρος τιμών σταθερό');
+    }
+    
+    // Momentum
+    if (curve.momentum > 0.02) summaryParts.push('θετική ορμή');
+    else if (curve.momentum < -0.02) summaryParts.push('αρνητική ορμή');
+    
+    // RSI
+    if (indicators) {
+      if (indicators.rsi > 70) summaryParts.push('RSI δείχνει υπεραγορασμένες συνθήκες');
+      else if (indicators.rsi < 30) summaryParts.push('RSI δείχνει υπερπουλημένες συνθήκες');
+    }
+    
+    // Candlestick
+    if (candles.pattern !== 'NONE') summaryParts.push(`${candles.description}`);
+    
+    // Support/Resistance
+    const currentPrice = prices[prices.length-1];
+    if (curve.resistance && currentPrice > curve.resistance * 0.98) {
+      summaryParts.push('κοντά σε αντίσταση');
+    } else if (curve.support && currentPrice < curve.support * 1.02) {
+      summaryParts.push('κοντά σε στήριξη');
+    }
+    
+    const summary = summaryParts.join('. ') + '.';
+    
+    // Conclusion
+    let conclusion = '';
+    if (curve.trend === 'UP' && curve.breakoutProb > 0.6 && curve.volatility < 0.02) {
+      conclusion = 'Ισχυρή ανοδική τάση με χαμηλή μεταβλητότητα — ευνοϊκό περιβάλλον.';
+    } else if (curve.trend === 'DOWN' && curve.volatility > 0.025) {
+      conclusion = 'Καθοδική τάση με υψηλή μεταβλητότητα — ασταθές περιβάλλον.';
+    } else if (structure && structure.consolidation) {
+      conclusion = 'Συσσώρευση — περιμένουμε διάσπαση για κατεύθυνση.';
+    } else if (curve.breakoutProb > 0.7) {
+      conclusion = 'Υψηλή πιθανότητα διάσπασης — παρακολούθηση.';
+    } else {
+      conclusion = 'Ουδέτερο περιβάλλον — καμία σαφής κατεύθυνση.';
+    }
+    
+    return {
+      curve,
+      candles,
+      indicators,
+      structure,
+      summary,
+      conclusion,
+      lastPrice
+    };
+  },
+  
+  // --- Final Layer 2 Summary ---
+  getSummary: (prices, highs, lows, volumes) => {
+    if (!prices || prices.length < 30) {
+      return {
+        trend: '—',
+        slope: '—',
+        momentum: '—',
+        volatility: '—',
+        rsi: '—',
+        macd: '—',
+        atr: '—',
+        support: '—',
+        resistance: '—',
+        breakout: '—',
+        meanReversion: '—',
+        trendStrength: '—',
+        riskZone: '—',
+        candlestick: '—',
+        summary: 'Insufficient data',
+        conclusion: 'Insufficient data'
+      };
+    }
+    
+    const result = Layer2.interpret(prices, highs, lows, volumes);
+    if (!result) return { summary: 'Analysis failed', conclusion: 'Analysis failed' };
+    
+    return {
+      trend: result.curve.trend,
+      slope: result.curve.slope.toFixed(2) + '%',
+      momentum: (result.curve.momentum * 100).toFixed(2) + '%',
+      volatility: (result.curve.volatility * 100).toFixed(2) + '%',
+      rsi: result.indicators ? result.indicators.rsi.toFixed(1) : '—',
+      macd: result.indicators ? (result.indicators.macd.macd).toFixed(4) : '—',
+      atr: result.curve.atr ? result.curve.atr.toFixed(4) : '—',
+      support: result.curve.support ? Utils.fmt(result.curve.support) : '—',
+      resistance: result.curve.resistance ? Utils.fmt(result.curve.resistance) : '—',
+      breakout: (result.curve.breakoutProb * 100).toFixed(1) + '%',
+      meanReversion: (result.curve.meanReversion * 100).toFixed(2) + '%',
+      trendStrength: (result.curve.trendStrength * 100).toFixed(1) + '%',
+      riskZone: result.curve.riskZone,
+      candlestick: result.candles.pattern + ' — ' + result.candles.description,
+      summary: result.summary,
+      conclusion: result.conclusion
+    };
+  }
+};
+
+// ============================================================
 // DATA ENGINE
 // ============================================================
-const DataEngine={timestamps:[],currentSymbol:CONFIG.SYMBOL,price:[],channels:{},
+const DataEngine={timestamps:[],currentSymbol:CONFIG.SYMBOL,price:[],high:[],low:[],volume:[],channels:{},
   async fetch(symbol=this.currentSymbol){symbol=Utils.normalizeSymbol(symbol);const aliases=[symbol];const results={};let primary=null,usedSymbol=symbol;for(const candidate of aliases){try{const r=await fetch(CONFIG.API+'/?symbol='+encodeURIComponent(candidate)+'&t='+Date.now(),{cache:'no-store'}),j=await r.json();if(!j.chart||!j.chart.result||!j.chart.result[0])throw new Error('bad feed '+candidate);primary=j.chart.result[0];usedSymbol=candidate;break}catch(e){Utils.log('Primary alias failed '+candidate+': '+e.message)}}if(!primary)throw new Error('Failed to fetch '+symbol);results[symbol]=primary;results._usedSymbol=usedSymbol;this.currentSymbol=symbol;this.timestamps=(primary.timestamp||[]).map(t=>t*1000);this.latestMeta=primary.meta;this.usedSymbol=usedSymbol;return results},
-  buildData(results,symbol){const p0=results[symbol];if(!p0)return null;const q=p0.indicators.quote[0];const closes=(q.close||[]).filter(Number.isFinite);let highs=(q.high||[]).filter(Number.isFinite),lows=(q.low||[]).filter(Number.isFinite),volumes=(q.volume||[]).filter(Number.isFinite);const len=closes.length;if(len<30)return null;if(highs.length<len)highs=closes.slice();if(lows.length<len)lows=closes.slice();if(volumes.length<len)volumes=Array(len).fill(1);const p=closes.slice(-len),h=highs.slice(-len),l=lows.slice(-len),vol=volumes.slice(-len);if(vol.length<len)while(vol.length<len)vol.unshift(1);const channels={price:p};const vm=Utils.avg(vol)||1;channels.volume=vol.map(v=>v/vm);channels.range=h.map((hi,i)=>(hi-l[i])/(p[i]||1));const ret=[0];for(let i=1;i<p.length;i++)ret.push(Math.log(p[i]/p[i-1]));channels.return=ret;channels.volatility=p.map((_,i)=>Utils.sd(ret.slice(Math.max(0,i-20),i+1)));this.channels=channels;this.price=p;this.timestamps=this.timestamps.slice(-len);return channels},
-  getPrice:()=>DataEngine.price?.at(-1)||0,getPrices:()=>DataEngine.price||[],getTimestamps:()=>DataEngine.timestamps||[]
+  buildData(results,symbol){const p0=results[symbol];if(!p0)return null;const q=p0.indicators.quote[0];const closes=(q.close||[]).filter(Number.isFinite);let highs=(q.high||[]).filter(Number.isFinite),lows=(q.low||[]).filter(Number.isFinite),volumes=(q.volume||[]).filter(Number.isFinite);const len=closes.length;if(len<30)return null;if(highs.length<len)highs=closes.slice();if(lows.length<len)lows=closes.slice();if(volumes.length<len)volumes=Array(len).fill(1);const p=closes.slice(-len),h=highs.slice(-len),l=lows.slice(-len),vol=volumes.slice(-len);if(vol.length<len)while(vol.length<len)vol.unshift(1);const channels={price:p};const vm=Utils.avg(vol)||1;channels.volume=vol.map(v=>v/vm);channels.range=h.map((hi,i)=>(hi-l[i])/(p[i]||1));const ret=[0];for(let i=1;i<p.length;i++)ret.push(Math.log(p[i]/p[i-1]));channels.return=ret;channels.volatility=p.map((_,i)=>Utils.sd(ret.slice(Math.max(0,i-20),i+1)));this.channels=channels;this.price=p;this.high=h;this.low=l;this.volume=vol;this.timestamps=this.timestamps.slice(-len);return channels},
+  getPrice:()=>DataEngine.price?.at(-1)||0,getPrices:()=>DataEngine.price||[],getHighs:()=>DataEngine.high||[],getLows:()=>DataEngine.low||[],getVolumes:()=>DataEngine.volume||[],getTimestamps:()=>DataEngine.timestamps||[]
 };
 
 // ============================================================
@@ -143,7 +575,8 @@ const UI={
   updateMemory:m=>{Utils.el('nearCases').textContent=m.n||0;Utils.el('memVerdict').textContent=m.top||'—';Utils.el('memConf').textContent=Math.round((m.memConf||0)*100)+'%';Utils.el('memGuard').textContent=m.guard||'—';Utils.el('memExplain').textContent=`GO ${m.counts?.GO||0} • ARM ${m.counts?.ARM||0} • HOLD ${m.counts?.HOLD||0} among nearest stored cases`},
   updateMemoryTable:()=>{const rows=MEMORY.decisions.slice(-20).reverse().map(x=>`<tr><td>${new Date(x.t).toLocaleTimeString('el-GR')}</td><td><span class="${x.verdict==='GO'?'badgeGo':x.verdict==='ARM'?'badgeArm':'badgeHold'}">${x.verdict}</span></td><td>${Math.round((x.confidence||0)*100)}</td><td>${Number(x.PCS||0).toFixed(3)}</td><td>${Number(x.Pi||0).toFixed(3)}</td><td>${Number(x.SCG||0).toFixed(3)}</td></tr>`).join('');Utils.el('memoryRows').innerHTML=rows||'<tr><td colspan="6">No memory yet</td></tr>';Utils.el('memV').textContent=MEMORY.decisions.length;Utils.el('memK').textContent=`GO ${MEMORY.decisions.filter(x=>x.verdict==='GO').length} • ARM ${MEMORY.decisions.filter(x=>x.verdict==='ARM').length} • HOLD ${MEMORY.decisions.filter(x=>x.verdict==='HOLD').length}`},
   updateChart:(sym='$')=>{const c=Utils.el('chart'),ctx=c.getContext('2d'),prices=DataEngine.getPrices();ctx.clearRect(0,0,c.width,c.height);if(prices.length<2)return;const min=Math.min(...prices),max=Math.max(...prices);Utils.el('minP').textContent=sym+' '+Utils.fmt(min);Utils.el('maxP').textContent=sym+' '+Utils.fmt(max);ctx.beginPath();prices.forEach((p,i)=>{const x=i/(prices.length-1)*c.width,y=c.height-((p-min)/(max-min+1e-9))*c.height;if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y)});ctx.lineWidth=3;ctx.strokeStyle='#168a3a';ctx.stroke()},
-  updateStability:h=>{if(h.length<5){Utils.el('stabilityPill').textContent='STABILITY: LEARNING';Utils.el('stabilityPill').className='pill gray';return}const stable=new Set(h.slice(-10)).size<=2;Utils.el('stabilityPill').textContent='STABILITY: '+(stable?'STABLE':'UNSTABLE');Utils.el('stabilityPill').className='pill '+(stable?'ok':'warn')}
+  updateStability:h=>{if(h.length<5){Utils.el('stabilityPill').textContent='STABILITY: LEARNING';Utils.el('stabilityPill').className='pill gray';return}const stable=new Set(h.slice(-10)).size<=2;Utils.el('stabilityPill').textContent='STABILITY: '+(stable?'STABLE':'UNSTABLE');Utils.el('stabilityPill').className='pill '+(stable?'ok':'warn')},
+  updateLayer2:(l2)=>{if(!l2)return;const map={trend:'l2Trend',slope:'l2Slope',momentum:'l2Momentum',volatility:'l2Volatility',rsi:'l2RSI',macd:'l2MACD',atr:'l2ATR',support:'l2Support',resistance:'l2Resistance',breakout:'l2Breakout',meanReversion:'l2MeanReversion',trendStrength:'l2TrendStrength',riskZone:'l2RiskZone',candlestick:'l2Candlestick',summary:'l2Summary',conclusion:'l2Conclusion'};Object.keys(map).forEach(k=>{const el=Utils.el(map[k]);if(!el)return;const v=l2[k];if(v===undefined||v===null){el.textContent='—';el.className='';return}el.textContent=typeof v==='number'?v.toFixed(2):String(v);const isGreen=v==='UP'||v==='POSITIVE'||v==='ACCUMULATION'||v==='LOW'||v==='BULLISH';const isRed=v==='DOWN'||v==='NEGATIVE'||v==='DISTRIBUTION'||v==='HIGH'||v==='BEARISH';el.className=isGreen?'green':isRed?'red':''})}
 };
 
 // ============================================================
@@ -153,7 +586,7 @@ class PulseApplication{
   constructor(){this.symbol=CONFIG.SYMBOL;this.decisionHistory=[];this.lastDecision='HOLD';this.overlayOn=true;this._lastMarketState=null;MEMORY.load();AuditEngine.load();this.setup();this.tickClock();setInterval(()=>this.tickClock(),1000);this.poll();setInterval(()=>this.poll(),CONFIG.POLL_MS);Utils.log('boot • '+CONFIG.VERSION+' • '+this.symbol)}
   setup(){document.querySelectorAll('.asset-btn').forEach(btn=>btn.onclick=()=>{document.querySelectorAll('.asset-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');this.symbol=Utils.normalizeSymbol(btn.dataset.asset);Utils.log('Switched to '+this.symbol);this.poll()});Utils.el('refreshBtn').onclick=()=>this.poll();Utils.el('overlayBtn').onclick=()=>{this.overlayOn=!this.overlayOn;Utils.el('overlayBtn').textContent='GO Overlay: '+(this.overlayOn?'ON':'OFF');Utils.el('overlayBtn').classList.toggle('black',this.overlayOn)};Utils.el('csvBtn').onclick=()=>{const h=['timeISO','symbol','price','verdict','confidence','score','PCS','PCS_z','Pi','SCG','market','nullDecision','opsDecision'];const csv=h.join(',')+'\n'+AUDIT.map(x=>[new Date(x.timestamp).toISOString(),x.symbol,x.price,x.verdict,x.confidence,x.score,x.PCS,x.PCS_z,x.Pi,x.SCG,x.market,x.nullDecision,x.opsDecision].join(',')).join('\n');Utils.download('sintelia_pulse_audit.csv',csv,'text/csv')};Utils.el('jsonBtn').onclick=()=>Utils.download('sintelia_pulse_audit.json',JSON.stringify(AUDIT,null,2),'application/json');Utils.el('memoryBtn').onclick=()=>Utils.download('sintelia_pulse_memory.json',JSON.stringify(MEMORY.decisions.slice(-200),null,2),'application/json');Utils.el('clearMemoryBtn').onclick=()=>{MEMORY.decisions=[];MEMORY.samples=[];Utils.save();UI.updateMemoryTable();Utils.log('memory cleared')};Utils.el('clearAuditBtn').onclick=()=>{AUDIT=[];Utils.save();Utils.log('audit cleared')};Utils.el('copyLogBtn').onclick=()=>navigator.clipboard?.writeText(Utils.el('log').textContent)}
   tickClock(){Utils.el('timeNow').textContent=new Date().toLocaleTimeString('el-GR')}
-  async poll(){const now=Date.now();try{this.symbol=Utils.normalizeSymbol(this.symbol);const preInfo=Utils.getMarketInfo(this.symbol);const preOpen=Utils.isMarketOpen(this.symbol,now);UI.updateMarket(preOpen,preInfo);Utils.el('marketTime').textContent=preInfo.time;Utils.el('symbolDisplay').textContent=this.symbol;Utils.el('currencyDisplay').textContent=preInfo.currency;Utils.logStateChange(this.symbol,preOpen);const results=await DataEngine.fetch(this.symbol),meta=results[this.symbol]?.meta||{},open=Utils.isMarketOpen(this.symbol,now),info=Utils.getMarketInfo(this.symbol,now),channels=DataEngine.buildData(results,this.symbol);if(!channels)throw new Error('Failed to build multichannel data');const price=DataEngine.getPrice(),prices=DataEngine.getPrices(),ts=DataEngine.getTimestamps();let sampling='—';if(ts.length>1){const d=(ts.at(-1)-ts.at(-2))/(24*60*60*1000);sampling=d<1?`${(d*24*60).toFixed(0)}m`:`${d.toFixed(2)}d`}const cur=info.currency;const sym=cur==='EUR'?'€':'$';Utils.el('priceDisplay').textContent=sym+' '+Utils.fmt(price);Utils.el('symbolDisplay').textContent=this.symbol;Utils.el('currencyDisplay').textContent=cur;Utils.el('prevClose').textContent='prev close: '+sym+' '+Utils.fmt(meta.previousClose||meta.chartPreviousClose||0);Utils.el('chkWorker').textContent='OK';Utils.el('chkFeed').textContent='OK';Utils.el('chkSampling').textContent=sampling;Utils.el('health').textContent='health: OK';Utils.el('healthDot').style.background='var(--green)';UI.updateChart(sym);UI.updateStability(this.decisionHistory);MEMORY.isActive=open;AuditEngine.isActive=open;if(!open){UI.updateMarket(open,info);Utils.el('marketTime').textContent=info.time;UI.updateDecision('HOLD','Market closed - OPS paused',0,false);UI.updateMemoryTable();Utils.el('diagText').innerHTML=`<b>${CONFIG.VERSION}</b> • ${this.symbol} • ${info.exchange} • MARKET CLOSED<br>OPS / MEMORY / AUDIT: PAUSED until market opens.<br>Price feed: OK • Sampling: ${sampling}`;return}const ops=OPSEngine.analyze(channels);const nullResult=Utils.nullCalibrateFull(ops._fullResult||ops,channels,CONFIG.NULL_ENSEMBLE_SIZE);const memory=MEMORY.lookup(ops,open);const dec=DecisionEngine.makeDecision(ops,nullResult,memory,open);const finalDecision=this.overlayOn?dec.decision:'HOLD';this.decisionHistory.push(finalDecision);if(this.decisionHistory.length>20)this.decisionHistory.shift();this.lastDecision=finalDecision;const record={t:now,symbol:this.symbol,price,verdict:finalDecision,confidence:dec.confidence,score:ops.score,PCS:ops.PCS,PCS_z:ops.PCS_z,Pi:ops.Pi,SCG:ops.SCG,rolling:ops.rolling,axiom:ops.axiom,market:info.open,reasons:ops.reasons,opsDecision:ops.decision,nullDecision:nullResult.decision};MEMORY.add(record);MEMORY.addSample({t:now,price,market:info.open});AuditEngine.log({...record,exchange:info.exchange,decisionReason:dec.reason,pPCS:nullResult.pPCS,pPi:nullResult.pPi,pSCG:nullResult.pSCG});Utils.save();UI.updateMarket(open,info);Utils.el('marketTime').textContent=info.time;UI.updateDecision(finalDecision,dec.reason,dec.confidence,open);UI.updateOPS(ops,nullResult);UI.updateNull(nullResult);UI.updateMemory(memory);UI.updateMemoryTable();const stats={success:0,total:0};Utils.el('diagText').innerHTML=`<b>${CONFIG.VERSION}</b> • ${this.symbol} • ${info.exchange} • ${info.open}<br>OPS: ${ops.decision} score=${ops.score} • Null: ${nullResult.decision} pPCS=${nullResult.pPCS.toFixed(3)}<br>PCS=${ops.PCS.toFixed(3)} • PCS_z=${ops.PCS_z.toFixed(3)} • Pi=${ops.Pi.toFixed(3)} • SCG=${ops.SCG.toFixed(3)}<br>Sampling: ${sampling} • Channels: ${ops.nChannels||5}`;Utils.log(`${this.symbol} ${info.exchange} ${info.open} ${finalDecision} ${sym}${Utils.fmt(price)} OPS=${ops.decision} null=${nullResult.decision}`)}catch(e){const info=Utils.getMarketInfo(this.symbol);const open=Utils.isMarketOpen(this.symbol);UI.updateMarket(open,info);Utils.el('marketTime').textContent=info.time;Utils.el('symbolDisplay').textContent=this.symbol;Utils.el('currencyDisplay').textContent=info.currency;Utils.el('priceDisplay').textContent=(info.symbol||'$')+' —';Utils.el('health').textContent='health: FAIL';Utils.el('healthDot').style.background='var(--red)';Utils.el('chkWorker').textContent='FAIL';Utils.el('chkFeed').textContent='FAIL';Utils.el('diagText').innerHTML='<span style="color:red">DATA FEED ERROR: '+String(e)+'</span><br>Market config remains locked to '+info.exchange+' / '+info.tz+' / '+(info.currency||'USD')+'.';Utils.log('ERROR '+this.symbol+' '+info.exchange+' '+String(e))}}
+  async poll(){const now=Date.now();try{this.symbol=Utils.normalizeSymbol(this.symbol);const preInfo=Utils.getMarketInfo(this.symbol);const preOpen=Utils.isMarketOpen(this.symbol,now);UI.updateMarket(preOpen,preInfo);Utils.el('marketTime').textContent=preInfo.time;Utils.el('symbolDisplay').textContent=this.symbol;Utils.el('currencyDisplay').textContent=preInfo.currency;Utils.logStateChange(this.symbol,preOpen);const results=await DataEngine.fetch(this.symbol),meta=results[this.symbol]?.meta||{},open=Utils.isMarketOpen(this.symbol,now),info=Utils.getMarketInfo(this.symbol,now),channels=DataEngine.buildData(results,this.symbol);if(!channels)throw new Error('Failed to build multichannel data');const price=DataEngine.getPrice(),prices=DataEngine.getPrices(),highs=DataEngine.getHighs(),lows=DataEngine.getLows(),volumes=DataEngine.getVolumes(),ts=DataEngine.getTimestamps();let sampling='—';if(ts.length>1){const d=(ts.at(-1)-ts.at(-2))/(24*60*60*1000);sampling=d<1?`${(d*24*60).toFixed(0)}m`:`${d.toFixed(2)}d`}const cur=info.currency;const sym=cur==='EUR'?'€':'$';Utils.el('priceDisplay').textContent=sym+' '+Utils.fmt(price);Utils.el('symbolDisplay').textContent=this.symbol;Utils.el('currencyDisplay').textContent=cur;Utils.el('prevClose').textContent='prev close: '+sym+' '+Utils.fmt(meta.previousClose||meta.chartPreviousClose||0);Utils.el('chkWorker').textContent='OK';Utils.el('chkFeed').textContent='OK';Utils.el('chkSampling').textContent=sampling;Utils.el('health').textContent='health: OK';Utils.el('healthDot').style.background='var(--green)';UI.updateChart(sym);UI.updateStability(this.decisionHistory);MEMORY.isActive=open;AuditEngine.isActive=open;if(!open){UI.updateMarket(open,info);Utils.el('marketTime').textContent=info.time;UI.updateDecision('HOLD','Market closed - OPS paused',0,false);UI.updateMemoryTable();Utils.el('diagText').innerHTML=`<b>${CONFIG.VERSION}</b> • ${this.symbol} • ${info.exchange} • MARKET CLOSED<br>OPS / MEMORY / AUDIT: PAUSED until market opens.<br>Price feed: OK • Sampling: ${sampling}`;return}const ops=OPSEngine.analyze(channels);const nullResult=Utils.nullCalibrateFull(ops._fullResult||ops,channels,CONFIG.NULL_ENSEMBLE_SIZE);const memory=MEMORY.lookup(ops,open);const dec=DecisionEngine.makeDecision(ops,nullResult,memory,open);const finalDecision=this.overlayOn?dec.decision:'HOLD';this.decisionHistory.push(finalDecision);if(this.decisionHistory.length>20)this.decisionHistory.shift();this.lastDecision=finalDecision;const record={t:now,symbol:this.symbol,price,verdict:finalDecision,confidence:dec.confidence,score:ops.score,PCS:ops.PCS,PCS_z:ops.PCS_z,Pi:ops.Pi,SCG:ops.SCG,rolling:ops.rolling,axiom:ops.axiom,market:info.open,reasons:ops.reasons,opsDecision:ops.decision,nullDecision:nullResult.decision};MEMORY.add(record);MEMORY.addSample({t:now,price,market:info.open});AuditEngine.log({...record,exchange:info.exchange,decisionReason:dec.reason,pPCS:nullResult.pPCS,pPi:nullResult.pPi,pSCG:nullResult.pSCG});Utils.save();UI.updateMarket(open,info);Utils.el('marketTime').textContent=info.time;UI.updateDecision(finalDecision,dec.reason,dec.confidence,open);UI.updateOPS(ops,nullResult);UI.updateNull(nullResult);UI.updateMemory(memory);UI.updateMemoryTable();const stats={success:0,total:0};Utils.el('diagText').innerHTML=`<b>${CONFIG.VERSION}</b> • ${this.symbol} • ${info.exchange} • ${info.open}<br>OPS: ${ops.decision} score=${ops.score} • Null: ${nullResult.decision} pPCS=${nullResult.pPCS.toFixed(3)}<br>PCS=${ops.PCS.toFixed(3)} • PCS_z=${ops.PCS_z.toFixed(3)} • Pi=${ops.Pi.toFixed(3)} • SCG=${ops.SCG.toFixed(3)}<br>Sampling: ${sampling} • Channels: ${ops.nChannels||5}`;Utils.log(`${this.symbol} ${info.exchange} ${info.open} ${finalDecision} ${sym}${Utils.fmt(price)} OPS=${ops.decision} null=${nullResult.decision}`);const layer2Result=Layer2.getSummary(prices,highs,lows,volumes);UI.updateLayer2(layer2Result)}catch(e){const info=Utils.getMarketInfo(this.symbol);const open=Utils.isMarketOpen(this.symbol);UI.updateMarket(open,info);Utils.el('marketTime').textContent=info.time;Utils.el('symbolDisplay').textContent=this.symbol;Utils.el('currencyDisplay').textContent=info.currency;Utils.el('priceDisplay').textContent=(info.symbol||'$')+' —';Utils.el('health').textContent='health: FAIL';Utils.el('healthDot').style.background='var(--red)';Utils.el('chkWorker').textContent='FAIL';Utils.el('chkFeed').textContent='FAIL';Utils.el('diagText').innerHTML='<span style="color:red">DATA FEED ERROR: '+String(e)+'</span><br>Market config remains locked to '+info.exchange+' / '+info.tz+' / '+(info.currency||'USD')+'.';Utils.log('ERROR '+this.symbol+' '+info.exchange+' '+String(e))}}
 }
 document.addEventListener('DOMContentLoaded',()=>{window.Pulse=new PulseApplication()});
 </script>
